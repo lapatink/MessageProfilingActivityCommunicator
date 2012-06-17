@@ -64,13 +64,13 @@ namespace MPacApplication
           public MainForm()
           {
                InitializeComponent();
-               comPortConfigForm = new ComPortConfigForm(this);
+               comPortConfigForm = null;
                closeComPort = false;
 
                String[] portNames = SerialPort.GetPortNames();
                foreach (String name in portNames)
                {
-                    if (name.Equals("COM18"))
+                    if (name.StartsWith("COM") && !name.StartsWith("COM1"))
                     {
                          OpenComPort(name, DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
                          break;
@@ -132,7 +132,7 @@ namespace MPacApplication
           {
                try
                {
-                    listeningPort = new SerialPort("COM18", baudRate, parity, dataBits, stopBits);
+                    listeningPort = new SerialPort(comPortName, baudRate, parity, dataBits, stopBits);
                }
                catch (Exception e)
                {
@@ -145,8 +145,24 @@ namespace MPacApplication
                btnOpenComPort.Enabled = false;
                btnOpenComPort.BackColor = Button.DefaultBackColor;
 
-               SetSerialPortConfig("COM18", baudRate, parity, dataBits, stopBits);
-               this.listeningPort.Open();
+               SetSerialPortConfig(comPortName, baudRate, parity, dataBits, stopBits);
+               try
+               {
+                    this.listeningPort.Open();
+               }
+               catch (Exception)
+               {
+                    String[] portNames = SerialPort.GetPortNames();
+                    foreach (String name in portNames)
+                    {
+                         if (name.StartsWith("COM") && !name.StartsWith("COM1"))
+                         {
+                              MessageBox.Show(comPortName + " does not seem to be a valid port, selecting port " + name);
+                              OpenComPort(name, this.baudRate, this.parity, this.dataBits, this.stopBits);
+                              break;
+                         }
+                    }
+               }
           }
 
           private void CloseComPort()
