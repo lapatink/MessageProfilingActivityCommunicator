@@ -29,9 +29,9 @@ namespace MPacApplication
         /// Reads the message table into a list of objects.
         /// </summary>
         /// <returns>Returns a list of Message objects.</returns>
-        public List<Message> GetMessageList()
+        public List<MessageFormat> GetMessageList()
         {
-            List<Message> messages = new List<Message>();
+            List<MessageFormat> messages = new List<MessageFormat>();
             try
             {
                 conn.Open();
@@ -49,7 +49,7 @@ namespace MPacApplication
                         ((byte[])safeRead(reader, "length"))[0].ToString() + "," +
                         safeRead(reader, "format");
 
-                    Message m = new Message();
+                    MessageFormat m = new MessageFormat();
 
                     m.FromCSVString(line);
                     messages.Add(m);
@@ -74,7 +74,7 @@ namespace MPacApplication
         /// </summary>
         /// <param name="message">Message object to write from.</param>
         /// <returns>Returns true on success.</returns>
-        public bool Write(Message message)
+        public bool Write(MessageFormat message)
         {
             bool flag = true;
             try

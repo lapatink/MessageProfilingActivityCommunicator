@@ -15,9 +15,9 @@ namespace MPacApplication
         /// </summary>
         /// <param name="filename">The filename and directory to import from.</param>
         /// <returns>Returns a list of messages</returns>
-        public static List<Message> ToMessages(string filename)
+        public static List<MessageFormat> ToMessages(string filename)
         {
-            List<Message> messages = new List<Message>();
+            List<MessageFormat> messages = new List<MessageFormat>();
 
             try
             {
@@ -27,7 +27,7 @@ namespace MPacApplication
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    messages.Add(new Message(line));
+                    messages.Add(new MessageFormat(line));
                 }
             }
             catch (Exception e)
