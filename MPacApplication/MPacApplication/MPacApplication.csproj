@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddMessageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddMessageForm.Designer.cs">
+      <DependentUpon>AddMessageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComPortConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +66,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AddMessageForm.resx">
+      <DependentUpon>AddMessageForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ComPortConfigForm.resx">
       <DependentUpon>ComPortConfigForm.cs</DependentUpon>
     </EmbeddedResource>

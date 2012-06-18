@@ -18,6 +18,7 @@ namespace MPacApplication
           public const StopBits DEFAULT_STOP_BITS = StopBits.One;
 
           private ComPortConfigForm comPortConfigForm;
+          private AddMessageForm AddMessageForm;
           private SerialPort listeningPort;
           private bool closeComPort;
           private String comPortName;
@@ -244,6 +245,19 @@ namespace MPacApplication
                }
                lstDisplayWindow.Items.Add(message);
                lstDisplayWindow.SelectedIndex++;
+          }
+
+          private void btnAddMessageForm_Click(object sender, EventArgs e)
+          {
+              try
+              {
+                  AddMessageForm.Show();
+              }
+              catch (Exception)
+              {
+                 AddMessageForm = new AddMessageForm(this);
+                 AddMessageForm.Show();
+              }
           }
      }
 }
