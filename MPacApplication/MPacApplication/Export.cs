@@ -17,13 +17,13 @@ namespace MPacApplication
         /// <param name="messages">List of Message objects.</param>
         /// <param name="filename">Filename and directory to export to.</param>
         /// <returns>Returns true on success.</returns>
-        public static bool FromMessages(List<Message> messages, string filename)
+        public static bool FromMessages(List<MessageFormat> messages, string filename)
         {
             try
             {
                 writer = new StreamWriter(filename);
                 writer.WriteLine(header);
-                foreach (Message m in messages)
+                foreach (MessageFormat m in messages)
                     writer.WriteLine(m.ToCSVString());
             }
             catch (Exception e)
