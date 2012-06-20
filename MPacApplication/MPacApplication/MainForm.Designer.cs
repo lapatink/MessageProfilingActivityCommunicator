@@ -190,10 +190,12 @@
                // 
                // lstDisplayWindow
                // 
+               this.lstDisplayWindow.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                this.lstDisplayWindow.FormattingEnabled = true;
+               this.lstDisplayWindow.ItemHeight = 16;
                this.lstDisplayWindow.Location = new System.Drawing.Point(12, 98);
                this.lstDisplayWindow.Name = "lstDisplayWindow";
-               this.lstDisplayWindow.Size = new System.Drawing.Size(1082, 355);
+               this.lstDisplayWindow.Size = new System.Drawing.Size(1082, 340);
                this.lstDisplayWindow.TabIndex = 14;
                // 
                // tmrCloseComPortCheck
@@ -204,7 +206,7 @@
                // tmrCheckForData
                // 
                this.tmrCheckForData.Enabled = true;
-               this.tmrCheckForData.Interval = 50;
+               this.tmrCheckForData.Interval = 1000;
                this.tmrCheckForData.Tick += new System.EventHandler(this.tmrCheckForData_Tick);
                // 
                // MainForm
