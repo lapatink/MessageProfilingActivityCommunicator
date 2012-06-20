@@ -192,7 +192,7 @@ namespace MPacApplication
 
           public void LogData(Message completedMessage)
           {
-               String message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}", DateTime.Now) + completedMessage.ToString();
+               String message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}\t\t", DateTime.Now) + completedMessage.ToString();
 
                lstDisplayWindow.Items.Add(message);
                lstDisplayWindow.SelectedIndex = numberOfEntries++;
@@ -286,6 +286,45 @@ namespace MPacApplication
                   AddCompanyForm = new AddMessageForm(this);
                   AddCompanyForm.Show();
               }
+          }
+
+          private void btnSendMessageOne_Click(object sender, EventArgs e)
+          {
+               String[] parts = txtMessageOne.Text.Split(' ');
+               byte[] message = new byte[parts.Length];
+
+               for (int i = 0; i < parts.Length; i++)
+               {
+                    message[i] = (byte)int.Parse(parts[i], System.Globalization.NumberStyles.HexNumber);
+               }
+
+               dataProcessor.ProcessData(message);
+          }
+
+          private void btnSendMessageTwo_Click(object sender, EventArgs e)
+          {
+               String[] parts = txtMessageTwo.Text.Split(' ');
+               byte[] message = new byte[parts.Length];
+
+               for (int i = 0; i < parts.Length; i++)
+               {
+                    message[i] = (byte)int.Parse(parts[i], System.Globalization.NumberStyles.HexNumber);
+               }
+
+               dataProcessor.ProcessData(message);
+          }
+
+          private void btnSendMessageThree_Click(object sender, EventArgs e)
+          {
+               String[] parts = txtMessageThree.Text.Split(' ');
+               byte[] message = new byte[parts.Length];
+
+               for (int i = 0; i < parts.Length; i++)
+               {
+                    message[i] = (byte)int.Parse(parts[i], System.Globalization.NumberStyles.HexNumber);
+               }
+
+               dataProcessor.ProcessData(message);
           }
      }
 }

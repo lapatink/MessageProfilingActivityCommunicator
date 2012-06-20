@@ -49,6 +49,12 @@
                this.tmrCheckForData = new System.Windows.Forms.Timer(this.components);
                this.btnAddMessage = new System.Windows.Forms.Button();
                this.btnAddCompanyMessage = new System.Windows.Forms.Button();
+               this.txtMessageOne = new System.Windows.Forms.TextBox();
+               this.txtMessageTwo = new System.Windows.Forms.TextBox();
+               this.txtMessageThree = new System.Windows.Forms.TextBox();
+               this.btnSendMessageOne = new System.Windows.Forms.Button();
+               this.btnSendMessageTwo = new System.Windows.Forms.Button();
+               this.btnSendMessageThree = new System.Windows.Forms.Button();
                this.SuspendLayout();
                // 
                // lblCurrentTime
@@ -193,9 +199,9 @@
                // lstDisplayWindow
                // 
                this.lstDisplayWindow.FormattingEnabled = true;
-               this.lstDisplayWindow.Location = new System.Drawing.Point(12, 98);
+               this.lstDisplayWindow.Location = new System.Drawing.Point(12, 176);
                this.lstDisplayWindow.Name = "lstDisplayWindow";
-               this.lstDisplayWindow.Size = new System.Drawing.Size(1082, 355);
+               this.lstDisplayWindow.Size = new System.Drawing.Size(1082, 277);
                this.lstDisplayWindow.TabIndex = 14;
                // 
                // tmrCloseComPortCheck
@@ -231,11 +237,68 @@
                this.btnAddCompanyMessage.UseVisualStyleBackColor = true;
                this.btnAddCompanyMessage.Click += new System.EventHandler(this.btnAddCompanyMessage_Click);
                // 
+               // txtMessageOne
+               // 
+               this.txtMessageOne.Location = new System.Drawing.Point(174, 94);
+               this.txtMessageOne.Name = "txtMessageOne";
+               this.txtMessageOne.Size = new System.Drawing.Size(653, 20);
+               this.txtMessageOne.TabIndex = 17;
+               // 
+               // txtMessageTwo
+               // 
+               this.txtMessageTwo.Location = new System.Drawing.Point(174, 121);
+               this.txtMessageTwo.Name = "txtMessageTwo";
+               this.txtMessageTwo.Size = new System.Drawing.Size(653, 20);
+               this.txtMessageTwo.TabIndex = 18;
+               // 
+               // txtMessageThree
+               // 
+               this.txtMessageThree.Location = new System.Drawing.Point(174, 148);
+               this.txtMessageThree.Name = "txtMessageThree";
+               this.txtMessageThree.Size = new System.Drawing.Size(653, 20);
+               this.txtMessageThree.TabIndex = 19;
+               // 
+               // btnSendMessageOne
+               // 
+               this.btnSendMessageOne.Location = new System.Drawing.Point(833, 91);
+               this.btnSendMessageOne.Name = "btnSendMessageOne";
+               this.btnSendMessageOne.Size = new System.Drawing.Size(75, 23);
+               this.btnSendMessageOne.TabIndex = 20;
+               this.btnSendMessageOne.Text = "Send";
+               this.btnSendMessageOne.UseVisualStyleBackColor = true;
+               this.btnSendMessageOne.Click += new System.EventHandler(this.btnSendMessageOne_Click);
+               // 
+               // btnSendMessageTwo
+               // 
+               this.btnSendMessageTwo.Location = new System.Drawing.Point(833, 118);
+               this.btnSendMessageTwo.Name = "btnSendMessageTwo";
+               this.btnSendMessageTwo.Size = new System.Drawing.Size(75, 23);
+               this.btnSendMessageTwo.TabIndex = 21;
+               this.btnSendMessageTwo.Text = "Send";
+               this.btnSendMessageTwo.UseVisualStyleBackColor = true;
+               this.btnSendMessageTwo.Click += new System.EventHandler(this.btnSendMessageTwo_Click);
+               // 
+               // btnSendMessageThree
+               // 
+               this.btnSendMessageThree.Location = new System.Drawing.Point(833, 145);
+               this.btnSendMessageThree.Name = "btnSendMessageThree";
+               this.btnSendMessageThree.Size = new System.Drawing.Size(75, 23);
+               this.btnSendMessageThree.TabIndex = 22;
+               this.btnSendMessageThree.Text = "Send";
+               this.btnSendMessageThree.UseVisualStyleBackColor = true;
+               this.btnSendMessageThree.Click += new System.EventHandler(this.btnSendMessageThree_Click);
+               // 
                // MainForm
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
                this.ClientSize = new System.Drawing.Size(1106, 468);
+               this.Controls.Add(this.btnSendMessageThree);
+               this.Controls.Add(this.btnSendMessageTwo);
+               this.Controls.Add(this.btnSendMessageOne);
+               this.Controls.Add(this.txtMessageThree);
+               this.Controls.Add(this.txtMessageTwo);
+               this.Controls.Add(this.txtMessageOne);
                this.Controls.Add(this.btnAddCompanyMessage);
                this.Controls.Add(this.btnAddMessage);
                this.Controls.Add(this.lstDisplayWindow);
@@ -282,6 +345,12 @@
           private System.Windows.Forms.Timer tmrCheckForData;
           private System.Windows.Forms.Button btnAddMessage;
           private System.Windows.Forms.Button btnAddCompanyMessage;
+          private System.Windows.Forms.TextBox txtMessageOne;
+          private System.Windows.Forms.TextBox txtMessageTwo;
+          private System.Windows.Forms.TextBox txtMessageThree;
+          private System.Windows.Forms.Button btnSendMessageOne;
+          private System.Windows.Forms.Button btnSendMessageTwo;
+          private System.Windows.Forms.Button btnSendMessageThree;
      }
 }
 
