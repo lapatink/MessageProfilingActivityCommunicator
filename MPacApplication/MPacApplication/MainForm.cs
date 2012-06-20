@@ -19,6 +19,7 @@ namespace MPacApplication
 
           private ComPortConfigForm comPortConfigForm;
           private AddMessageForm AddMessageForm;
+          private AddMessageForm AddCompanyForm;
           private SerialPort listeningPort;
           private bool closeComPort;
           private String comPortName;
@@ -247,7 +248,7 @@ namespace MPacApplication
                lstDisplayWindow.SelectedIndex++;
           }
 
-          private void btnAddMessageForm_Click(object sender, EventArgs e)
+          private void btnAddMessage_Click(object sender, EventArgs e)
           {
               try
               {
@@ -255,9 +256,24 @@ namespace MPacApplication
               }
               catch (Exception)
               {
-                 AddMessageForm = new AddMessageForm(this);
-                 AddMessageForm.Show();
+                  AddMessageForm = new AddMessageForm(this);
+                  AddMessageForm.Show();
               }
           }
+
+          private void btnAddCompanyMessage_Click(object sender, EventArgs e)
+          {
+              try
+              {
+                  AddCompanyForm.Show();
+              }
+              catch (Exception)
+              {
+                  AddCompanyForm = new AddMessageForm(this);
+                  AddCompanyForm.Show();
+              }
+          }
+
+
      }
 }

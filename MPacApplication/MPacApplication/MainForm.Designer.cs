@@ -47,7 +47,8 @@
               this.lstDisplayWindow = new System.Windows.Forms.ListBox();
               this.tmrCloseComPortCheck = new System.Windows.Forms.Timer(this.components);
               this.tmrCheckForData = new System.Windows.Forms.Timer(this.components);
-              this.btnAddMessageForm = new System.Windows.Forms.Button();
+              this.btnAddMessage = new System.Windows.Forms.Button();
+              this.btnAddCompanyMessage = new System.Windows.Forms.Button();
               this.SuspendLayout();
               // 
               // lblCurrentTime
@@ -208,23 +209,35 @@
               this.tmrCheckForData.Interval = 50;
               this.tmrCheckForData.Tick += new System.EventHandler(this.tmrCheckForData_Tick);
               // 
-              // btnAddMessageForm
+              // btnAddMessage
               // 
-              this.btnAddMessageForm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-              this.btnAddMessageForm.Location = new System.Drawing.Point(408, 10);
-              this.btnAddMessageForm.Name = "btnAddMessageForm";
-              this.btnAddMessageForm.Size = new System.Drawing.Size(75, 68);
-              this.btnAddMessageForm.TabIndex = 15;
-              this.btnAddMessageForm.Text = "Add Message";
-              this.btnAddMessageForm.UseVisualStyleBackColor = true;
-              this.btnAddMessageForm.Click += new System.EventHandler(this.btnAddMessageForm_Click);
+              this.btnAddMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+              this.btnAddMessage.Location = new System.Drawing.Point(408, 10);
+              this.btnAddMessage.Name = "btnAddMessage";
+              this.btnAddMessage.Size = new System.Drawing.Size(75, 68);
+              this.btnAddMessage.TabIndex = 15;
+              this.btnAddMessage.Text = "Add Local Message";
+              this.btnAddMessage.UseVisualStyleBackColor = true;
+              this.btnAddMessage.Click += new System.EventHandler(this.btnAddMessage_Click);
+              // 
+              // btnAddCompanyMessage
+              // 
+              this.btnAddCompanyMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+              this.btnAddCompanyMessage.Location = new System.Drawing.Point(489, 10);
+              this.btnAddCompanyMessage.Name = "btnAddCompanyMessage";
+              this.btnAddCompanyMessage.Size = new System.Drawing.Size(75, 68);
+              this.btnAddCompanyMessage.TabIndex = 16;
+              this.btnAddCompanyMessage.Text = "Add Company Message";
+              this.btnAddCompanyMessage.UseVisualStyleBackColor = true;
+              this.btnAddCompanyMessage.Click += new System.EventHandler(this.btnAddCompanyMessage_Click);
               // 
               // MainForm
               // 
               this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
               this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
               this.ClientSize = new System.Drawing.Size(1106, 468);
-              this.Controls.Add(this.btnAddMessageForm);
+              this.Controls.Add(this.btnAddCompanyMessage);
+              this.Controls.Add(this.btnAddMessage);
               this.Controls.Add(this.lstDisplayWindow);
               this.Controls.Add(this.lblvBaudRate);
               this.Controls.Add(this.lblvDataBits);
@@ -267,7 +280,8 @@
           private System.Windows.Forms.ListBox lstDisplayWindow;
           private System.Windows.Forms.Timer tmrCloseComPortCheck;
           private System.Windows.Forms.Timer tmrCheckForData;
-          private System.Windows.Forms.Button btnAddMessageForm;
+          private System.Windows.Forms.Button btnAddMessage;
+          private System.Windows.Forms.Button btnAddCompanyMessage;
      }
 }
 

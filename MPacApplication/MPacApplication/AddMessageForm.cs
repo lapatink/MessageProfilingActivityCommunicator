@@ -17,61 +17,112 @@ namespace MPacApplication
           {
                InitializeComponent();
                parentForm = sourceForm;
-        }
+          }
 
-        private void btnLocalMessage_Click(object sender, EventArgs e)
+        private void txtHex1_TextChanged(object sender, EventArgs e)
         {
-            btnLocalMessage.Enabled = false;
-            btnCompanyMessage.Enabled = true;
+            if (txtHex1.Text != "")
+            {
+                try
+                {
+                    int n = int.Parse(txtHex1.Text, System.Globalization.NumberStyles.HexNumber);
+                    if (n < 0 || n > 255)
+                    {
+                        txtHex1.Text = "";
+                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
+                }
+                catch
+                {
+                    txtHex1.Text = "";
+                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                }
+            }
         }
 
-        private void btnCompanyMessage_Click(object sender, EventArgs e)
+        private void txtHex2_TextChanged(object sender, EventArgs e)
         {
-            btnLocalMessage.Enabled = true;
-            btnCompanyMessage.Enabled = false;
+            if (txtHex2.Text != "")
+            {
+                try
+                {
+                    int n = int.Parse(txtHex2.Text, System.Globalization.NumberStyles.HexNumber);
+                    if (n < 0 || n > 255)
+                    {
+                        txtHex2.Text = "";
+                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
+                }
+                catch
+                {
+                    txtHex2.Text = "";
+                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                }
+            }
         }
 
-        private void btnByte_Click(object sender, EventArgs e)
+        private void txtHex3_TextChanged(object sender, EventArgs e)
         {
-            btnByte.Enabled = false;
-            btnWord.Enabled = true;
-            btnAll.Enabled = true;
+            if (txtHex3.Text != "")
+            {
+                try
+                {
+                    int n = int.Parse(txtHex3.Text, System.Globalization.NumberStyles.HexNumber);
+                    if (n < 0 || n > 255)
+                    {
+                        txtHex3.Text = "";
+                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
+                }
+                catch
+                {
+                    txtHex3.Text = "";
+                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                }
+            }
         }
 
-        private void btnWord_Click(object sender, EventArgs e)
+        private void txtHex4_TextChanged(object sender, EventArgs e)
         {
-            btnByte.Enabled = true;
-            btnWord.Enabled = false;
-            btnAll.Enabled = true;
+            if (txtHex4.Text != "")
+            {
+                try
+                {
+                    int n = int.Parse(txtHex4.Text, System.Globalization.NumberStyles.HexNumber);
+                    if (n < 0 || n > 255)
+                    {
+                        txtHex4.Text = "";
+                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
+                }
+                catch
+                {
+                    txtHex4.Text = "";
+                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                }
+            }
         }
 
-        private void btnAll_Click(object sender, EventArgs e)
+        private void txtHex5_TextChanged(object sender, EventArgs e)
         {
-            btnByte.Enabled = true;
-            btnWord.Enabled = true;
-            btnAll.Enabled = false;
-
+            if (txtHex5.Text != "")
+            {
+                try
+                {
+                    int n = int.Parse(txtHex5.Text, System.Globalization.NumberStyles.HexNumber);
+                    if (n < 0 || n > 255)
+                    {
+                        txtHex5.Text = "";
+                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
+                }
+                catch
+                {
+                    txtHex5.Text = "";
+                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                }
+            }
         }
-
-        private void btnDec_Click(object sender, EventArgs e)
-        {
-            btnDec.Enabled = false;
-            btnBin.Enabled = true;
-            btnHex.Enabled = true;
-        }
-
-        private void btnBin_Click(object sender, EventArgs e)
-        {
-            btnDec.Enabled = true;
-            btnBin.Enabled = false;
-            btnHex.Enabled = true;
-        }
-
-        private void btnHex_Click(object sender, EventArgs e)
-        {
-            btnDec.Enabled = true;
-            btnBin.Enabled = true;
-            btnHex.Enabled = false;
-        }
+       
     }
 }
