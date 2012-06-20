@@ -290,7 +290,7 @@ namespace MPacApplication
 
           private void btnSendMessageOne_Click(object sender, EventArgs e)
           {
-               String[] parts = txtMessageOne.Text.Split(' ');
+               String[] parts = txtMessageOne.Text.Trim().Split(' ');
                byte[] message = new byte[parts.Length];
 
                for (int i = 0; i < parts.Length; i++)
