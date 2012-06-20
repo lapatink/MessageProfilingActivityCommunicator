@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.lblVersion = new System.Windows.Forms.Label();
-            this.txtHex1 = new System.Windows.Forms.TextBox();
-            this.txtHex2 = new System.Windows.Forms.TextBox();
+            this.txtVersion1 = new System.Windows.Forms.TextBox();
+            this.txtVersion2 = new System.Windows.Forms.TextBox();
             this.lblHex1 = new System.Windows.Forms.Label();
             this.lblHex2 = new System.Windows.Forms.Label();
             this.lblHex4 = new System.Windows.Forms.Label();
             this.lblHex3 = new System.Windows.Forms.Label();
-            this.txtHex4 = new System.Windows.Forms.TextBox();
-            this.txtHex3 = new System.Windows.Forms.TextBox();
+            this.txtID2 = new System.Windows.Forms.TextBox();
+            this.txtID1 = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
             this.lblHex5 = new System.Windows.Forms.Label();
-            this.txtHex5 = new System.Windows.Forms.TextBox();
+            this.txtLength = new System.Windows.Forms.TextBox();
             this.lblLength = new System.Windows.Forms.Label();
-            this.txtString1 = new System.Windows.Forms.TextBox();
+            this.txtName = new System.Windows.Forms.TextBox();
             this.lblName = new System.Windows.Forms.Label();
-            this.txtString2 = new System.Windows.Forms.TextBox();
+            this.txtFormat = new System.Windows.Forms.TextBox();
             this.lblFormat = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
@@ -59,21 +59,21 @@
             this.lblVersion.TabIndex = 0;
             this.lblVersion.Text = "Version";
             // 
-            // txtHex1
+            // txtVersion1
             // 
-            this.txtHex1.Location = new System.Drawing.Point(117, 22);
-            this.txtHex1.Name = "txtHex1";
-            this.txtHex1.Size = new System.Drawing.Size(46, 20);
-            this.txtHex1.TabIndex = 1;
-            this.txtHex1.TextChanged += new System.EventHandler(this.txtHex1_TextChanged);
+            this.txtVersion1.Location = new System.Drawing.Point(117, 22);
+            this.txtVersion1.Name = "txtVersion1";
+            this.txtVersion1.Size = new System.Drawing.Size(46, 20);
+            this.txtVersion1.TabIndex = 1;
+            this.txtVersion1.LostFocus += new System.EventHandler(this.txtVersion1_LostFocus);
             // 
-            // txtHex2
+            // txtVersion2
             // 
-            this.txtHex2.Location = new System.Drawing.Point(201, 22);
-            this.txtHex2.Name = "txtHex2";
-            this.txtHex2.Size = new System.Drawing.Size(46, 20);
-            this.txtHex2.TabIndex = 2;
-            this.txtHex2.TextChanged += new System.EventHandler(this.txtHex2_TextChanged);
+            this.txtVersion2.Location = new System.Drawing.Point(201, 22);
+            this.txtVersion2.Name = "txtVersion2";
+            this.txtVersion2.Size = new System.Drawing.Size(46, 20);
+            this.txtVersion2.TabIndex = 2;
+            this.txtVersion2.LostFocus += new System.EventHandler(this.txtVersion2_LostFocus);
             // 
             // lblHex1
             // 
@@ -111,21 +111,21 @@
             this.lblHex3.TabIndex = 8;
             this.lblHex3.Text = "00-FF";
             // 
-            // txtHex4
+            // txtID2
             // 
-            this.txtHex4.Location = new System.Drawing.Point(201, 80);
-            this.txtHex4.Name = "txtHex4";
-            this.txtHex4.Size = new System.Drawing.Size(46, 20);
-            this.txtHex4.TabIndex = 7;
-            this.txtHex4.TextChanged += new System.EventHandler(this.txtHex4_TextChanged);
+            this.txtID2.Location = new System.Drawing.Point(201, 80);
+            this.txtID2.Name = "txtID2";
+            this.txtID2.Size = new System.Drawing.Size(46, 20);
+            this.txtID2.TabIndex = 7;
+            this.txtID2.LostFocus += new System.EventHandler(this.txtID2_LostFocus);
             // 
-            // txtHex3
+            // txtID1
             // 
-            this.txtHex3.Location = new System.Drawing.Point(117, 80);
-            this.txtHex3.Name = "txtHex3";
-            this.txtHex3.Size = new System.Drawing.Size(46, 20);
-            this.txtHex3.TabIndex = 6;
-            this.txtHex3.TextChanged += new System.EventHandler(this.txtHex3_TextChanged);
+            this.txtID1.Location = new System.Drawing.Point(117, 80);
+            this.txtID1.Name = "txtID1";
+            this.txtID1.Size = new System.Drawing.Size(46, 20);
+            this.txtID1.TabIndex = 6;
+            this.txtID1.LostFocus += new System.EventHandler(this.txtID1_LostFocus);
             // 
             // lblID
             // 
@@ -146,13 +146,13 @@
             this.lblHex5.TabIndex = 13;
             this.lblHex5.Text = "00-FF";
             // 
-            // txtHex5
+            // txtLength
             // 
-            this.txtHex5.Location = new System.Drawing.Point(117, 141);
-            this.txtHex5.Name = "txtHex5";
-            this.txtHex5.Size = new System.Drawing.Size(46, 20);
-            this.txtHex5.TabIndex = 11;
-            this.txtHex5.TextChanged += new System.EventHandler(this.txtHex5_TextChanged);
+            this.txtLength.Location = new System.Drawing.Point(117, 141);
+            this.txtLength.Name = "txtLength";
+            this.txtLength.Size = new System.Drawing.Size(46, 20);
+            this.txtLength.TabIndex = 11;
+            this.txtID1.LostFocus += new System.EventHandler(this.txtID1_LostFocus);
             // 
             // lblLength
             // 
@@ -164,12 +164,12 @@
             this.lblLength.TabIndex = 10;
             this.lblLength.Text = "Length";
             // 
-            // txtString1
+            // txtName
             // 
-            this.txtString1.Location = new System.Drawing.Point(117, 210);
-            this.txtString1.Name = "txtString1";
-            this.txtString1.Size = new System.Drawing.Size(130, 20);
-            this.txtString1.TabIndex = 16;
+            this.txtName.Location = new System.Drawing.Point(117, 210);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(130, 20);
+            this.txtName.TabIndex = 16;
             // 
             // lblName
             // 
@@ -181,12 +181,12 @@
             this.lblName.TabIndex = 15;
             this.lblName.Text = "Name";
             // 
-            // txtString2
+            // txtFormat
             // 
-            this.txtString2.Location = new System.Drawing.Point(117, 272);
-            this.txtString2.Name = "txtString2";
-            this.txtString2.Size = new System.Drawing.Size(130, 20);
-            this.txtString2.TabIndex = 18;
+            this.txtFormat.Location = new System.Drawing.Point(117, 272);
+            this.txtFormat.Name = "txtFormat";
+            this.txtFormat.Size = new System.Drawing.Size(130, 20);
+            this.txtFormat.TabIndex = 18;
             // 
             // lblFormat
             // 
@@ -206,6 +206,7 @@
             this.btnCancel.TabIndex = 20;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOK
             // 
@@ -215,6 +216,7 @@
             this.btnOK.TabIndex = 19;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // AddMessageForm
             // 
@@ -223,22 +225,22 @@
             this.ClientSize = new System.Drawing.Size(267, 372);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.txtString2);
+            this.Controls.Add(this.txtFormat);
             this.Controls.Add(this.lblFormat);
-            this.Controls.Add(this.txtString1);
+            this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.lblHex5);
-            this.Controls.Add(this.txtHex5);
+            this.Controls.Add(this.txtLength);
             this.Controls.Add(this.lblLength);
             this.Controls.Add(this.lblHex4);
             this.Controls.Add(this.lblHex3);
-            this.Controls.Add(this.txtHex4);
-            this.Controls.Add(this.txtHex3);
+            this.Controls.Add(this.txtID2);
+            this.Controls.Add(this.txtID1);
             this.Controls.Add(this.lblID);
             this.Controls.Add(this.lblHex2);
             this.Controls.Add(this.lblHex1);
-            this.Controls.Add(this.txtHex2);
-            this.Controls.Add(this.txtHex1);
+            this.Controls.Add(this.txtVersion2);
+            this.Controls.Add(this.txtVersion1);
             this.Controls.Add(this.lblVersion);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -252,21 +254,21 @@
         #endregion
 
         private System.Windows.Forms.Label lblVersion;
-        private System.Windows.Forms.TextBox txtHex1;
-        private System.Windows.Forms.TextBox txtHex2;
+        private System.Windows.Forms.TextBox txtVersion1;
+        private System.Windows.Forms.TextBox txtVersion2;
         private System.Windows.Forms.Label lblHex1;
         private System.Windows.Forms.Label lblHex2;
         private System.Windows.Forms.Label lblHex4;
         private System.Windows.Forms.Label lblHex3;
-        private System.Windows.Forms.TextBox txtHex4;
-        private System.Windows.Forms.TextBox txtHex3;
+        private System.Windows.Forms.TextBox txtID2;
+        private System.Windows.Forms.TextBox txtID1;
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.Label lblHex5;
-        private System.Windows.Forms.TextBox txtHex5;
+        private System.Windows.Forms.TextBox txtLength;
         private System.Windows.Forms.Label lblLength;
-        private System.Windows.Forms.TextBox txtString1;
+        private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox txtString2;
+        private System.Windows.Forms.TextBox txtFormat;
         private System.Windows.Forms.Label lblFormat;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
