@@ -25,6 +25,7 @@ namespace MPacApplication
           private bool closeComPort;
 
           private DataProcessor dataProcessor;
+          private int numberOfEntries;
 
           private String comPortName;
           public String ComPortName
@@ -74,6 +75,7 @@ namespace MPacApplication
                closeComPort = false;
 
                dataProcessor = new DataProcessor(this);
+               numberOfEntries = 0;
 
                String[] portNames = SerialPort.GetPortNames();
                foreach (String name in portNames)
@@ -193,7 +195,7 @@ namespace MPacApplication
                String message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}", DateTime.Now) + completedMessage.ToString();
 
                lstDisplayWindow.Items.Add(message);
-               lstDisplayWindow.SelectedIndex++;
+               lstDisplayWindow.SelectedIndex = numberOfEntries++;
           }
 
           public void RecordTrash(byte[] trashBytes)
