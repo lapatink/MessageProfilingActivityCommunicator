@@ -20,8 +20,12 @@ namespace MPacApplication
           private ComPortConfigForm comPortConfigForm;
           private AddMessageForm AddMessageForm;
           private AddMessageForm AddCompanyForm;
+
           private SerialPort listeningPort;
           private bool closeComPort;
+
+          private DataProcessor dataProcessor;
+
           private String comPortName;
           public String ComPortName
           {
@@ -68,6 +72,8 @@ namespace MPacApplication
                InitializeComponent();
                comPortConfigForm = null;
                closeComPort = false;
+
+               dataProcessor = new DataProcessor(this);
 
                String[] portNames = SerialPort.GetPortNames();
                foreach (String name in portNames)
@@ -182,9 +188,20 @@ namespace MPacApplication
                }
           }
 
+          public void LogData(Message completedMessage)
+          {
+               String message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}", DateTime.Now) + completedMessage.ToString();
+
+               lstDisplayWindow.Items.Add(message);
+               lstDisplayWindow.SelectedIndex++;
+          }
+
+          public void RecordTrash(byte[] trashBytes)
+          {
+          }
+
           private void ClockRefresh_Tick(object sender, EventArgs e)
           {
-               //String time = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}", DateTime.Now);
                String time = String.Format("{0:MM/dd/yyyy   HH:mm:ss tt}", DateTime.Now);
                lblCurrentTime.Text = time;
           }
@@ -239,13 +256,8 @@ namespace MPacApplication
 
                numberOfBytes = listeningPort.Read(buffer, 0, numberOfBytes);
 
-               String message = "";
-               foreach (byte b in buffer)
-               {
-                    message += Convert.ToString(b, 16).PadLeft(2, '0').ToUpper();
-               }
-               lstDisplayWindow.Items.Add(message);
-               lstDisplayWindow.SelectedIndex++;
+               if (numberOfBytes > 0)
+                    dataProcessor.ProcessData(buffer);
           }
 
           private void btnAddMessage_Click(object sender, EventArgs e)
