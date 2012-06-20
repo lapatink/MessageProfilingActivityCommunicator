@@ -202,7 +202,7 @@ namespace MPacApplication
           {
           }
 
-          private void ClockRefresh_Tick(object sender, EventArgs e)
+          private void tmrClockRefresh_Tick(object sender, EventArgs e)
           {
                String time = String.Format("{0:MM/dd/yyyy   HH:mm:ss tt}", DateTime.Now);
                lblCurrentTime.Text = time;
@@ -287,7 +287,5 @@ namespace MPacApplication
                   AddCompanyForm.Show();
               }
           }
-
-
      }
 }
