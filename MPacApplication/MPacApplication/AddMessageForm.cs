@@ -19,109 +19,119 @@ namespace MPacApplication
                parentForm = sourceForm;
           }
 
-        private void txtHex1_TextChanged(object sender, EventArgs e)
+        private void txtVersion1_LostFocus(object sender, EventArgs e)
         {
-            if (txtHex1.Text != "")
+            if (txtVersion1.Text != "")
             {
                 try
                 {
-                    int n = int.Parse(txtHex1.Text, System.Globalization.NumberStyles.HexNumber);
+                    int n = int.Parse(txtVersion1.Text, System.Globalization.NumberStyles.HexNumber);
                     if (n < 0 || n > 255)
                     {
-                        txtHex1.Text = "";
+                        txtVersion1.Text = "00";
                         MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     }
                 }
                 catch
                 {
-                    txtHex1.Text = "";
+                    txtVersion1.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
             }
         }
 
-        private void txtHex2_TextChanged(object sender, EventArgs e)
+        private void txtVersion2_LostFocus(object sender, EventArgs e)
         {
-            if (txtHex2.Text != "")
+            if (txtVersion2.Text != "")
             {
                 try
                 {
-                    int n = int.Parse(txtHex2.Text, System.Globalization.NumberStyles.HexNumber);
+                    int n = int.Parse(txtVersion2.Text, System.Globalization.NumberStyles.HexNumber);
                     if (n < 0 || n > 255)
                     {
-                        txtHex2.Text = "";
+                        txtVersion2.Text = "00";
                         MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     }
                 }
                 catch
                 {
-                    txtHex2.Text = "";
+                    txtVersion2.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
             }
         }
 
-        private void txtHex3_TextChanged(object sender, EventArgs e)
+        private void txtID1_LostFocus(object sender, EventArgs e)
         {
-            if (txtHex3.Text != "")
+            if (txtID1.Text != "")
             {
                 try
                 {
-                    int n = int.Parse(txtHex3.Text, System.Globalization.NumberStyles.HexNumber);
+                    int n = int.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber);
                     if (n < 0 || n > 255)
                     {
-                        txtHex3.Text = "";
+                        txtID1.Text = "00";
                         MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     }
                 }
                 catch
                 {
-                    txtHex3.Text = "";
+                    txtID1.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
             }
         }
 
-        private void txtHex4_TextChanged(object sender, EventArgs e)
+        private void txtID2_LostFocus(object sender, EventArgs e)
         {
-            if (txtHex4.Text != "")
+            if (txtID2.Text != "")
             {
                 try
                 {
-                    int n = int.Parse(txtHex4.Text, System.Globalization.NumberStyles.HexNumber);
+                    int n = int.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber);
                     if (n < 0 || n > 255)
                     {
-                        txtHex4.Text = "";
+                        txtID2.Text = "00";
                         MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     }
                 }
                 catch
                 {
-                    txtHex4.Text = "";
+                    txtID2.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
             }
         }
 
-        private void txtHex5_TextChanged(object sender, EventArgs e)
+        private void txtLength_LostFocus(object sender, EventArgs e)
         {
-            if (txtHex5.Text != "")
+            if (txtLength.Text != "")
             {
                 try
                 {
-                    int n = int.Parse(txtHex5.Text, System.Globalization.NumberStyles.HexNumber);
+                    int n = int.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber);
                     if (n < 0 || n > 255)
                     {
-                        txtHex5.Text = "";
+                        txtLength.Text = "00";
                         MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     }
                 }
                 catch
                 {
-                    txtHex5.Text = "";
+                    txtLength.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
             }
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Visible = false;
         }
        
     }
