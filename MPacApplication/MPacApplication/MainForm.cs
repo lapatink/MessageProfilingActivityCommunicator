@@ -326,5 +326,39 @@ namespace MPacApplication
 
                dataProcessor.ProcessData(message);
           }
+
+          private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+          {
+              //TODO: Do we need anything else here? Ask if they want to save maybe?
+              Close();
+          }
+
+          private void importToolStripMenuItem_Click(object sender, EventArgs e)
+          {
+              OpenFileDialog fileDialog = new OpenFileDialog();
+              fileDialog.Filter = "CSV Files|*.csv|All Files|*.*";
+              fileDialog.InitialDirectory = "%USERPROFILE%";
+
+              if (fileDialog.ShowDialog() == DialogResult.OK)
+              {
+                  //TODO: error checking
+                  Console.WriteLine(fileDialog.FileName);
+                  //TODO: do something with the message formats
+                  //List<MessageFormat> messages = Import.ToMessages(fileDialog.FileName);
+              }
+          }
+
+          private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+          {
+              SaveFileDialog fileDialog = new SaveFileDialog();
+              fileDialog.Filter = "CSV Files|*.csv|All Files|*.*";
+              fileDialog.InitialDirectory = "%USERPROFILE%";
+
+              if (fileDialog.ShowDialog() == DialogResult.OK)
+              {
+                  //TODO: Export an actual list of objects. Add error checking
+                  Export.FromMessages(new List<MessageFormat>(), fileDialog.FileName);
+              }
+          }
      }
 }
