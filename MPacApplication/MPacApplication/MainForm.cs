@@ -12,6 +12,8 @@ namespace MPacApplication
 {
      public partial class MainForm : Form
      {
+          public static List<MessageFormat> messages = new List<MessageFormat>();
+
           public const int DEFAULT_BAUD_RATE = 240;
           public const Parity DEFAULT_PARITY = Parity.None;
           public const int DEFAULT_DATA_BITS = 8;

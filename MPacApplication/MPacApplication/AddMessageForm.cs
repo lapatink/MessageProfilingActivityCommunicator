@@ -126,12 +126,45 @@ namespace MPacApplication
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < MainForm.messages.Count; i++)
+            {
+                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.messages[i].id_high) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.messages[i].id_low))
+                {
+                    MessageBox.Show("Message ID already exists", "Duplicate ID", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    this.Visible = false;
+                    reset();
+                    return;
+                }
+            }
+            MessageFormat message = new MessageFormat(
+                Byte.Parse(txtVersion1.Text, System.Globalization.NumberStyles.HexNumber),
+                Byte.Parse(txtVersion2.Text, System.Globalization.NumberStyles.HexNumber),
+                Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber),
+                Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber),
+                Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
+                txtFormat.Text,
+                txtName.Text);
+            
+            MainForm.messages.Add(message);
             this.Visible = false;
+            reset();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Visible = false;
+            reset();
+        }
+
+        private void reset()
+        {
+            txtVersion1.Text = "";
+            txtVersion2.Text = "";
+            txtID1.Text = "";
+            txtID2.Text = "";
+            txtLength.Text = "";
+            txtName.Text = "";
+            txtFormat.Text = "";
         }
        
     }
