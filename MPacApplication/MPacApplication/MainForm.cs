@@ -12,6 +12,8 @@ namespace MPacApplication
 {
      public partial class MainForm : Form
      {
+          public static List<MessageFormat> messages = new List<MessageFormat>();
+
           public const int DEFAULT_BAUD_RATE = 240;
           public const Parity DEFAULT_PARITY = Parity.None;
           public const int DEFAULT_DATA_BITS = 8;
@@ -270,7 +272,7 @@ namespace MPacApplication
               }
               catch (Exception)
               {
-                  AddMessageForm = new AddMessageForm(this);
+                  AddMessageForm = new AddMessageForm(this, AddMessageForm.messageType.local);
                   AddMessageForm.Show();
               }
           }
@@ -283,7 +285,7 @@ namespace MPacApplication
               }
               catch (Exception)
               {
-                  AddCompanyForm = new AddMessageForm(this);
+                  AddCompanyForm = new AddMessageForm(this, AddMessageForm.messageType.local);
                   AddCompanyForm.Show();
               }
           }

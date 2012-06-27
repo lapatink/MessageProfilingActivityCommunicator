@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MPacApplication
 {
-    class MessageFormat
+    public class MessageFormat
     {
         private int id = -1;
         public byte version_major;
