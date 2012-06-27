@@ -242,7 +242,7 @@ namespace MPacApplication
 
           private void tmrCloseComPortCheck_Tick(object sender, EventArgs e)
           {
-               if (!closeComPort && listeningPort != null && !listeningPort.IsOpen && !comPortConfigForm.Visible)
+               if (!closeComPort && listeningPort != null && !listeningPort.IsOpen && comPortConfigForm != null && !comPortConfigForm.Visible)
                     OpenComPort();
           }
 
