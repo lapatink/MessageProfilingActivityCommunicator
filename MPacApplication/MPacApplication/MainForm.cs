@@ -272,7 +272,7 @@ namespace MPacApplication
               }
               catch (Exception)
               {
-                  AddMessageForm = new AddMessageForm(this);
+                  AddMessageForm = new AddMessageForm(this, AddMessageForm.messageType.local);
                   AddMessageForm.Show();
               }
           }
@@ -285,7 +285,7 @@ namespace MPacApplication
               }
               catch (Exception)
               {
-                  AddCompanyForm = new AddMessageForm(this);
+                  AddCompanyForm = new AddMessageForm(this, AddMessageForm.messageType.local);
                   AddCompanyForm.Show();
               }
           }

@@ -13,11 +13,18 @@ namespace MPacApplication
     {
         private MainForm parentForm;
 
+        public enum messageType { local, company };
+
         public AddMessageForm(MainForm sourceForm)
           {
                InitializeComponent();
                parentForm = sourceForm;
           }
+        public AddMessageForm(MainForm sourceForm, messageType type)
+        {
+            InitializeComponent();
+            parentForm = sourceForm;
+        }
 
         private void txtVersion1_LostFocus(object sender, EventArgs e)
         {
