@@ -25,6 +25,7 @@ namespace MPacApplication
 
           private SerialPort listeningPort;
           private bool closeComPort;
+          private bool comPortClosed;
 
           private DataProcessor dataProcessor;
           private int numberOfEntries;
@@ -134,10 +135,8 @@ namespace MPacApplication
                     return;
                }
 
-               btnCloseComPort.Enabled = true;
-               btnCloseComPort.BackColor = Color.Red;
-               btnOpenComPort.Enabled = false;
-               btnOpenComPort.BackColor = Button.DefaultBackColor;
+               comPortClosed = false;
+               btnOpenAndClose.BackColor = Color.Green;
           }
 
           public void OpenComPort(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
@@ -152,10 +151,8 @@ namespace MPacApplication
                     return;
                }
 
-               btnCloseComPort.Enabled = true;
-               btnCloseComPort.BackColor = Color.Red;
-               btnOpenComPort.Enabled = false;
-               btnOpenComPort.BackColor = Button.DefaultBackColor;
+               comPortClosed = false;
+               btnOpenAndClose.BackColor = Color.Green;
 
                SetSerialPortConfig(comPortName, baudRate, parity, dataBits, stopBits);
                try
@@ -179,10 +176,8 @@ namespace MPacApplication
 
           private void CloseComPort()
           {
-               btnCloseComPort.Enabled = false;
-               btnCloseComPort.BackColor = Button.DefaultBackColor;
-               btnOpenComPort.Enabled = true;
-               btnOpenComPort.BackColor = Color.Green;
+               comPortClosed = true;
+               btnOpenAndClose.BackColor = Color.Red;
 
                if (listeningPort != null)
                {
@@ -208,18 +203,6 @@ namespace MPacApplication
           {
                String time = String.Format("{0:MM/dd/yyyy   HH:mm:ss tt}", DateTime.Now);
                lblCurrentTime.Text = time;
-          }
-
-          private void btnCloseComPort_Click(object sender, EventArgs e)
-          {
-               CloseComPort();
-               closeComPort = true;
-          }
-
-          private void btnOpenComPort_Click(object sender, EventArgs e)
-          {
-               OpenComPort();
-               closeComPort = false;
           }
 
           private void btnConfiureComPort_Click(object sender, EventArgs e)
@@ -361,6 +344,20 @@ namespace MPacApplication
                   //TODO: Export an actual list of objects. Add error checking
                   Export.FromMessages(new List<MessageFormat>(), fileDialog.FileName);
               }
+          }
+
+          private void btnOpenAndClose_Click(object sender, EventArgs e)
+          {
+               if (comPortClosed)
+               {
+                    OpenComPort();
+                    closeComPort = false;
+               }
+               else
+               {
+                    CloseComPort();
+                    closeComPort = true;
+               }
           }
      }
 }
