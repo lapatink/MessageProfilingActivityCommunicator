@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +12,9 @@ namespace MPacApplication
 {
      public partial class MainForm : Form
      {
-          public const int DEFAULT_BAUD_RATE = 240;
+	     public static List<MessageFormat> messages = new List<MessageFormat>();
+          
+		public const int DEFAULT_BAUD_RATE = 240;
           public const Parity DEFAULT_PARITY = Parity.None;
           public const int DEFAULT_DATA_BITS = 8;
           public const StopBits DEFAULT_STOP_BITS = StopBits.One;

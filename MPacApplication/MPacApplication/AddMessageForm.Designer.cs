@@ -152,7 +152,7 @@
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(46, 20);
             this.txtLength.TabIndex = 11;
-            this.txtID1.LostFocus += new System.EventHandler(this.txtID1_LostFocus);
+            this.txtLength.LostFocus += new System.EventHandler(this.txtLength_LostFocus);
             // 
             // lblLength
             // 
