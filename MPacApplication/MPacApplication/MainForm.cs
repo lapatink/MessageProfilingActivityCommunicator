@@ -24,8 +24,9 @@ namespace MPacApplication
           private AddMessageForm AddCompanyForm;
 
           private SerialPort listeningPort;
-          private bool closeComPort;
           private bool comPortClosed;
+
+          private List<String> availablePortNames;
 
           private DataProcessor dataProcessor;
           private int numberOfEntries;
@@ -75,12 +76,19 @@ namespace MPacApplication
           {
                InitializeComponent();
                comPortConfigForm = null;
-               closeComPort = false;
 
                dataProcessor = new DataProcessor(this);
                numberOfEntries = 0;
 
+               availablePortNames = new List<String>();
                String[] portNames = SerialPort.GetPortNames();
+               foreach (String name in portNames)
+               {
+                    if (name.StartsWith("COM"))
+                    {
+                         availablePortNames.Add(name);
+                    }
+               }
                foreach (String name in portNames)
                {
                     if (name.StartsWith("COM") && !name.StartsWith("COM1"))
@@ -89,10 +97,36 @@ namespace MPacApplication
                          break;
                     }
                }
+               //OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
           }
 
           private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
           {
+               /*
+               if (listeningPort != null && listeningPort.IsOpen)
+               {
+                    CloseComPort();
+               }
+
+               this.comPortName = comPortName;
+               this.baudRate = baudRate;
+               this.parity = parity;
+               this.dataBits = dataBits;
+               this.stopBits = stopBits;
+
+               if (listeningPort == null)
+               {
+                    listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
+               }
+               else
+               {
+                    listeningPort.PortName = this.comPortName;
+                    listeningPort.BaudRate = this.baudRate;
+                    listeningPort.Parity = this.parity;
+                    listeningPort.DataBits = this.dataBits;
+                    listeningPort.StopBits = this.stopBits;
+               }
+                */
                this.comPortName = comPortName;
                this.baudRate = baudRate;
                this.parity = parity;
@@ -103,6 +137,7 @@ namespace MPacApplication
                lblvBaudRate.Text = this.baudRate.ToString();
                lblvParity.Text = this.parity.ToString();
                lblvDataBits.Text = this.dataBits.ToString();
+
                switch (stopBits)
                {
                     case StopBits.One:
@@ -134,27 +169,7 @@ namespace MPacApplication
                     MessageBox.Show(e.ToString());
                     return;
                }
-
-               comPortClosed = false;
-               btnOpenAndClose.BackColor = Color.Green;
-          }
-
-          public void OpenComPort(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
-          {
-               try
-               {
-                    listeningPort = new SerialPort(comPortName, baudRate, parity, dataBits, stopBits);
-               }
-               catch (Exception e)
-               {
-                    MessageBox.Show(e.ToString());
-                    return;
-               }
-
-               comPortClosed = false;
-               btnOpenAndClose.BackColor = Color.Green;
-
-               SetSerialPortConfig(comPortName, baudRate, parity, dataBits, stopBits);
+               /*
                try
                {
                     this.listeningPort.Open();
@@ -172,18 +187,32 @@ namespace MPacApplication
                          }
                     }
                }
+               catch (Exception ex)
+               {
+                    MessageBox.Show(ex.ToString());
+                    //MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availablePortNames.ElementAt<String>(1));
+                    availablePortNames.Remove(this.comPortName);
+                    OpenComPort(availablePortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits);
+               }
+               */
+               comPortClosed = false;
+               btnOpenAndClose.BackColor = Color.Green;
+          }
+
+          public void OpenComPort(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
+          {
+               SetSerialPortConfig(comPortName, baudRate, parity, dataBits, stopBits);
+               OpenComPort();
           }
 
           private void CloseComPort()
           {
-               comPortClosed = true;
                btnOpenAndClose.BackColor = Color.Red;
+               comPortClosed = true;
 
                if (listeningPort != null)
                {
                     listeningPort.Close();
-                    listeningPort.Dispose();
-                    listeningPort = null;
                }
           }
 
@@ -221,12 +250,6 @@ namespace MPacApplication
                {
                     comPortConfigForm.SetComboBoxes(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
                }
-          }
-
-          private void tmrCloseComPortCheck_Tick(object sender, EventArgs e)
-          {
-               if (!closeComPort && listeningPort != null && !listeningPort.IsOpen && comPortConfigForm != null && !comPortConfigForm.Visible)
-                    OpenComPort();
           }
 
           private void tmrCheckForData_Tick(object sender, EventArgs e)
@@ -351,12 +374,10 @@ namespace MPacApplication
                if (comPortClosed)
                {
                     OpenComPort();
-                    closeComPort = false;
                }
                else
                {
                     CloseComPort();
-                    closeComPort = true;
                }
           }
      }

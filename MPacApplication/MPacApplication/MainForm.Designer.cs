@@ -43,7 +43,6 @@
                this.lblvDataBits = new System.Windows.Forms.Label();
                this.lblvBaudRate = new System.Windows.Forms.Label();
                this.lstDisplayWindow = new System.Windows.Forms.ListBox();
-               this.tmrCloseComPortCheck = new System.Windows.Forms.Timer(this.components);
                this.tmrCheckForData = new System.Windows.Forms.Timer(this.components);
                this.btnAddMessage = new System.Windows.Forms.Button();
                this.btnAddCompanyMessage = new System.Windows.Forms.Button();
@@ -186,11 +185,6 @@
                this.lstDisplayWindow.Name = "lstDisplayWindow";
                this.lstDisplayWindow.Size = new System.Drawing.Size(1082, 277);
                this.lstDisplayWindow.TabIndex = 14;
-               // 
-               // tmrCloseComPortCheck
-               // 
-               this.tmrCloseComPortCheck.Enabled = true;
-               this.tmrCloseComPortCheck.Tick += new System.EventHandler(this.tmrCloseComPortCheck_Tick);
                // 
                // tmrCheckForData
                // 
@@ -383,7 +377,6 @@
           private System.Windows.Forms.Label lblvDataBits;
           private System.Windows.Forms.Label lblvBaudRate;
           private System.Windows.Forms.ListBox lstDisplayWindow;
-          private System.Windows.Forms.Timer tmrCloseComPortCheck;
           private System.Windows.Forms.Timer tmrCheckForData;
           private System.Windows.Forms.Button btnAddMessage;
           private System.Windows.Forms.Button btnAddCompanyMessage;
