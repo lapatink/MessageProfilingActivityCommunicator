@@ -29,7 +29,10 @@ namespace MPacApplication
           private List<String> availablePortNames;
 
           private DataProcessor dataProcessor;
+          private int numberOfStatusEntries;
           private int numberOfEntries;
+
+          private bool initialized;
 
           private String comPortName;
           public String ComPortName
@@ -78,7 +81,10 @@ namespace MPacApplication
                comPortConfigForm = null;
 
                dataProcessor = new DataProcessor(this);
+               numberOfStatusEntries = 0;
                numberOfEntries = 0;
+
+               initialized = false;
 
                availablePortNames = new List<String>();
                String[] portNames = SerialPort.GetPortNames();
@@ -98,15 +104,13 @@ namespace MPacApplication
                     }
                }
                //OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
+
+               initialized = true;
           }
 
           private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
           {
-               /*
-               if (listeningPort != null && listeningPort.IsOpen)
-               {
-                    CloseComPort();
-               }
+               CloseComPort();
 
                this.comPortName = comPortName;
                this.baudRate = baudRate;
@@ -126,17 +130,12 @@ namespace MPacApplication
                     listeningPort.DataBits = this.dataBits;
                     listeningPort.StopBits = this.stopBits;
                }
-                */
-               this.comPortName = comPortName;
-               this.baudRate = baudRate;
-               this.parity = parity;
-               this.dataBits = dataBits;
-               this.stopBits = stopBits;
 
                lblvPortName.Text = this.comPortName;
                lblvBaudRate.Text = this.baudRate.ToString();
                lblvParity.Text = this.parity.ToString();
                lblvDataBits.Text = this.dataBits.ToString();
+               lblvStopBits.Text = this.stopBits.ToString();
 
                switch (stopBits)
                {
@@ -156,6 +155,12 @@ namespace MPacApplication
                          lblvStopBits.Text = "None";
                          break;
                }
+          }
+
+          public void OpenComPort(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
+          {
+               SetSerialPortConfig(comPortName, baudRate, parity, dataBits, stopBits);
+               OpenComPort();
           }
 
           private void OpenComPort()
@@ -199,21 +204,15 @@ namespace MPacApplication
                btnOpenAndClose.BackColor = Color.Green;
           }
 
-          public void OpenComPort(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
-          {
-               SetSerialPortConfig(comPortName, baudRate, parity, dataBits, stopBits);
-               OpenComPort();
-          }
-
           private void CloseComPort()
           {
-               btnOpenAndClose.BackColor = Color.Red;
-               comPortClosed = true;
-
-               if (listeningPort != null)
+               if (listeningPort != null && listeningPort.IsOpen)
                {
                     listeningPort.Close();
                }
+
+               btnOpenAndClose.BackColor = Color.Red;
+               comPortClosed = true;
           }
 
           public void LogData(Message completedMessage)
@@ -228,13 +227,19 @@ namespace MPacApplication
           {
           }
 
+          public void PrintStatusMessage(String message)
+          {
+               lstStatusDisplay.Items.Add(message);
+               lstStatusDisplay.SelectedIndex = numberOfStatusEntries++;
+          }
+
           private void tmrClockRefresh_Tick(object sender, EventArgs e)
           {
                String time = String.Format("{0:MM/dd/yyyy   HH:mm:ss tt}", DateTime.Now);
                lblCurrentTime.Text = time;
           }
 
-          private void btnConfiureComPort_Click(object sender, EventArgs e)
+          private void btnConfigureComPort_Click(object sender, EventArgs e)
           {
                CloseComPort();
                try
@@ -267,7 +272,25 @@ namespace MPacApplication
                numberOfBytes = listeningPort.Read(buffer, 0, numberOfBytes);
 
                if (numberOfBytes > 0)
+               {
                     dataProcessor.ProcessData(buffer);
+                    foreach (byte b in buffer)
+                    {
+                         lstComPortDisplay.Items.Add(Convert.ToString(b, 16).PadLeft(2, '0').ToUpper());
+                    }
+               }
+          }
+
+          private void btnOpenAndClose_Click(object sender, EventArgs e)
+          {
+               if (comPortClosed)
+               {
+                    OpenComPort();
+               }
+               else
+               {
+                    CloseComPort();
+               }
           }
 
           private void btnAddMessage_Click(object sender, EventArgs e)
@@ -367,18 +390,6 @@ namespace MPacApplication
                   //TODO: Export an actual list of objects. Add error checking
                   Export.FromMessages(new List<MessageFormat>(), fileDialog.FileName);
               }
-          }
-
-          private void btnOpenAndClose_Click(object sender, EventArgs e)
-          {
-               if (comPortClosed)
-               {
-                    OpenComPort();
-               }
-               else
-               {
-                    CloseComPort();
-               }
           }
      }
 }

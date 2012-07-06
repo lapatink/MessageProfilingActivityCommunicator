@@ -31,7 +31,7 @@
                this.components = new System.ComponentModel.Container();
                this.lblCurrentTime = new System.Windows.Forms.Label();
                this.tmrClockRefresh = new System.Windows.Forms.Timer(this.components);
-               this.btnConfiureComPort = new System.Windows.Forms.Button();
+               this.btnConfigureComPort = new System.Windows.Forms.Button();
                this.lblPortName = new System.Windows.Forms.Label();
                this.lblParity = new System.Windows.Forms.Label();
                this.lblStopBits = new System.Windows.Forms.Label();
@@ -59,6 +59,8 @@
                this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
                this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
                this.btnOpenAndClose = new System.Windows.Forms.Button();
+               this.lstComPortDisplay = new System.Windows.Forms.ListBox();
+               this.lstStatusDisplay = new System.Windows.Forms.ListBox();
                this.menuStrip1.SuspendLayout();
                this.SuspendLayout();
                // 
@@ -77,16 +79,16 @@
                this.tmrClockRefresh.Enabled = true;
                this.tmrClockRefresh.Tick += new System.EventHandler(this.tmrClockRefresh_Tick);
                // 
-               // btnConfiureComPort
+               // btnConfigureComPort
                // 
-               this.btnConfiureComPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.btnConfiureComPort.Location = new System.Drawing.Point(273, 27);
-               this.btnConfiureComPort.Name = "btnConfiureComPort";
-               this.btnConfiureComPort.Size = new System.Drawing.Size(75, 68);
-               this.btnConfiureComPort.TabIndex = 3;
-               this.btnConfiureComPort.Text = "Configure";
-               this.btnConfiureComPort.UseVisualStyleBackColor = true;
-               this.btnConfiureComPort.Click += new System.EventHandler(this.btnConfiureComPort_Click);
+               this.btnConfigureComPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+               this.btnConfigureComPort.Location = new System.Drawing.Point(273, 27);
+               this.btnConfigureComPort.Name = "btnConfigureComPort";
+               this.btnConfigureComPort.Size = new System.Drawing.Size(75, 68);
+               this.btnConfigureComPort.TabIndex = 3;
+               this.btnConfigureComPort.Text = "Configure";
+               this.btnConfigureComPort.UseVisualStyleBackColor = true;
+               this.btnConfigureComPort.Click += new System.EventHandler(this.btnConfigureComPort_Click);
                // 
                // lblPortName
                // 
@@ -323,11 +325,29 @@
                this.btnOpenAndClose.UseVisualStyleBackColor = true;
                this.btnOpenAndClose.Click += new System.EventHandler(this.btnOpenAndClose_Click);
                // 
+               // lstComPortDisplay
+               // 
+               this.lstComPortDisplay.FormattingEnabled = true;
+               this.lstComPortDisplay.Location = new System.Drawing.Point(12, 475);
+               this.lstComPortDisplay.Name = "lstComPortDisplay";
+               this.lstComPortDisplay.Size = new System.Drawing.Size(516, 290);
+               this.lstComPortDisplay.TabIndex = 25;
+               // 
+               // lstStatusDisplay
+               // 
+               this.lstStatusDisplay.FormattingEnabled = true;
+               this.lstStatusDisplay.Location = new System.Drawing.Point(534, 475);
+               this.lstStatusDisplay.Name = "lstStatusDisplay";
+               this.lstStatusDisplay.Size = new System.Drawing.Size(560, 290);
+               this.lstStatusDisplay.TabIndex = 26;
+               // 
                // MainForm
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-               this.ClientSize = new System.Drawing.Size(1106, 482);
+               this.ClientSize = new System.Drawing.Size(1106, 769);
+               this.Controls.Add(this.lstStatusDisplay);
+               this.Controls.Add(this.lstComPortDisplay);
                this.Controls.Add(this.btnOpenAndClose);
                this.Controls.Add(this.btnSendMessageThree);
                this.Controls.Add(this.btnSendMessageTwo);
@@ -348,7 +368,7 @@
                this.Controls.Add(this.lblStopBits);
                this.Controls.Add(this.lblParity);
                this.Controls.Add(this.lblPortName);
-               this.Controls.Add(this.btnConfiureComPort);
+               this.Controls.Add(this.btnConfigureComPort);
                this.Controls.Add(this.lblCurrentTime);
                this.Controls.Add(this.menuStrip1);
                this.MainMenuStrip = this.menuStrip1;
@@ -365,7 +385,7 @@
 
           private System.Windows.Forms.Label lblCurrentTime;
           private System.Windows.Forms.Timer tmrClockRefresh;
-          private System.Windows.Forms.Button btnConfiureComPort;
+          private System.Windows.Forms.Button btnConfigureComPort;
           private System.Windows.Forms.Label lblPortName;
           private System.Windows.Forms.Label lblParity;
           private System.Windows.Forms.Label lblStopBits;
@@ -393,6 +413,8 @@
           private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
           private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
           private System.Windows.Forms.Button btnOpenAndClose;
+          private System.Windows.Forms.ListBox lstComPortDisplay;
+          private System.Windows.Forms.ListBox lstStatusDisplay;
      }
 }
 
