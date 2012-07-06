@@ -95,15 +95,15 @@ namespace MPacApplication
                          availablePortNames.Add(name);
                     }
                }
-               foreach (String name in portNames)
+               /*foreach (String name in portNames)
                {
                     if (name.StartsWith("COM") && !name.StartsWith("COM1"))
                     {
                          OpenComPort(name, DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
                          break;
                     }
-               }
-               //OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
+               }*/
+               OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
 
                initialized = true;
           }
@@ -167,19 +167,9 @@ namespace MPacApplication
           {
                try
                {
-                    listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
-               }
-               catch (Exception e)
-               {
-                    MessageBox.Show(e.ToString());
-                    return;
-               }
-               /*
-               try
-               {
                     this.listeningPort.Open();
                }
-               catch (Exception)
+               /*catch (Exception)
                {
                     String[] portNames = SerialPort.GetPortNames();
                     foreach (String name in portNames)
@@ -191,15 +181,16 @@ namespace MPacApplication
                               break;
                          }
                     }
-               }
+               }*/
                catch (Exception ex)
                {
-                    MessageBox.Show(ex.ToString());
-                    //MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availablePortNames.ElementAt<String>(1));
+                    //MessageBox.Show(ex.ToString());
+                    if(initialized)
+                         MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availablePortNames.ElementAt<String>(1));
                     availablePortNames.Remove(this.comPortName);
                     OpenComPort(availablePortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits);
                }
-               */
+
                comPortClosed = false;
                btnOpenAndClose.BackColor = Color.Green;
           }
