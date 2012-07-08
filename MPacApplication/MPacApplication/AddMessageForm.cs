@@ -19,11 +19,13 @@ namespace MPacApplication
           {
                InitializeComponent();
                parentForm = sourceForm;
+               reset();
           }
         public AddMessageForm(MainForm sourceForm, messageType type)
         {
             InitializeComponent();
             parentForm = sourceForm;
+            reset();
         }
 
         private void txtVersion1_LostFocus(object sender, EventArgs e)
@@ -165,11 +167,11 @@ namespace MPacApplication
 
         private void reset()
         {
-            txtVersion1.Text = "";
-            txtVersion2.Text = "";
-            txtID1.Text = "";
-            txtID2.Text = "";
-            txtLength.Text = "";
+            txtVersion1.Text = "00";
+            txtVersion2.Text = "00";
+            txtID1.Text = "00";
+            txtID2.Text = "00";
+            txtLength.Text = "00";
             txtName.Text = "";
             txtFormat.Text = "";
         }

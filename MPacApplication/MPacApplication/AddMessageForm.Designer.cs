@@ -243,7 +243,9 @@
             this.Controls.Add(this.txtVersion1);
             this.Controls.Add(this.lblVersion);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(283, 410);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(283, 410);
             this.Name = "AddMessageForm";
             this.Text = "AddMessageForm";
             this.ResumeLayout(false);
