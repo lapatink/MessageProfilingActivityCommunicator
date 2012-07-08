@@ -190,6 +190,7 @@ namespace MPacApplication
 
                comPortClosed = false;
                btnOpenAndClose.BackColor = Color.Green;
+               btnOpenAndClose.Text = "Opened";
           }
 
           private void CloseComPort()
@@ -201,6 +202,7 @@ namespace MPacApplication
                }
 
                btnOpenAndClose.BackColor = Color.Red;
+               btnOpenAndClose.Text = "Closed";
                comPortClosed = true;
           }
 
