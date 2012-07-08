@@ -19,11 +19,13 @@ namespace MPacApplication
           {
                InitializeComponent();
                parentForm = sourceForm;
+               reset();
           }
         public AddMessageForm(MainForm sourceForm, messageType type)
         {
             InitializeComponent();
             parentForm = sourceForm;
+            reset();
         }
 
         private void txtVersion1_LostFocus(object sender, EventArgs e)
@@ -133,9 +135,9 @@ namespace MPacApplication
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < MainForm.messages.Count; i++)
+            for (int i = 0; i < MainForm.getMessagesCount(); i++)
             {
-                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.messages[i].id_high) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.messages[i].id_low))
+                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.getMessageHigh(i)) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.getMessageLow(i)))
                 {
                     MessageBox.Show("Message ID already exists", "Duplicate ID", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     this.Visible = false;
@@ -151,8 +153,8 @@ namespace MPacApplication
                 Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
                 txtFormat.Text,
                 txtName.Text);
-            
-            MainForm.messages.Add(message);
+
+            MainForm.createMessageFormat(message);
             this.Visible = false;
             reset();
         }
@@ -165,11 +167,11 @@ namespace MPacApplication
 
         private void reset()
         {
-            txtVersion1.Text = "";
-            txtVersion2.Text = "";
-            txtID1.Text = "";
-            txtID2.Text = "";
-            txtLength.Text = "";
+            txtVersion1.Text = "00";
+            txtVersion2.Text = "00";
+            txtID1.Text = "00";
+            txtID2.Text = "00";
+            txtLength.Text = "00";
             txtName.Text = "";
             txtFormat.Text = "";
         }
