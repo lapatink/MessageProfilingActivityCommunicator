@@ -133,9 +133,9 @@ namespace MPacApplication
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < MainForm.messages.Count; i++)
+            for (int i = 0; i < MainForm.getMessagesCount(); i++)
             {
-                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.messages[i].id_high) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.messages[i].id_low))
+                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.getMessageHigh(i)) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.getMessageLow(i)))
                 {
                     MessageBox.Show("Message ID already exists", "Duplicate ID", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     this.Visible = false;
@@ -151,8 +151,8 @@ namespace MPacApplication
                 Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
                 txtFormat.Text,
                 txtName.Text);
-            
-            MainForm.messages.Add(message);
+
+            MainForm.createMessageFormat(message);
             this.Visible = false;
             reset();
         }
