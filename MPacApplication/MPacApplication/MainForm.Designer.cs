@@ -31,7 +31,7 @@
                this.components = new System.ComponentModel.Container();
                this.lblCurrentTime = new System.Windows.Forms.Label();
                this.tmrClockRefresh = new System.Windows.Forms.Timer(this.components);
-               this.btnConfiureComPort = new System.Windows.Forms.Button();
+               this.btnConfigureComPort = new System.Windows.Forms.Button();
                this.lblPortName = new System.Windows.Forms.Label();
                this.lblParity = new System.Windows.Forms.Label();
                this.lblStopBits = new System.Windows.Forms.Label();
@@ -43,7 +43,6 @@
                this.lblvDataBits = new System.Windows.Forms.Label();
                this.lblvBaudRate = new System.Windows.Forms.Label();
                this.lstDisplayWindow = new System.Windows.Forms.ListBox();
-               this.tmrCloseComPortCheck = new System.Windows.Forms.Timer(this.components);
                this.tmrCheckForData = new System.Windows.Forms.Timer(this.components);
                this.btnAddMessage = new System.Windows.Forms.Button();
                this.btnAddCompanyMessage = new System.Windows.Forms.Button();
@@ -60,14 +59,20 @@
                this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
                this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
                this.btnOpenAndClose = new System.Windows.Forms.Button();
+               this.lstComPortDisplay = new System.Windows.Forms.ListBox();
+               this.lstStatusDisplay = new System.Windows.Forms.ListBox();
+               this.label1 = new System.Windows.Forms.Label();
+               this.label2 = new System.Windows.Forms.Label();
+               this.label3 = new System.Windows.Forms.Label();
                this.menuStrip1.SuspendLayout();
                this.SuspendLayout();
                // 
                // lblCurrentTime
                // 
+               this.lblCurrentTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
                this.lblCurrentTime.AutoSize = true;
                this.lblCurrentTime.Font = new System.Drawing.Font("Quartz MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.lblCurrentTime.Location = new System.Drawing.Point(779, 25);
+               this.lblCurrentTime.Location = new System.Drawing.Point(464, 24);
                this.lblCurrentTime.Name = "lblCurrentTime";
                this.lblCurrentTime.Size = new System.Drawing.Size(308, 25);
                this.lblCurrentTime.TabIndex = 0;
@@ -78,21 +83,21 @@
                this.tmrClockRefresh.Enabled = true;
                this.tmrClockRefresh.Tick += new System.EventHandler(this.tmrClockRefresh_Tick);
                // 
-               // btnConfiureComPort
+               // btnConfigureComPort
                // 
-               this.btnConfiureComPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.btnConfiureComPort.Location = new System.Drawing.Point(273, 27);
-               this.btnConfiureComPort.Name = "btnConfiureComPort";
-               this.btnConfiureComPort.Size = new System.Drawing.Size(75, 68);
-               this.btnConfiureComPort.TabIndex = 3;
-               this.btnConfiureComPort.Text = "Configure";
-               this.btnConfiureComPort.UseVisualStyleBackColor = true;
-               this.btnConfiureComPort.Click += new System.EventHandler(this.btnConfiureComPort_Click);
+               this.btnConfigureComPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+               this.btnConfigureComPort.Location = new System.Drawing.Point(93, 27);
+               this.btnConfigureComPort.Name = "btnConfigureComPort";
+               this.btnConfigureComPort.Size = new System.Drawing.Size(75, 68);
+               this.btnConfigureComPort.TabIndex = 3;
+               this.btnConfigureComPort.Text = "Configure";
+               this.btnConfigureComPort.UseVisualStyleBackColor = true;
+               this.btnConfigureComPort.Click += new System.EventHandler(this.btnConfigureComPort_Click);
                // 
                // lblPortName
                // 
                this.lblPortName.AutoSize = true;
-               this.lblPortName.Location = new System.Drawing.Point(354, 27);
+               this.lblPortName.Location = new System.Drawing.Point(174, 27);
                this.lblPortName.Name = "lblPortName";
                this.lblPortName.Size = new System.Drawing.Size(60, 13);
                this.lblPortName.TabIndex = 4;
@@ -101,7 +106,7 @@
                // lblParity
                // 
                this.lblParity.AutoSize = true;
-               this.lblParity.Location = new System.Drawing.Point(354, 53);
+               this.lblParity.Location = new System.Drawing.Point(174, 53);
                this.lblParity.Name = "lblParity";
                this.lblParity.Size = new System.Drawing.Size(36, 13);
                this.lblParity.TabIndex = 5;
@@ -110,7 +115,7 @@
                // lblStopBits
                // 
                this.lblStopBits.AutoSize = true;
-               this.lblStopBits.Location = new System.Drawing.Point(354, 79);
+               this.lblStopBits.Location = new System.Drawing.Point(174, 79);
                this.lblStopBits.Name = "lblStopBits";
                this.lblStopBits.Size = new System.Drawing.Size(52, 13);
                this.lblStopBits.TabIndex = 6;
@@ -119,7 +124,7 @@
                // lblDataBits
                // 
                this.lblDataBits.AutoSize = true;
-               this.lblDataBits.Location = new System.Drawing.Point(354, 66);
+               this.lblDataBits.Location = new System.Drawing.Point(174, 66);
                this.lblDataBits.Name = "lblDataBits";
                this.lblDataBits.Size = new System.Drawing.Size(53, 13);
                this.lblDataBits.TabIndex = 7;
@@ -128,7 +133,7 @@
                // lblBaudRate
                // 
                this.lblBaudRate.AutoSize = true;
-               this.lblBaudRate.Location = new System.Drawing.Point(354, 40);
+               this.lblBaudRate.Location = new System.Drawing.Point(174, 40);
                this.lblBaudRate.Name = "lblBaudRate";
                this.lblBaudRate.Size = new System.Drawing.Size(61, 13);
                this.lblBaudRate.TabIndex = 8;
@@ -137,60 +142,58 @@
                // lblvPortName
                // 
                this.lblvPortName.AutoSize = true;
-               this.lblvPortName.Location = new System.Drawing.Point(420, 27);
+               this.lblvPortName.Location = new System.Drawing.Point(240, 27);
                this.lblvPortName.Name = "lblvPortName";
-               this.lblvPortName.Size = new System.Drawing.Size(67, 13);
+               this.lblvPortName.Size = new System.Drawing.Size(43, 13);
                this.lblvPortName.TabIndex = 9;
-               this.lblvPortName.Text = "0000000000";
+               this.lblvPortName.Text = "000000";
                // 
                // lblvParity
                // 
                this.lblvParity.AutoSize = true;
-               this.lblvParity.Location = new System.Drawing.Point(420, 53);
+               this.lblvParity.Location = new System.Drawing.Point(240, 53);
                this.lblvParity.Name = "lblvParity";
-               this.lblvParity.Size = new System.Drawing.Size(67, 13);
+               this.lblvParity.Size = new System.Drawing.Size(43, 13);
                this.lblvParity.TabIndex = 10;
-               this.lblvParity.Text = "0000000000";
+               this.lblvParity.Text = "000000";
                // 
                // lblvStopBits
                // 
                this.lblvStopBits.AutoSize = true;
-               this.lblvStopBits.Location = new System.Drawing.Point(420, 79);
+               this.lblvStopBits.Location = new System.Drawing.Point(240, 79);
                this.lblvStopBits.Name = "lblvStopBits";
-               this.lblvStopBits.Size = new System.Drawing.Size(67, 13);
+               this.lblvStopBits.Size = new System.Drawing.Size(43, 13);
                this.lblvStopBits.TabIndex = 11;
-               this.lblvStopBits.Text = "0000000000";
+               this.lblvStopBits.Text = "000000";
                // 
                // lblvDataBits
                // 
                this.lblvDataBits.AutoSize = true;
-               this.lblvDataBits.Location = new System.Drawing.Point(420, 66);
+               this.lblvDataBits.Location = new System.Drawing.Point(240, 66);
                this.lblvDataBits.Name = "lblvDataBits";
-               this.lblvDataBits.Size = new System.Drawing.Size(67, 13);
+               this.lblvDataBits.Size = new System.Drawing.Size(43, 13);
                this.lblvDataBits.TabIndex = 12;
-               this.lblvDataBits.Text = "0000000000";
+               this.lblvDataBits.Text = "000000";
                // 
                // lblvBaudRate
                // 
                this.lblvBaudRate.AutoSize = true;
-               this.lblvBaudRate.Location = new System.Drawing.Point(420, 40);
+               this.lblvBaudRate.Location = new System.Drawing.Point(240, 40);
                this.lblvBaudRate.Name = "lblvBaudRate";
-               this.lblvBaudRate.Size = new System.Drawing.Size(67, 13);
+               this.lblvBaudRate.Size = new System.Drawing.Size(43, 13);
                this.lblvBaudRate.TabIndex = 13;
-               this.lblvBaudRate.Text = "0000000000";
+               this.lblvBaudRate.Text = "000000";
                // 
                // lstDisplayWindow
                // 
+               this.lstDisplayWindow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
                this.lstDisplayWindow.FormattingEnabled = true;
                this.lstDisplayWindow.Location = new System.Drawing.Point(12, 192);
                this.lstDisplayWindow.Name = "lstDisplayWindow";
-               this.lstDisplayWindow.Size = new System.Drawing.Size(1082, 277);
+               this.lstDisplayWindow.Size = new System.Drawing.Size(760, 82);
                this.lstDisplayWindow.TabIndex = 14;
-               // 
-               // tmrCloseComPortCheck
-               // 
-               this.tmrCloseComPortCheck.Enabled = true;
-               this.tmrCloseComPortCheck.Tick += new System.EventHandler(this.tmrCloseComPortCheck_Tick);
                // 
                // tmrCheckForData
                // 
@@ -200,8 +203,9 @@
                // 
                // btnAddMessage
                // 
+               this.btnAddMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
                this.btnAddMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.btnAddMessage.Location = new System.Drawing.Point(507, 27);
+               this.btnAddMessage.Location = new System.Drawing.Point(302, 27);
                this.btnAddMessage.Name = "btnAddMessage";
                this.btnAddMessage.Size = new System.Drawing.Size(75, 68);
                this.btnAddMessage.TabIndex = 15;
@@ -211,8 +215,9 @@
                // 
                // btnAddCompanyMessage
                // 
+               this.btnAddCompanyMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
                this.btnAddCompanyMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.btnAddCompanyMessage.Location = new System.Drawing.Point(588, 27);
+               this.btnAddCompanyMessage.Location = new System.Drawing.Point(383, 27);
                this.btnAddCompanyMessage.Name = "btnAddCompanyMessage";
                this.btnAddCompanyMessage.Size = new System.Drawing.Size(75, 68);
                this.btnAddCompanyMessage.TabIndex = 16;
@@ -222,28 +227,35 @@
                // 
                // txtMessageOne
                // 
-               this.txtMessageOne.Location = new System.Drawing.Point(174, 110);
+               this.txtMessageOne.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+               this.txtMessageOne.Location = new System.Drawing.Point(95, 110);
                this.txtMessageOne.Name = "txtMessageOne";
-               this.txtMessageOne.Size = new System.Drawing.Size(653, 20);
+               this.txtMessageOne.Size = new System.Drawing.Size(596, 20);
                this.txtMessageOne.TabIndex = 17;
                // 
                // txtMessageTwo
                // 
-               this.txtMessageTwo.Location = new System.Drawing.Point(174, 137);
+               this.txtMessageTwo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+               this.txtMessageTwo.Location = new System.Drawing.Point(95, 137);
                this.txtMessageTwo.Name = "txtMessageTwo";
-               this.txtMessageTwo.Size = new System.Drawing.Size(653, 20);
+               this.txtMessageTwo.Size = new System.Drawing.Size(596, 20);
                this.txtMessageTwo.TabIndex = 18;
                // 
                // txtMessageThree
                // 
-               this.txtMessageThree.Location = new System.Drawing.Point(174, 164);
+               this.txtMessageThree.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+               this.txtMessageThree.Location = new System.Drawing.Point(95, 164);
                this.txtMessageThree.Name = "txtMessageThree";
-               this.txtMessageThree.Size = new System.Drawing.Size(653, 20);
+               this.txtMessageThree.Size = new System.Drawing.Size(596, 20);
                this.txtMessageThree.TabIndex = 19;
                // 
                // btnSendMessageOne
                // 
-               this.btnSendMessageOne.Location = new System.Drawing.Point(833, 107);
+               this.btnSendMessageOne.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+               this.btnSendMessageOne.Location = new System.Drawing.Point(697, 108);
                this.btnSendMessageOne.Name = "btnSendMessageOne";
                this.btnSendMessageOne.Size = new System.Drawing.Size(75, 23);
                this.btnSendMessageOne.TabIndex = 20;
@@ -253,7 +265,8 @@
                // 
                // btnSendMessageTwo
                // 
-               this.btnSendMessageTwo.Location = new System.Drawing.Point(833, 134);
+               this.btnSendMessageTwo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+               this.btnSendMessageTwo.Location = new System.Drawing.Point(697, 135);
                this.btnSendMessageTwo.Name = "btnSendMessageTwo";
                this.btnSendMessageTwo.Size = new System.Drawing.Size(75, 23);
                this.btnSendMessageTwo.TabIndex = 21;
@@ -263,7 +276,8 @@
                // 
                // btnSendMessageThree
                // 
-               this.btnSendMessageThree.Location = new System.Drawing.Point(833, 161);
+               this.btnSendMessageThree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+               this.btnSendMessageThree.Location = new System.Drawing.Point(697, 162);
                this.btnSendMessageThree.Name = "btnSendMessageThree";
                this.btnSendMessageThree.Size = new System.Drawing.Size(75, 23);
                this.btnSendMessageThree.TabIndex = 22;
@@ -277,7 +291,7 @@
             this.File});
                this.menuStrip1.Location = new System.Drawing.Point(0, 0);
                this.menuStrip1.Name = "menuStrip1";
-               this.menuStrip1.Size = new System.Drawing.Size(1106, 24);
+               this.menuStrip1.Size = new System.Drawing.Size(784, 24);
                this.menuStrip1.TabIndex = 23;
                this.menuStrip1.Text = "menuStrip1";
                // 
@@ -321,7 +335,7 @@
                // btnOpenAndClose
                // 
                this.btnOpenAndClose.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.btnOpenAndClose.Location = new System.Drawing.Point(192, 27);
+               this.btnOpenAndClose.Location = new System.Drawing.Point(12, 27);
                this.btnOpenAndClose.Name = "btnOpenAndClose";
                this.btnOpenAndClose.Size = new System.Drawing.Size(75, 68);
                this.btnOpenAndClose.TabIndex = 24;
@@ -329,11 +343,62 @@
                this.btnOpenAndClose.UseVisualStyleBackColor = true;
                this.btnOpenAndClose.Click += new System.EventHandler(this.btnOpenAndClose_Click);
                // 
+               // lstComPortDisplay
+               // 
+               this.lstComPortDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+               this.lstComPortDisplay.FormattingEnabled = true;
+               this.lstComPortDisplay.Location = new System.Drawing.Point(12, 277);
+               this.lstComPortDisplay.Name = "lstComPortDisplay";
+               this.lstComPortDisplay.Size = new System.Drawing.Size(377, 173);
+               this.lstComPortDisplay.TabIndex = 25;
+               // 
+               // lstStatusDisplay
+               // 
+               this.lstStatusDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+               this.lstStatusDisplay.FormattingEnabled = true;
+               this.lstStatusDisplay.Location = new System.Drawing.Point(395, 277);
+               this.lstStatusDisplay.Name = "lstStatusDisplay";
+               this.lstStatusDisplay.Size = new System.Drawing.Size(377, 173);
+               this.lstStatusDisplay.TabIndex = 26;
+               // 
+               // label1
+               // 
+               this.label1.AutoSize = true;
+               this.label1.Location = new System.Drawing.Point(13, 117);
+               this.label1.Name = "label1";
+               this.label1.Size = new System.Drawing.Size(73, 13);
+               this.label1.TabIndex = 27;
+               this.label1.Text = "Message One";
+               // 
+               // label2
+               // 
+               this.label2.AutoSize = true;
+               this.label2.Location = new System.Drawing.Point(13, 144);
+               this.label2.Name = "label2";
+               this.label2.Size = new System.Drawing.Size(74, 13);
+               this.label2.TabIndex = 28;
+               this.label2.Text = "Message Two";
+               // 
+               // label3
+               // 
+               this.label3.AutoSize = true;
+               this.label3.Location = new System.Drawing.Point(13, 171);
+               this.label3.Name = "label3";
+               this.label3.Size = new System.Drawing.Size(76, 13);
+               this.label3.TabIndex = 29;
+               this.label3.Text = "Mesage Three";
+               // 
                // MainForm
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-               this.ClientSize = new System.Drawing.Size(1106, 482);
+               this.ClientSize = new System.Drawing.Size(784, 462);
+               this.Controls.Add(this.label3);
+               this.Controls.Add(this.label2);
+               this.Controls.Add(this.label1);
+               this.Controls.Add(this.lstStatusDisplay);
+               this.Controls.Add(this.lstComPortDisplay);
                this.Controls.Add(this.btnOpenAndClose);
                this.Controls.Add(this.btnSendMessageThree);
                this.Controls.Add(this.btnSendMessageTwo);
@@ -354,10 +419,11 @@
                this.Controls.Add(this.lblStopBits);
                this.Controls.Add(this.lblParity);
                this.Controls.Add(this.lblPortName);
-               this.Controls.Add(this.btnConfiureComPort);
+               this.Controls.Add(this.btnConfigureComPort);
                this.Controls.Add(this.lblCurrentTime);
                this.Controls.Add(this.menuStrip1);
                this.MainMenuStrip = this.menuStrip1;
+               this.MinimumSize = new System.Drawing.Size(800, 500);
                this.Name = "MainForm";
                this.Text = "Message-Profiling Activity Communicator";
                this.menuStrip1.ResumeLayout(false);
@@ -371,7 +437,7 @@
 
           private System.Windows.Forms.Label lblCurrentTime;
           private System.Windows.Forms.Timer tmrClockRefresh;
-          private System.Windows.Forms.Button btnConfiureComPort;
+          private System.Windows.Forms.Button btnConfigureComPort;
           private System.Windows.Forms.Label lblPortName;
           private System.Windows.Forms.Label lblParity;
           private System.Windows.Forms.Label lblStopBits;
@@ -383,7 +449,6 @@
           private System.Windows.Forms.Label lblvDataBits;
           private System.Windows.Forms.Label lblvBaudRate;
           private System.Windows.Forms.ListBox lstDisplayWindow;
-          private System.Windows.Forms.Timer tmrCloseComPortCheck;
           private System.Windows.Forms.Timer tmrCheckForData;
           private System.Windows.Forms.Button btnAddMessage;
           private System.Windows.Forms.Button btnAddCompanyMessage;
@@ -400,6 +465,11 @@
           private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
           private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
           private System.Windows.Forms.Button btnOpenAndClose;
+          private System.Windows.Forms.ListBox lstComPortDisplay;
+          private System.Windows.Forms.ListBox lstStatusDisplay;
+          private System.Windows.Forms.Label label1;
+          private System.Windows.Forms.Label label2;
+          private System.Windows.Forms.Label label3;
      }
 }
 
