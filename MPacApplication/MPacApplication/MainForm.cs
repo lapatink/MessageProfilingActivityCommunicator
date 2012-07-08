@@ -78,12 +78,13 @@ namespace MPacApplication
           public MainForm()
           {
                InitializeComponent();
-               comPortConfigForm = null;
 
+               comPortConfigForm = null;
                dataProcessor = new DataProcessor(this);
                numberOfStatusEntries = 0;
                numberOfEntries = 0;
 
+               PrintStatusMessage("Start Initialization");
                initialized = false;
 
                availablePortNames = new List<String>();
@@ -92,24 +93,29 @@ namespace MPacApplication
                {
                     if (name.StartsWith("COM"))
                     {
+                         PrintStatusMessage("Add Com Port " + name);
                          availablePortNames.Add(name);
                     }
                }
-               /*foreach (String name in portNames)
-               {
-                    if (name.StartsWith("COM") && !name.StartsWith("COM1"))
-                    {
-                         OpenComPort(name, DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
-                         break;
-                    }
-               }*/
+               availablePortNames.Sort();
+
                OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
 
+               PrintStatusMessage("Remaining List");
+               foreach (String name in availablePortNames)
+               {
+                    PrintStatusMessage(name);
+               }
+
                initialized = true;
+
+               PrintStatusMessage("End Initialization");
           }
 
           private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
           {
+               PrintStatusMessage("Set Serial Port Config " + comPortName + " " + baudRate + " " + parity + " " + dataBits + " " + stopBits);
+
                CloseComPort();
 
                this.comPortName = comPortName;
@@ -120,6 +126,7 @@ namespace MPacApplication
 
                if (listeningPort == null)
                {
+                    PrintStatusMessage("Create new SerialPort " + this.comPortName + " " + this.baudRate + " " + this.parity + " " + this.dataBits + " " + this.stopBits);
                     listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
                }
                else
@@ -167,27 +174,17 @@ namespace MPacApplication
           {
                try
                {
+                    PrintStatusMessage("Opening Serial Port " + this.comPortName);
                     this.listeningPort.Open();
                }
-               /*catch (Exception)
-               {
-                    String[] portNames = SerialPort.GetPortNames();
-                    foreach (String name in portNames)
-                    {
-                         if (name.StartsWith("COM") && !name.StartsWith("COM1"))
-                         {
-                              MessageBox.Show(comPortName + " does not seem to be a valid port, selecting port " + name);
-                              OpenComPort(name, this.baudRate, this.parity, this.dataBits, this.stopBits);
-                              break;
-                         }
-                    }
-               }*/
                catch (Exception ex)
                {
+                    PrintStatusMessage("Unable to open serial port " + this.comPortName);
+                    PrintStatusMessage("Removing " + this.comPortName + " from available port list");
+                    availablePortNames.Remove(this.comPortName);
                     //MessageBox.Show(ex.ToString());
                     if(initialized)
-                         MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availablePortNames.ElementAt<String>(1));
-                    availablePortNames.Remove(this.comPortName);
+                         MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availablePortNames.ElementAt<String>(0));
                     OpenComPort(availablePortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits);
                }
 
@@ -199,6 +196,7 @@ namespace MPacApplication
           {
                if (listeningPort != null && listeningPort.IsOpen)
                {
+                    PrintStatusMessage("Closing serial port");
                     listeningPort.Close();
                }
 
@@ -221,7 +219,8 @@ namespace MPacApplication
           public void PrintStatusMessage(String message)
           {
                lstStatusDisplay.Items.Add(message);
-               lstStatusDisplay.SelectedIndex = numberOfStatusEntries++;
+               lstStatusDisplay.SelectedIndex = numberOfStatusEntries;
+               numberOfStatusEntries++;
           }
 
           private void tmrClockRefresh_Tick(object sender, EventArgs e)
