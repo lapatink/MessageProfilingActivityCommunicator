@@ -177,12 +177,11 @@ namespace MPacApplication
                     PrintStatusMessage("Opening Serial Port " + this.comPortName);
                     this.listeningPort.Open();
                }
-               catch (Exception ex)
+               catch (Exception)
                {
                     PrintStatusMessage("Unable to open serial port " + this.comPortName);
                     PrintStatusMessage("Removing " + this.comPortName + " from available port list");
                     availablePortNames.Remove(this.comPortName);
-                    //MessageBox.Show(ex.ToString());
                     if(initialized)
                          MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availablePortNames.ElementAt<String>(0));
                     OpenComPort(availablePortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits);
@@ -216,6 +215,7 @@ namespace MPacApplication
 
           public void RecordTrash(byte[] trashBytes)
           {
+               //TODO - this may be used to record all bytes not in messages
           }
 
           public void PrintStatusMessage(String message)
@@ -313,33 +313,24 @@ namespace MPacApplication
 
           private void btnSendMessageOne_Click(object sender, EventArgs e)
           {
-               String[] parts = txtMessageOne.Text.Trim().Split(' ');
-               byte[] message = new byte[parts.Length];
-
-               for (int i = 0; i < parts.Length; i++)
-               {
-                    message[i] = (byte)int.Parse(parts[i], System.Globalization.NumberStyles.HexNumber);
-               }
-
-               dataProcessor.ProcessData(message);
+               SendMessageToParser(txtMessageOne.Text.Trim().Split(' '));
           }
 
           private void btnSendMessageTwo_Click(object sender, EventArgs e)
           {
-               String[] parts = txtMessageTwo.Text.Split(' ');
-               byte[] message = new byte[parts.Length];
-
-               for (int i = 0; i < parts.Length; i++)
-               {
-                    message[i] = (byte)int.Parse(parts[i], System.Globalization.NumberStyles.HexNumber);
-               }
-
-               dataProcessor.ProcessData(message);
+               SendMessageToParser(txtMessageTwo.Text.Trim().Split(' '));
           }
 
           private void btnSendMessageThree_Click(object sender, EventArgs e)
           {
-               String[] parts = txtMessageThree.Text.Split(' ');
+               SendMessageToParser(txtMessageThree.Text.Trim().Split(' '));
+          }
+
+          private void SendMessageToParser(String[] parts)
+          {
+               if (parts == null)
+                    return;
+
                byte[] message = new byte[parts.Length];
 
                for (int i = 0; i < parts.Length; i++)
