@@ -225,6 +225,11 @@ namespace MPacApplication
                return messages[index].id_low;
           }
 
+          public static string getMessageName(int index)
+          {
+              return messages[index].name;
+          }
+
           public void LogData(Message completedMessage)
           {
                String message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}\t\t", DateTime.Now) + completedMessage.ToString();
@@ -313,7 +318,7 @@ namespace MPacApplication
               }
               catch (Exception)
               {
-                  AddMessageForm = new AddMessageForm(this);
+                  AddMessageForm = new AddMessageForm(this, AddMessageForm.messageType.local);
                   AddMessageForm.Show();
               }
           }
@@ -326,7 +331,7 @@ namespace MPacApplication
               }
               catch (Exception)
               {
-                  AddCompanyForm = new AddMessageForm(this);
+                  AddCompanyForm = new AddMessageForm(this, AddMessageForm.messageType.company);
                   AddCompanyForm.Show();
               }
           }

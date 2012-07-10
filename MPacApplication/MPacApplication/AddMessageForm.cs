@@ -144,6 +144,13 @@ namespace MPacApplication
                     reset();
                     return;
                 }
+                if (txtName.Text == MainForm.getMessageName(i))
+                {
+                    MessageBox.Show("Message name already exists", "Duplicate name", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    this.Visible = false;
+                    reset();
+                    return;
+                }
             }
             MessageFormat message = new MessageFormat(
                 Byte.Parse(txtVersion1.Text, System.Globalization.NumberStyles.HexNumber),
@@ -151,8 +158,8 @@ namespace MPacApplication
                 Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber),
                 Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber),
                 Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
-                txtFormat.Text,
-                txtName.Text);
+                txtName.Text,
+                txtFormat.Text);
 
             MainForm.createMessageFormat(message);
             this.Visible = false;
@@ -174,7 +181,6 @@ namespace MPacApplication
             txtLength.Text = "00";
             txtName.Text = "";
             txtFormat.Text = "";
-        }
-       
+        }     
     }
 }
