@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,14 +22,14 @@ namespace MPacApplication
                //new Focus(this);
                parentForm = sourceForm;
 
-            //move all the panels to the correct location
-            //note: some of these panels are off the edge of the window on the designer.
+               //move all the panels to the correct location
+               //note: some of these panels are off the edge of the window on the designer.
                pnlCustomFormat.Location = new Point(271, 135);
                pnlExternalProgram.Location = new Point(271, 135);
                pnlUniformGroup.Location = new Point(271, 135);
-
-            //won't let me do this in the designer for some reason
-            //default selections
+            
+                //won't let me do this in the designer for some reason
+                //default selections
                cmbDefaultFormat.SelectedIndex = 3;
                cmbDefaultType.SelectedIndex = 0;
                cmbGroup.SelectedIndex = 0;
@@ -44,6 +44,23 @@ namespace MPacApplication
         public AddMessageForm(MainForm sourceForm, messageType type)
         {
             InitializeComponent();
+
+            //move all the panels to the correct location
+            //note: some of these panels are off the edge of the window on the designer.
+            pnlCustomFormat.Location = new Point(271, 135);
+            pnlExternalProgram.Location = new Point(271, 135);
+            pnlUniformGroup.Location = new Point(271, 135);
+
+            //won't let me do this in the designer for some reason
+            //default selections
+            cmbDefaultFormat.SelectedIndex = 3;
+            cmbDefaultType.SelectedIndex = 0;
+            cmbGroup.SelectedIndex = 0;
+            cmbCount.SelectedIndex = 0;
+            cmbType.SelectedIndex = 0;
+            cmbFormat.SelectedIndex = 3;
+            cmbUniformFormat.SelectedIndex = 3;
+            cmbUniformGroup.SelectedIndex = 1;
             parentForm = sourceForm;
             reset();
         }
