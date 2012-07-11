@@ -61,6 +61,9 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="DataProcessor.cs" />
     <Compile Include="Export.cs" />
+    <Compile Include="Focus.cs" />
+    <Compile Include="Format.cs" />
+    <Compile Include="FormatParser.cs" />
     <Compile Include="Import.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
