@@ -12,7 +12,7 @@ namespace MPacApplication
 {
      public partial class MainForm : Form
      {
-          private static List<MessageFormat> messages = new List<MessageFormat>();
+          private List<MessageFormat> messages = new List<MessageFormat>();
           
           public const int DEFAULT_BAUD_RATE = 240;
           public const Parity DEFAULT_PARITY = Parity.None;
@@ -205,27 +205,27 @@ namespace MPacApplication
                comPortClosed = true;
           }
 
-          public static void createMessageFormat(MessageFormat message)
+          public void createMessageFormat(MessageFormat message)
           {
                messages.Add(message);
           }
 
-          public static int getMessagesCount()
+          public int getMessagesCount()
           {
                return messages.Count;
           }
 
-          public static byte getMessageHigh(int index)
+          public byte getMessageHigh(int index)
           {
                return messages[index].id_high;
           }
 
-          public static byte getMessageLow(int index)
+          public byte getMessageLow(int index)
           {
                return messages[index].id_low;
           }
 
-          public static string getMessageName(int index)
+          public string getMessageName(int index)
           {
               return messages[index].name;
           }

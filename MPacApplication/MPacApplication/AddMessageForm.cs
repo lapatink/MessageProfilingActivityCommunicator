@@ -154,21 +154,17 @@ namespace MPacApplication
         }
 
         private void btnOK_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < MainForm.getMessagesCount(); i++)
+        { 
+            for (int i = 0; i < parentForm.getMessagesCount(); i++)
             {
-                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.getMessageHigh(i)) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == MainForm.getMessageLow(i)))
+                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.getMessageHigh(i)) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.getMessageLow(i)))
                 {
                     MessageBox.Show("Message ID already exists", "Duplicate ID", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                    this.Visible = false;
-                    reset();
                     return;
                 }
-				if (txtName.Text == MainForm.getMessageName(i))
+				if (txtName.Text == parentForm.getMessageName(i))
                 {
                     MessageBox.Show("Message name already exists", "Duplicate name", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                    this.Visible = false;
-                    reset();
                     return;
                 }
             }
@@ -198,10 +194,10 @@ namespace MPacApplication
                 Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber),
                 Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber),
                 Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
-                txtFormat.Text,
-                txtName.Text);
+                txtName.Text,
+                txtFormat.Text);
 
-            MainForm.createMessageFormat(message);
+            parentForm.createMessageFormat(message);
             this.Visible = false;
             reset();
         }
@@ -214,7 +210,7 @@ namespace MPacApplication
 
         private void reset()
         {
-            txtVersion1.Text = "00";
+            txtVersion1.Text = "01";
             txtVersion2.Text = "00";
             txtID1.Text = "00";
             txtID2.Text = "00";
