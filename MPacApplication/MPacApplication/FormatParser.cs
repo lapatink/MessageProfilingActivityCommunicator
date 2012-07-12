@@ -59,8 +59,6 @@ namespace MPacApplication
                             output += parse(type, form, data);
                         break;
                 }
-
-
             }
 
             if (external != "")

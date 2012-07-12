@@ -36,7 +36,7 @@ namespace MPacApplication
           {
                String str = "Version: " + version_major + "." + version_minor + "\t\tMessage ID: 0x" + id_high + id_low;
 
-               if (data != null)
+               if (data != null && data.Length > 0)
                {
                     str += "\t\tData:";
 

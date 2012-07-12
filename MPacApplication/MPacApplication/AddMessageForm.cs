@@ -215,8 +215,8 @@ namespace MPacApplication
                 Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber),
                 Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber),
                 Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
-                txtFormat.Text,
-                txtName.Text);
+                txtName.Text,
+                txtFormat.Text);
 
             MainForm.createMessageFormat(message);
             this.Visible = false;

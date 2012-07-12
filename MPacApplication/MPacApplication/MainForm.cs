@@ -232,7 +232,35 @@ namespace MPacApplication
 
           public void LogData(Message completedMessage)
           {
-               String message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}\t\t", DateTime.Now) + completedMessage.ToString();
+               String message;
+               
+               //TODO - this is a hacky demo
+               MessageFormat format = null;
+               foreach (MessageFormat mf in messages)
+               {
+                    if (mf.id_high == completedMessage.id_high && mf.id_low == completedMessage.id_low)
+                    {
+                         format = mf;
+                         break;
+                    }
+               }
+
+               if (format == null)
+               {
+                    message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}\t\t", DateTime.Now) + completedMessage.ToString();;
+               }
+               else
+               {
+                    message = format.name;
+                    if (completedMessage.data == null || completedMessage.data.Length == format.length)
+                    {
+                         message += ":  " + FormatParser.Parse(format.format, completedMessage.data);
+                    }
+                    else
+                    {
+                         message += ":  Message Format Does Not Match Data Length";
+                    }
+               }
 
                lstDisplayWindow.Items.Add(message);
                lstDisplayWindow.SelectedIndex = numberOfEntries++;
