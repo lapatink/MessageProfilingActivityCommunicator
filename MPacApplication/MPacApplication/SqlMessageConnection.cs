@@ -18,11 +18,25 @@ namespace MPacApplication
         /// Instantiates an instance of the SqlMessageConnnection object.
         /// </summary>
         /// <param name="connection">The connection string for the database.</param>
+        /// <param name="table">The database table to read/write to/from.</param>
         public SqlMessageConnection(string connection, string table)
         {
             this.connection = connection;
-            conn = new SqlConnection(connection);
+            conn = new SqlConnection(this.connection);
             this.table = table.Split(' ')[0].Trim(); //TODO: parameterize this
+        }
+
+        /// <summary>
+        /// Instantiates an instance of the SqlMessageConnection
+        /// </summary>
+        /// <param name="connection">The complete connection string from the configuration file.</param>
+        public SqlMessageConnection(string connection)
+        {
+            this.connection = connection.Substring(0, connection.LastIndexOf(';') + 1);
+            conn = new SqlConnection(this.connection);
+            this.table = connection.Substring(connection.LastIndexOf(';') + 1);
+            this.table = this.table.Split(' ')[0].Trim(); //TODO: parameterize this
+
         }
 
         /// <summary>
@@ -61,7 +75,8 @@ namespace MPacApplication
             }
             finally
             {
-                conn.Close();
+                if (conn!=null)
+                    conn.Close();
                 cmd = null;
                 reader = null;
             }

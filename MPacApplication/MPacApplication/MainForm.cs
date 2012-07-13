@@ -110,6 +110,26 @@ namespace MPacApplication
                initialized = true;
 
                PrintStatusMessage("End Initialization");
+
+               PrintStatusMessage("Start Configuration");
+               Configuration config = new Configuration();
+
+               string[] connections = config.Read();
+              PrintStatusMessage("Configuration read complete. Found " + connections.Length + " connection(s).");
+
+               if (!config.IsAdministrator)
+                   btnAddCompanyMessage.Hide();
+
+               PrintStatusMessage("End Configuration");
+               PrintStatusMessage("Start SQL Import");
+
+               foreach (string connection in connections)
+                   messages.AddRange(new SqlMessageConnection(connection).GetMessageList());
+
+              PrintStatusMessage("End SQL Import. " + messages.Count + " custom messages loaded.");
+
+
+
           }
 
           private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)

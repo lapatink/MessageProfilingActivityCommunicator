@@ -10,5 +10,6 @@
     <password>xjSeu3sBBUvDgyL</password>
     <!-- I may add encryption options here at some point. Plaintext for now.-->
   </connection>
+  <admin>true</admin>
   <!--<file>c:\config.xml</file>--> <!-- you can specify multiple config files in various locations this way.-->
 </config>
