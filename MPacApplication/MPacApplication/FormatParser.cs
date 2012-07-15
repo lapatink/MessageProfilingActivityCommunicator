@@ -8,178 +8,315 @@ namespace MPacApplication
 {
     static class FormatParser
     {
-        private static string delim = " ";
-        private static string def_type = "b";
-        private static string def_form = "h";
-        private static string external = "";
+        private const string delim = "  ";
+        private static byte[] data = null;
         private static int index = 0;
 
-        public static string Parse(string format, byte[] data)
+        /// <summary>
+        /// Parses a set of byte data based on a format string.
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="bytes">The set of byte data to parse.</param>
+        /// <returns>Returns a formatted string of the data.</returns>
+        public static string Parse(string format, byte[] bytes)
         {
-            index = 0;
-            string[] tokens = format.ToLower().Split(' ');
+            if (bytes == null)
+                return "";
+            if (bytes.Length < 1 || format.Length < 1)
+                return "";
+
+            data = bytes;
+
+            string[] tokens = format.Split(' ');
             string output = "";
 
             for (int i = 0; i < tokens.Length; i++)
             {
-                int num = 0;
-                int grp = 0;
-                string form = "";
-                string type = "";
-
-                if (external != "")
-                    break;
-                switch (tokens[i])
+                if (tokens[i] == "g")
                 {
-                    case "df":
-                        def_form = tokens[++i];
-                        def_type = tokens[++i];
-                        break;
-                    case "dl":
-                        delim = tokens[++i].Replace(@"\s", " ").Replace(@"\c", ",");
-                        break;
-                    case "call":
-                        external = format.Substring("call ".Length);
-                        break;
-                    case "g":
-                        grp = int.Parse(tokens[++i]);
-                        num = int.Parse(tokens[++i]);
-                        form = tokens[++i];
-                        type = tokens[++i];
-                        for (int j = 0; j < num * grp; j++)
-                            output += parse(type, form, data, true) + ((j % grp != 0) ? delim : "");
-                        break;
-                    case "":
-                        break;
-                    default:
-                        num = int.Parse(tokens[i]);
-                        form = tokens[++i];
-                        type = tokens[++i];
-                        for (int j = 0; j < num; j++)
-                            output += parse(type, form, data);
-                        break;
+                    output += group(tokens[++i], tokens[++i], tokens[++i]);
+                }
+                else if (tokens[i] == "call")
+                {
+                    //format the argument string
+                    string args = FormatParser.Parse("%", data).Replace(delim, " ");
+
+                    string filename = format.Substring(5, format.Length - 5);
+
+                    Process p = new Process();
+                    p.StartInfo.FileName = filename;
+                    p.StartInfo.Arguments = args;
+                    p.StartInfo.UseShellExecute = false;
+                    p.StartInfo.RedirectStandardOutput = true;
+                    p.StartInfo.CreateNoWindow = true;
+                    p.Start();
+
+                    output = p.StandardOutput.ReadToEnd();
+                    p.WaitForExit();
+
+                    return output;
+                }
+                else if (tokens[i] != "" && tokens[i] != "%")
+                {
+                    output += set(tokens[i], tokens[++i], tokens[++i]);
                 }
             }
 
-            if (external != "")
-            {
-                string input = "";
-
-                foreach (byte b in data)
-                    input += b.ToString() + " ";
-
-                Process p = new Process();
-                p.StartInfo.FileName = external;
-                p.StartInfo.Arguments = input;
-                p.StartInfo.UseShellExecute = false;
-                p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.CreateNoWindow = true;
-                p.Start();
-
-                output = p.StandardOutput.ReadToEnd();
-                p.WaitForExit();
-                return output;
-            }
-
-            int size = 0;
-            switch (def_type)
-            {
-                case "b":
-                    size = sizeof(byte);
-                    break;
-                case "s":
-                    size = sizeof(short);
-                    break;
-                case "i":
-                    size = sizeof(int);
-                    break;
-                case "l":
-                    size = sizeof(long);
-                    break;
-
-            }
+            //format remaining data
             while (index < data.Length)
             {
-                if ((data.Length - index) < size)
-                    break;
-                output += parse(def_type, def_form, data);
+                output += Format.AsHex(data[index]) + delim;
+                index++;
             }
 
-            return output.Substring(0, output.Length - delim.Length);
+            output = output.Substring(0, output.Length - delim.Length);
+            return output;
+
         }
 
-        private static string parse(string type, string form, byte[] data, bool group = false)
+        /// <summary>
+        /// Format a string with uniform grouping.
+        /// </summary>
+        /// <param name="scount">String representing the integer number of times to repeat, or * for "infinite."</param>
+        /// <param name="sgroupsize">String representing the number of bytes to group.</param>
+        /// <param name="type">h for hex and b for binary.</param>
+        /// <returns>Returns a formatted string, or "" if a failure occured.</returns>
+        private static string group(string scount, string sgroupsize, string type)
         {
-            string ret = "";
-            byte[] bytes;
-            string mydelim = delim;
-            if (group)
-                mydelim = "";
+            int count = safeParse(scount);
+            int groupsize = safeParse(sgroupsize);
+            string output = "";
 
-            switch (type)
+            if (groupsize < 1)
+                return "";
+
+            if (count == -1)
             {
-                case "i":
-                    if ((sizeof(Int32) + index) > data.Length)
-                        return "";
-                    bytes = new byte[sizeof(Int32)];
-                    Array.Copy(data, index, bytes, 0, sizeof(Int32));
-                    index += sizeof(Int32);
-                    if (form == "d")
-                        ret += BitConverter.ToInt32(bytes, 0).ToString() + mydelim;
-                    else if (form == "h")
-                        ret += Format.AsHex(BitConverter.ToInt32(bytes, 0)) + mydelim;
-                    else if (form == "b")
-                        ret += Format.AsBinary(BitConverter.ToInt32(bytes, 0)) + mydelim;
-                    else if (form == "o")
-                        ret += Format.AsOctal(BitConverter.ToInt32(bytes, 0)) + mydelim;
-                    break;
-                case "s":
-                    if ((sizeof(Int16) + index) > data.Length)
-                        return "";
-                    bytes = new byte[sizeof(Int16)];
-                    Array.Copy(data, index, bytes, 0, sizeof(Int16));
-                    index += sizeof(Int16);
-                    if (form == "d")
-                        ret += BitConverter.ToInt16(bytes, 0).ToString() + mydelim;
-                    else if (form == "h")
-                        ret += Format.AsHex(BitConverter.ToInt16(bytes, 0)) + mydelim;
-                    else if (form == "b")
-                        ret += Format.AsBinary(BitConverter.ToInt16(bytes, 0)) + mydelim;
-                    else if (form == "o")
-                        ret += Format.AsOctal(BitConverter.ToInt16(bytes, 0)) + mydelim;
-                    break;
-                case "b":
-                    if ((sizeof(byte) + index) > data.Length)
-                        return "";
-                    bytes = new byte[sizeof(byte)];
-                    Array.Copy(data, index, bytes, 0, sizeof(byte));
-                    index += sizeof(byte);
-                    if (form == "d")
-                        ret += bytes[0].ToString() + mydelim;
-                    else if (form == "h")
-                        ret += Format.AsHex(bytes[0]) + mydelim;
-                    else if (form == "b")
-                        ret += Format.AsBinary(bytes[0]) + mydelim;
-                    else if (form == "o")
-                        ret += Format.AsOctal(bytes[0]) + mydelim;
-                    break;
-                case "l":
-                    if ((sizeof(Int64) + index) > data.Length)
-                        return "";
-                    bytes = new byte[sizeof(Int64)];
-                    Array.Copy(data, index, bytes, 0, sizeof(Int64));
-                    index += sizeof(Int64);
-                    if (form == "d")
-                        ret += BitConverter.ToInt64(bytes, 0).ToString() + mydelim;
-                    else if (form == "h")
-                        ret += Format.AsHex(BitConverter.ToInt64(bytes, 0)) + mydelim;
-                    else if (form == "b")
-                        ret += Format.AsBinary(BitConverter.ToInt64(bytes, 0)) + mydelim;
-                    else if (form == "o")
-                        ret += Format.AsOctal(BitConverter.ToInt64(bytes, 0)) + mydelim;
-                    break;
+                int space = 0;
+
+                for (int i = index; i < data.Length - (data.Length % groupsize); i++)
+                {
+                    space++;
+                    if (type == "h")
+                        output += Format.AsHex(data[i]);
+                    else if (type == "b")
+                        output += Format.AsBinary(data[i]);
+
+                    if (space % groupsize == 0)
+                        output += delim;
+
+                }
+
+                index = data.Length - (data.Length % groupsize);
+                return output;
             }
+            else
+            {
+                int size = count * groupsize;
+                int space = 0;
+
+                if (size > data.Length - index)
+                {
+                    size = data.Length - index;
+                    size = size - (size % groupsize);
+                }
+
+                for (int i = index; i < size; i++)
+                {
+                    space++;
+
+                    if (type == "h")
+                        output += Format.AsHex(data[i]);
+                    else if (type == "b")
+                        output += Format.AsBinary(data[i]);
+
+                    if (space % groupsize == 0)
+                        output += delim;
+                }
+                index += size;
+                return output;
+            }
+        }
+
+        /// <summary>
+        /// Format a string based on a format and data type, with a set number of repeats.
+        /// </summary>
+        /// <param name="scount">Number of times to repeat.</param>
+        /// <param name="format">Format style</param>
+        /// <param name="type">Data type.</param>
+        /// <returns>Returns a formatted string, or "" if failure occured.</returns>
+        private static string set(string scount, string format, string type)
+        {
+            int count = safeParse(scount);
+            int size = sizeOf(type);
+
+            string ret = "";
+
+            if (count == -1)
+                count = (data.Length - index) - ((data.Length - index) % size);
+
+            while ((count * size) > (data.Length - index))
+                count--;
+
+            if (count < 1)
+                return "";
+
+            byte[] bytes;
+            object value = null;
+
+            for (int i = 0; i < count; i++)
+            {
+                value = null;
+
+                switch (type)
+                {
+                    case "b":
+                        bytes = new byte[sizeof(byte)];
+                        Array.Copy(data, index, bytes, 0, sizeof(byte));
+                        index += sizeof(byte);
+
+                        value = (byte)bytes[0];
+
+                        if (format == "b")
+                            ret += Format.AsBinary((byte)value) + delim;
+                        else if (format == "h")
+                            ret += Format.AsHex((byte)value) + delim;
+                        else if (format == "d")
+                            ret += ((byte)value).ToString() + delim;
+                        break;
+                    case "s":
+                        bytes = new byte[sizeof(short)];
+                        Array.Copy(data, index, bytes, 0, sizeof(short));
+                        index += sizeof(short);
+
+                        value = (short)BitConverter.ToInt16(bytes, 0);
+
+                        if (format == "b")
+                            ret += Format.AsBinary((short)value) + delim;
+                        else if (format == "h")
+                            ret += Format.AsHex((short)value) + delim;
+                        else if (format == "d")
+                            ret += ((short)value).ToString() + delim;
+                        break;
+                    case "us":
+                        bytes = new byte[sizeof(ushort)];
+                        Array.Copy(data, index, bytes, 0, sizeof(ushort));
+                        index += sizeof(ushort);
+
+                        value = (ushort)BitConverter.ToUInt16(bytes, 0);
+
+                        if (format == "b")
+                            ret += Format.AsBinary((ushort)value) + delim;
+                        else if (format == "h")
+                            ret += Format.AsHex((ushort)value) + delim;
+                        else if (format == "d")
+                            ret += ((ushort)value).ToString() + delim;
+                        break;
+                    case "i":
+                        bytes = new byte[sizeof(int)];
+                        Array.Copy(data, index, bytes, 0, sizeof(int));
+                        index += sizeof(int);
+
+                        value = (int)BitConverter.ToInt32(bytes, 0);
+
+                        if (format == "b")
+                            ret += Format.AsBinary((int)value) + delim;
+                        else if (format == "h")
+                            ret += Format.AsHex((int)value) + delim;
+                        else if (format == "d")
+                            ret += ((int)value).ToString() + delim;
+                        break;
+                    case "ui":
+                        bytes = new byte[sizeof(uint)];
+                        Array.Copy(data, index, bytes, 0, sizeof(uint));
+                        index += sizeof(uint);
+
+                        value = (uint)BitConverter.ToUInt32(bytes, 0);
+
+                        if (format == "b")
+                            ret += Format.AsBinary((uint)value) + delim;
+                        else if (format == "h")
+                            ret += Format.AsHex((uint)value) + delim;
+                        else if (format == "d")
+                            ret += ((uint)value).ToString() + delim;
+                        break;
+                    case "l":
+                        bytes = new byte[sizeof(long)];
+                        Array.Copy(data, index, bytes, 0, sizeof(long));
+                        index += sizeof(long);
+
+                        value = (long)BitConverter.ToInt64(bytes, 0);
+
+                        if (format == "b")
+                            ret += Format.AsBinary((long)value) + delim;
+                        else if (format == "h")
+                            ret += Format.AsHex((long)value) + delim;
+                        else if (format == "d")
+                            ret += ((long)value).ToString() + delim;
+                        break;
+                    case "ul":
+                        bytes = new byte[sizeof(ulong)];
+                        Array.Copy(data, index, bytes, 0, sizeof(ulong));
+                        index += sizeof(ulong);
+
+                        value = (ulong)BitConverter.ToUInt64(bytes, 0);
+
+                        if (format == "b")
+                            ret += Format.AsBinary((ulong)value) + delim;
+                        else if (format == "h")
+                            ret += Format.AsHex((ulong)value) + delim;
+                        else if (format == "d")
+                            ret += ((ulong)value).ToString() + delim;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
             return ret;
+
+        }
+
+        /// <summary>
+        /// Safely parse a string value to an int. 
+        /// </summary>
+        /// <param name="value">String value to parse.</param>
+        /// <returns>Returns 0 on failure and -1 for *</returns>
+        private static int safeParse(string value)
+        {
+            int ret = 0;
+            if (value == "*")
+                return -1;
+            try { ret = int.Parse(value); }
+            catch { }
+            return ret;
+        }
+
+        /// <summary>
+        /// Get the integer size of a type token.
+        /// </summary>
+        /// <param name="s">The token to parse.</param>
+        /// <returns>Returns an integer size, or 0 by default.</returns>
+        private static int sizeOf(string s)
+        {
+            switch (s)
+            {
+                case "b":
+                    return 1;
+                case "s":
+                case "us":
+                    return 2;
+                case "i":
+                case "ui":
+                    return 4;
+                case "l":
+                case "ul":
+                    return 8;
+                default:
+                    return 0;
+            }
+
         }
     }
 }

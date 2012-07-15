@@ -22,22 +22,9 @@ namespace MPacApplication
                //new Focus(this);
                parentForm = sourceForm;
 
-            //move all the panels to the correct location
-            //note: some of these panels are off the edge of the window on the designer.
                pnlCustomFormat.Location = new Point(271, 135);
                pnlExternalProgram.Location = new Point(271, 135);
                pnlUniformGroup.Location = new Point(271, 135);
-
-            //won't let me do this in the designer for some reason
-            //default selections
-               cmbDefaultFormat.SelectedIndex = 3;
-               cmbDefaultType.SelectedIndex = 0;
-               cmbGroup.SelectedIndex = 0;
-               cmbCount.SelectedIndex = 0;
-               cmbType.SelectedIndex = 0;
-               cmbFormat.SelectedIndex = 3;
-               cmbUniformFormat.SelectedIndex = 3;
-               cmbUniformGroup.SelectedIndex = 1;
             
                reset();
           }
@@ -45,6 +32,11 @@ namespace MPacApplication
         {
             InitializeComponent();
             parentForm = sourceForm;
+
+            pnlCustomFormat.Location = new Point(271, 135);
+            pnlExternalProgram.Location = new Point(271, 135);
+            pnlUniformGroup.Location = new Point(271, 135);
+
             reset();
         }
 
@@ -171,14 +163,10 @@ namespace MPacApplication
 
             if (cmbFormatType.SelectedIndex == 0)
             {
-                txtFormat.Text = "df " + Format.getTokenString(cmbDefaultFormat.Text) + " " + Format.getTokenString(cmbDefaultType.Text) + " ";
-                txtFormat.Text += "dl " + txtDelim.Text.Replace(" ", @"\s").Replace(",", @"\c") + " ";
-                txtFormat.Text += "g " + cmbUniformGroup.Text + " 255 " + Format.getTokenString(cmbUniformFormat.Text) + " b";
+                txtFormat.Text += "g * " + cmbUniformGroup.Text + " " + Format.getTokenString(cmbUniformFormat.Text);
             }
             else if (cmbFormatType.SelectedIndex == 1)
             {
-                txtFormat.Text = "df " + Format.getTokenString(cmbDefaultFormat.Text) + " " + Format.getTokenString(cmbDefaultType.Text) + " ";
-                txtFormat.Text += "dl " + txtDelim.Text.Replace(" ", @"\s").Replace(",", @"\c") + " ";
                 foreach (FormatLine f in lstFormats.Items)
                     txtFormat.Text += f.ToFormatString();
             }
@@ -217,13 +205,11 @@ namespace MPacApplication
             txtLength.Text = "00";
             txtName.Text = "";
             txtFormat.Text = "";
-            cmbDefaultFormat.SelectedIndex = 3;
-            cmbDefaultType.SelectedIndex = 0;
             cmbGroup.SelectedIndex = 0;
             cmbCount.SelectedIndex = 0;
             cmbType.SelectedIndex = 0;
             cmbFormat.SelectedIndex = 3;
-            cmbUniformFormat.SelectedIndex = 3;
+            cmbUniformFormat.SelectedIndex = 1;
             cmbUniformGroup.SelectedIndex = 1;
             cmbFormatType.SelectedIndex = -1;
 
@@ -239,7 +225,6 @@ namespace MPacApplication
         {
             if (cmbFormatType.SelectedIndex == 0)
             {
-                pnlDefault.Enabled = true; 
                 pnlUniformGroup.Show();
                 pnlExternalProgram.Hide();
                 pnlCustomFormat.Hide();
@@ -247,14 +232,12 @@ namespace MPacApplication
             }
             else if (cmbFormatType.SelectedIndex == 1)
             {
-                pnlDefault.Enabled = true;
                 pnlCustomFormat.Show();
                 pnlExternalProgram.Hide();
                 pnlUniformGroup.Hide();
             }
             else if (cmbFormatType.SelectedIndex == 2)
             {
-                pnlDefault.Enabled = false;
                 pnlExternalProgram.Show();
                 pnlCustomFormat.Hide();
                 pnlUniformGroup.Hide();
