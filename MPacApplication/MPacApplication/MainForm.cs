@@ -128,6 +128,20 @@ namespace MPacApplication
 
               PrintStatusMessage("End SQL Import. " + messages.Count + " custom messages loaded.");
 
+              /*
+               * Format testing. form is the format string, b is the random data array.
+               * Prints raw data and formatted data to console.
+              string form = "g * 2 h";
+              byte[] b = new byte[13];
+              (new Random()).NextBytes(b);
+
+              string s = "";
+              foreach (byte a in b)
+                  s += a.ToString() + " ";
+              Console.WriteLine(s);
+              Console.WriteLine(FormatParser.Parse(form, b));
+               */
+
 
 
           }
