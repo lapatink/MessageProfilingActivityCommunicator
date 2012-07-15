@@ -12,9 +12,8 @@ namespace MPacApplication
     public partial class AddMessageForm : Form
     {
         private MainForm parentForm;
-
         public enum messageType { local, company };
-
+        private messageType msgType;
         public AddMessageForm(MainForm sourceForm)
           {
                InitializeComponent();
@@ -43,6 +42,7 @@ namespace MPacApplication
           }
         public AddMessageForm(MainForm sourceForm, messageType type)
         {
+            msgType = type;
             InitializeComponent();
             parentForm = sourceForm;
             reset();
@@ -196,8 +196,19 @@ namespace MPacApplication
                 Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
                 txtName.Text,
                 txtFormat.Text);
-
             parentForm.createMessageFormat(message);
+            if (msgType == messageType.company)
+            {
+                Configuration config = new Configuration();
+                string[] connections = config.Read();
+                SqlMessageConnection sql = new SqlMessageConnection(connections[0]);
+                sql.Write(message);
+                MessageBox.Show("Company message created", "Company message created", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            }
+            else
+            {
+                MessageBox.Show("Local message created", "Local message created", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+            }
             this.Visible = false;
             reset();
         }
