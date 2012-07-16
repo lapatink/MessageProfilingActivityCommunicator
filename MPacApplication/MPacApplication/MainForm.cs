@@ -125,9 +125,9 @@ namespace MPacApplication
                PrintStatusMessage("Start SQL Import");
 
                foreach (string connection in connections)
-                   messages.AddRange(new SqlMessageConnection(connection).GetMessageList());
+                   companyMessages.AddRange(new SqlMessageConnection(connection).GetMessageList());
 
-              PrintStatusMessage("End SQL Import. " + messages.Count + " custom messages loaded.");
+              PrintStatusMessage("End SQL Import. " + companyMessages.Count + " custom messages loaded.");
 
               /*
                * Format testing. form is the format string, b is the random data array.
