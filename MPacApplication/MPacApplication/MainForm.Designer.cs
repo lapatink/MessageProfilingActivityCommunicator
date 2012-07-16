@@ -190,6 +190,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
                this.lstDisplayWindow.FormattingEnabled = true;
+               this.lstDisplayWindow.HorizontalScrollbar = true;
                this.lstDisplayWindow.Location = new System.Drawing.Point(12, 192);
                this.lstDisplayWindow.Name = "lstDisplayWindow";
                this.lstDisplayWindow.Size = new System.Drawing.Size(760, 82);
@@ -348,6 +349,7 @@
                this.lstComPortDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
                this.lstComPortDisplay.FormattingEnabled = true;
+               this.lstComPortDisplay.HorizontalScrollbar = true;
                this.lstComPortDisplay.Location = new System.Drawing.Point(12, 277);
                this.lstComPortDisplay.Name = "lstComPortDisplay";
                this.lstComPortDisplay.Size = new System.Drawing.Size(377, 173);
@@ -357,6 +359,7 @@
                // 
                this.lstStatusDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
                this.lstStatusDisplay.FormattingEnabled = true;
+               this.lstStatusDisplay.HorizontalScrollbar = true;
                this.lstStatusDisplay.Location = new System.Drawing.Point(395, 277);
                this.lstStatusDisplay.Name = "lstStatusDisplay";
                this.lstStatusDisplay.Size = new System.Drawing.Size(377, 173);

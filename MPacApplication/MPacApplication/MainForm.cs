@@ -141,9 +141,6 @@ namespace MPacApplication
               Console.WriteLine(s);
               Console.WriteLine(FormatParser.Parse(form, b));
                */
-
-
-
           }
 
           private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
@@ -281,14 +278,19 @@ namespace MPacApplication
 
                if (format == null)
                {
-                    message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}\t\t", DateTime.Now) + completedMessage.ToString();;
+                    message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}\t\t", DateTime.Now) + completedMessage.ToString();
                }
                else
                {
                     message = format.name;
                     if (completedMessage.data == null || completedMessage.data.Length == format.length)
                     {
-                         message += ":  " + FormatParser.Parse(format.format, completedMessage.data);
+                         String str = FormatParser.Parse(format.format, completedMessage.data); // if data length == 0, this can still return string via external program
+
+                         if (str != null && str.Length != 0)
+                         {
+                              message += ":  " + str;
+                         }
                     }
                     else
                     {
