@@ -64,6 +64,8 @@
                this.label1 = new System.Windows.Forms.Label();
                this.label2 = new System.Windows.Forms.Label();
                this.label3 = new System.Windows.Forms.Label();
+               this.lstLocalMessageSummary = new System.Windows.Forms.ListBox();
+               this.lstCompanyMessageSummary = new System.Windows.Forms.ListBox();
                this.menuStrip1.SuspendLayout();
                this.SuspendLayout();
                // 
@@ -193,7 +195,7 @@
                this.lstDisplayWindow.HorizontalScrollbar = true;
                this.lstDisplayWindow.Location = new System.Drawing.Point(12, 192);
                this.lstDisplayWindow.Name = "lstDisplayWindow";
-               this.lstDisplayWindow.Size = new System.Drawing.Size(760, 82);
+               this.lstDisplayWindow.Size = new System.Drawing.Size(598, 82);
                this.lstDisplayWindow.TabIndex = 14;
                // 
                // tmrCheckForData
@@ -346,21 +348,21 @@
                // 
                // lstComPortDisplay
                // 
-               this.lstComPortDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+               this.lstComPortDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
                this.lstComPortDisplay.FormattingEnabled = true;
                this.lstComPortDisplay.HorizontalScrollbar = true;
                this.lstComPortDisplay.Location = new System.Drawing.Point(12, 277);
                this.lstComPortDisplay.Name = "lstComPortDisplay";
-               this.lstComPortDisplay.Size = new System.Drawing.Size(377, 173);
+               this.lstComPortDisplay.Size = new System.Drawing.Size(215, 173);
                this.lstComPortDisplay.TabIndex = 25;
                // 
                // lstStatusDisplay
                // 
-               this.lstStatusDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+               this.lstStatusDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
                this.lstStatusDisplay.FormattingEnabled = true;
                this.lstStatusDisplay.HorizontalScrollbar = true;
-               this.lstStatusDisplay.Location = new System.Drawing.Point(395, 277);
+               this.lstStatusDisplay.Location = new System.Drawing.Point(233, 277);
                this.lstStatusDisplay.Name = "lstStatusDisplay";
                this.lstStatusDisplay.Size = new System.Drawing.Size(377, 173);
                this.lstStatusDisplay.TabIndex = 26;
@@ -392,11 +394,32 @@
                this.label3.TabIndex = 29;
                this.label3.Text = "Mesage Three";
                // 
+               // lstLocalMessageSummary
+               // 
+               this.lstLocalMessageSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+               this.lstLocalMessageSummary.FormattingEnabled = true;
+               this.lstLocalMessageSummary.Location = new System.Drawing.Point(616, 192);
+               this.lstLocalMessageSummary.Name = "lstLocalMessageSummary";
+               this.lstLocalMessageSummary.Size = new System.Drawing.Size(156, 121);
+               this.lstLocalMessageSummary.TabIndex = 30;
+               // 
+               // lstCompanyMessageSummary
+               // 
+               this.lstCompanyMessageSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+               this.lstCompanyMessageSummary.FormattingEnabled = true;
+               this.lstCompanyMessageSummary.Location = new System.Drawing.Point(616, 319);
+               this.lstCompanyMessageSummary.Name = "lstCompanyMessageSummary";
+               this.lstCompanyMessageSummary.Size = new System.Drawing.Size(156, 134);
+               this.lstCompanyMessageSummary.TabIndex = 31;
+               // 
                // MainForm
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
                this.ClientSize = new System.Drawing.Size(784, 462);
+               this.Controls.Add(this.lstCompanyMessageSummary);
+               this.Controls.Add(this.lstLocalMessageSummary);
                this.Controls.Add(this.label3);
                this.Controls.Add(this.label2);
                this.Controls.Add(this.label1);
@@ -473,6 +496,8 @@
           private System.Windows.Forms.Label label1;
           private System.Windows.Forms.Label label2;
           private System.Windows.Forms.Label label3;
+          private System.Windows.Forms.ListBox lstLocalMessageSummary;
+          private System.Windows.Forms.ListBox lstCompanyMessageSummary;
      }
 }
 
