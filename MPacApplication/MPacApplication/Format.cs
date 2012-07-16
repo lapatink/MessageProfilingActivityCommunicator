@@ -7,75 +7,64 @@ namespace MPacApplication
 {
     static class Format
     {
-        public static string AsHex(int value)
-        {
-            return value.ToString("X").PadLeft(8, '0'); ;
-        }
-        public static string AsHex(short value)
-        {
-            return value.ToString("X").PadLeft(4, '0'); ;
-        }
-        public static string AsHex(long value)
-        {
-            return value.ToString("X").PadLeft(16, '0'); ;
-        }
         public static string AsHex(byte value)
         {
             return value.ToString("X").PadLeft(2, '0');
         }
-        //TODO: padding
-        public static string AsBinary(int value)
+        public static string AsHex(short value)
         {
-            return Convert.ToString(value, 2);
+            return value.ToString("X").PadLeft(4, '0');
+        }
+        public static string AsHex(int value)
+        {
+            return value.ToString("X").PadLeft(8, '0');
+        }
+        public static string AsHex(long value)
+        {
+            return value.ToString("X").PadLeft(16, '0');
+        }
+        public static string AsHex(ushort value)
+        {
+            return value.ToString("X").PadLeft(4, '0');
+        }
+        public static string AsHex(uint value)
+        {
+            return value.ToString("X").PadLeft(8, '0');
+        }
+        public static string AsHex(ulong value)
+        {
+            return value.ToString("X").PadLeft(16, '0');
+        }
+
+        public static string AsBinary(byte value)
+        {
+            return Convert.ToString(value, 2).PadLeft(8, '0');
         }
         public static string AsBinary(short value)
         {
-            return Convert.ToString(value, 2);
+            return Convert.ToString(value, 2).PadLeft(16,'0');
+        }
+        public static string AsBinary(int value)
+        {
+            return Convert.ToString(value, 2).PadLeft(32,'0');
         }
         public static string AsBinary(long value)
         {
-            return Convert.ToString(value, 2);
-        }
-        public static string AsBinary(byte value)
-        {
-            return Convert.ToString(value, 2);
-        }
-        public static string AsBinary(uint value)
-        {
-            return Convert.ToString(value, 2);
+            return Convert.ToString(value, 2).PadLeft(64,'0');
         }
         public static string AsBinary(ushort value)
         {
-            return Convert.ToString(value, 2);
+            return Convert.ToString(value, 2).PadLeft(16,'0');
         }
-        public static string AsChar(byte value)
+        public static string AsBinary(uint value)
         {
-            return Convert.ToChar(value).ToString();
+            return Convert.ToString(value, 2).PadLeft(32, '0'); ;
         }
-        public static string AsChar(byte[] value)
+        public static string AsBinary(ulong value)
         {
-            string s = "";
-            foreach (byte b in value)
-                s += Convert.ToChar(b).ToString();
-            return s;
+            return Convert.ToString((long)value, 2).PadLeft(64, '0'); //there is no distinction in binary
         }
 
-        public static string AsOctal(int value)
-        {
-            return Convert.ToString(value, 8);
-        }
-        public static string AsOctal(short value)
-        {
-            return Convert.ToString(value, 8);
-        }
-        public static string AsOctal(long value)
-        {
-            return Convert.ToString(value, 8);
-        }
-        public static string AsOctal(byte value)
-        {
-            return Convert.ToString(value, 8);
-        }
         public static string getTokenString(string s)
         {
             s = s.ToLower();

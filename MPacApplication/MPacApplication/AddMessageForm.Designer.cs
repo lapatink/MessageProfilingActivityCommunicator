@@ -54,16 +54,10 @@
             this.lblUniformFormat = new System.Windows.Forms.Label();
             this.lblUniformGroup = new System.Windows.Forms.Label();
             this.cmbUniformGroup = new System.Windows.Forms.ComboBox();
-            this.lblDelim = new System.Windows.Forms.Label();
-            this.txtDelim = new System.Windows.Forms.TextBox();
-            this.lblDefaultFormat = new System.Windows.Forms.Label();
-            this.cmbDefaultFormat = new System.Windows.Forms.ComboBox();
-            this.cmbDefaultType = new System.Windows.Forms.ComboBox();
             this.pnlExternalProgram = new System.Windows.Forms.Panel();
             this.lblExternal = new System.Windows.Forms.Label();
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.txtExternalFile = new System.Windows.Forms.TextBox();
-            this.pnlDefault = new System.Windows.Forms.Panel();
             this.pnlCustomFormat = new System.Windows.Forms.Panel();
             this.lblType = new System.Windows.Forms.Label();
             this.lblFormat2 = new System.Windows.Forms.Label();
@@ -80,7 +74,6 @@
             this.lstFormats = new System.Windows.Forms.ListBox();
             this.pnlUniformGroup.SuspendLayout();
             this.pnlExternalProgram.SuspendLayout();
-            this.pnlDefault.SuspendLayout();
             this.pnlCustomFormat.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -297,8 +290,6 @@
             this.cmbUniformFormat.FormattingEnabled = true;
             this.cmbUniformFormat.Items.AddRange(new object[] {
             "Binary",
-            "Octal",
-            "Decimal",
             "Hex"});
             this.cmbUniformFormat.Location = new System.Drawing.Point(99, 49);
             this.cmbUniformFormat.Name = "cmbUniformFormat";
@@ -342,61 +333,6 @@
             this.cmbUniformGroup.Size = new System.Drawing.Size(81, 21);
             this.cmbUniformGroup.TabIndex = 3;
             // 
-            // lblDelim
-            // 
-            this.lblDelim.AutoSize = true;
-            this.lblDelim.Location = new System.Drawing.Point(4, 48);
-            this.lblDelim.Name = "lblDelim";
-            this.lblDelim.Size = new System.Drawing.Size(105, 13);
-            this.lblDelim.TabIndex = 24;
-            this.lblDelim.Text = "Delimit the data with ";
-            // 
-            // txtDelim
-            // 
-            this.txtDelim.Location = new System.Drawing.Point(108, 45);
-            this.txtDelim.MaxLength = 8;
-            this.txtDelim.Name = "txtDelim";
-            this.txtDelim.Size = new System.Drawing.Size(40, 20);
-            this.txtDelim.TabIndex = 25;
-            this.txtDelim.Text = " ";
-            // 
-            // lblDefaultFormat
-            // 
-            this.lblDefaultFormat.AutoSize = true;
-            this.lblDefaultFormat.Location = new System.Drawing.Point(4, 21);
-            this.lblDefaultFormat.Name = "lblDefaultFormat";
-            this.lblDefaultFormat.Size = new System.Drawing.Size(144, 13);
-            this.lblDefaultFormat.TabIndex = 26;
-            this.lblDefaultFormat.Text = "Set the default data format to";
-            // 
-            // cmbDefaultFormat
-            // 
-            this.cmbDefaultFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDefaultFormat.FormattingEnabled = true;
-            this.cmbDefaultFormat.Items.AddRange(new object[] {
-            "Binary",
-            "Octal",
-            "Decimal",
-            "Hex"});
-            this.cmbDefaultFormat.Location = new System.Drawing.Point(154, 16);
-            this.cmbDefaultFormat.Name = "cmbDefaultFormat";
-            this.cmbDefaultFormat.Size = new System.Drawing.Size(84, 21);
-            this.cmbDefaultFormat.TabIndex = 27;
-            // 
-            // cmbDefaultType
-            // 
-            this.cmbDefaultType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDefaultType.FormattingEnabled = true;
-            this.cmbDefaultType.Items.AddRange(new object[] {
-            "Byte",
-            "Short",
-            "Int",
-            "Long"});
-            this.cmbDefaultType.Location = new System.Drawing.Point(244, 16);
-            this.cmbDefaultType.Name = "cmbDefaultType";
-            this.cmbDefaultType.Size = new System.Drawing.Size(84, 21);
-            this.cmbDefaultType.TabIndex = 28;
-            // 
             // pnlExternalProgram
             // 
             this.pnlExternalProgram.Controls.Add(this.lblExternal);
@@ -434,18 +370,6 @@
             this.txtExternalFile.Size = new System.Drawing.Size(241, 20);
             this.txtExternalFile.TabIndex = 0;
             // 
-            // pnlDefault
-            // 
-            this.pnlDefault.Controls.Add(this.cmbDefaultType);
-            this.pnlDefault.Controls.Add(this.cmbDefaultFormat);
-            this.pnlDefault.Controls.Add(this.lblDefaultFormat);
-            this.pnlDefault.Controls.Add(this.txtDelim);
-            this.pnlDefault.Controls.Add(this.lblDelim);
-            this.pnlDefault.Location = new System.Drawing.Point(271, 49);
-            this.pnlDefault.Name = "pnlDefault";
-            this.pnlDefault.Size = new System.Drawing.Size(352, 79);
-            this.pnlDefault.TabIndex = 30;
-            // 
             // pnlCustomFormat
             // 
             this.pnlCustomFormat.Controls.Add(this.lblType);
@@ -463,7 +387,7 @@
             this.pnlCustomFormat.Controls.Add(this.lstFormats);
             this.pnlCustomFormat.Location = new System.Drawing.Point(271, 134);
             this.pnlCustomFormat.Name = "pnlCustomFormat";
-            this.pnlCustomFormat.Size = new System.Drawing.Size(411, 153);
+            this.pnlCustomFormat.Size = new System.Drawing.Size(404, 144);
             this.pnlCustomFormat.TabIndex = 31;
             this.pnlCustomFormat.Visible = false;
             // 
@@ -621,9 +545,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(676, 278);
+            this.ClientSize = new System.Drawing.Size(677, 282);
             this.Controls.Add(this.pnlCustomFormat);
-            this.Controls.Add(this.pnlDefault);
             this.Controls.Add(this.pnlExternalProgram);
             this.Controls.Add(this.pnlUniformGroup);
             this.Controls.Add(this.cmbFormatType);
@@ -655,8 +578,6 @@
             this.pnlUniformGroup.PerformLayout();
             this.pnlExternalProgram.ResumeLayout(false);
             this.pnlExternalProgram.PerformLayout();
-            this.pnlDefault.ResumeLayout(false);
-            this.pnlDefault.PerformLayout();
             this.pnlCustomFormat.ResumeLayout(false);
             this.pnlCustomFormat.PerformLayout();
             this.ResumeLayout(false);
@@ -692,16 +613,10 @@
         private System.Windows.Forms.Label lblUniformFormat;
         private System.Windows.Forms.Label lblUniformGroup;
         private System.Windows.Forms.Label lblUniformGroup2;
-        private System.Windows.Forms.Label lblDelim;
-        private System.Windows.Forms.TextBox txtDelim;
-        private System.Windows.Forms.Label lblDefaultFormat;
-        private System.Windows.Forms.ComboBox cmbDefaultFormat;
-        private System.Windows.Forms.ComboBox cmbDefaultType;
         private System.Windows.Forms.Panel pnlExternalProgram;
         private System.Windows.Forms.Label lblExternal;
         private System.Windows.Forms.Button btnOpenFile;
         private System.Windows.Forms.TextBox txtExternalFile;
-        private System.Windows.Forms.Panel pnlDefault;
         private System.Windows.Forms.Panel pnlCustomFormat;
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.Label lblFormat2;
