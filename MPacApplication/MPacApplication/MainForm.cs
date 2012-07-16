@@ -12,8 +12,9 @@ namespace MPacApplication
 {
      public partial class MainForm : Form
      {
-          private List<MessageFormat> messages = new List<MessageFormat>();
-          
+          private List<MessageFormat> localMessages = new List<MessageFormat>();
+          private List<MessageFormat> companyMessages = new List<MessageFormat>(); 
+
           public const int DEFAULT_BAUD_RATE = 240;
           public const Parity DEFAULT_PARITY = Parity.None;
           public const int DEFAULT_DATA_BITS = 8;
@@ -236,29 +237,44 @@ namespace MPacApplication
                comPortClosed = true;
           }
 
-          public void createMessageFormat(MessageFormat message)
+          public void createMessageFormat(MessageFormat message, AddMessageForm.messageType type)
           {
-               messages.Add(message);
+              if(type == AddMessageForm.messageType.company)
+                  companyMessages.Add(message);
+              else
+                  localMessages.Add(message);
           }
 
-          public int getMessagesCount()
+          public int getMessagesCount(AddMessageForm.messageType type)
           {
-               return messages.Count;
+              if (type == AddMessageForm.messageType.company)
+                  return companyMessages.Count;
+              else
+                  return localMessages.Count;              
           }
 
-          public byte getMessageHigh(int index)
+          public byte getMessageHigh(int index, AddMessageForm.messageType type)
           {
-               return messages[index].id_high;
+              if (type == AddMessageForm.messageType.company)
+                  return companyMessages[index].id_high;
+              else
+                  return localMessages[index].id_high;
           }
 
-          public byte getMessageLow(int index)
+          public byte getMessageLow(int index, AddMessageForm.messageType type)
           {
-               return messages[index].id_low;
+              if (type == AddMessageForm.messageType.company)
+                  return companyMessages[index].id_low;
+              else
+                  return localMessages[index].id_low;
           }
 
-          public string getMessageName(int index)
+          public string getMessageName(int index, AddMessageForm.messageType type)
           {
-              return messages[index].name;
+              if (type == AddMessageForm.messageType.company)
+                  return companyMessages[index].name;
+              else
+                  return localMessages[index].name;
           }
 
           public void LogData(Message completedMessage)
