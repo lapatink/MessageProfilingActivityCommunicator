@@ -277,20 +277,32 @@ namespace MPacApplication
                   return localMessages[index].name;
           }
 
+          private MessageFormat GetMessageFormat(byte highByte, byte lowByte)
+          {
+               foreach (MessageFormat mf in localMessages)
+               {
+                    if (mf.id_high == highByte && mf.id_low == lowByte)
+                    {
+                         return mf;
+                    }
+               }
+
+               foreach (MessageFormat mf in companyMessages)
+               {
+                    if (mf.id_high == highByte && mf.id_low == lowByte)
+                    {
+                         return mf;
+                    }
+               }
+
+               return null;
+          }
+
           public void LogData(Message completedMessage)
           {
                String message;
                
-               //TODO - this is a hacky demo
-               MessageFormat format = null;
-               foreach (MessageFormat mf in messages)
-               {
-                    if (mf.id_high == completedMessage.id_high && mf.id_low == completedMessage.id_low)
-                    {
-                         format = mf;
-                         break;
-                    }
-               }
+               MessageFormat format = GetMessageFormat(completedMessage.id_high, completedMessage.id_low);
 
                if (format == null)
                {
