@@ -9,11 +9,12 @@ using System.Windows.Forms;
 
 namespace MPacApplication
 {
+    public enum MessageType { Local, Company };
+
     public partial class AddMessageForm : Form
     {
         private MainForm parentForm;
-        private messageType msgType;
-        public enum messageType { local, company };
+        private MessageType msgType;
         public AddMessageForm(MainForm sourceForm)
           {
                InitializeComponent();
@@ -27,7 +28,7 @@ namespace MPacApplication
             
                reset();
           }
-        public AddMessageForm(MainForm sourceForm, messageType type)
+        public AddMessageForm(MainForm sourceForm, MessageType type)
         {
             InitializeComponent();
             parentForm = sourceForm;
@@ -147,14 +148,14 @@ namespace MPacApplication
 
         private void btnOK_Click(object sender, EventArgs e)
         { 
-            for (int i = 0; i < parentForm.getMessagesCount(msgType); i++)
+            for (int i = 0; i < parentForm.GetMessagesCount(msgType); i++)
             {
-                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.getMessageHigh(i, msgType)) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.getMessageLow(i, msgType)))
+                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.GetMessageHighByte(i, msgType)) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.GetMessageLowByte(i, msgType)))
                 {
                     MessageBox.Show("Message ID already exists", "Duplicate ID", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     return;
                 }
-				if (txtName.Text == parentForm.getMessageName(i, msgType))
+			 if (txtName.Text == parentForm.GetMessageName(i, msgType))
                 {
                     MessageBox.Show("Message name already exists", "Duplicate name", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     return;
@@ -185,7 +186,7 @@ namespace MPacApplication
                 txtName.Text,
                 txtFormat.Text);
 
-            if (msgType == messageType.company)
+            if (msgType == MessageType.Company)
             {
                 Configuration config = new Configuration();
                 string[] connections = config.Read();
@@ -197,7 +198,7 @@ namespace MPacApplication
             {
                 MessageBox.Show("Local message created", "Local message created", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
             }
-            parentForm.createMessageFormat(message, msgType);
+            parentForm.AddMessageFormat(message, msgType);
             this.Visible = false;
             reset();
         }

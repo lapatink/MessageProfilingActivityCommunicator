@@ -32,6 +32,7 @@ namespace MPacApplication
           private DataProcessor dataProcessor;
           private int numberOfStatusEntries;
           private int numberOfEntries;
+          private int totalNumberOfMessages;
 
           private bool initialized;
 
@@ -84,6 +85,7 @@ namespace MPacApplication
                dataProcessor = new DataProcessor(this);
                numberOfStatusEntries = 0;
                numberOfEntries = 0;
+               totalNumberOfMessages = 0;
 
                PrintStatusMessage("Start Initialization");
                initialized = false;
@@ -237,44 +239,37 @@ namespace MPacApplication
                comPortClosed = true;
           }
 
-          public void createMessageFormat(MessageFormat message, AddMessageForm.messageType type)
+          //TODO - these four functions could be wrapped up into a "CanThisMessageBeAdded(MessageFormat messageFormat) type of function
+          public int GetMessagesCount(MessageType type)
           {
-              if(type == AddMessageForm.messageType.company)
-                  companyMessages.Add(message);
-              else
-                  localMessages.Add(message);
+               if (type == MessageType.Company)
+                    return companyMessages.Count;
+               else
+                    return localMessages.Count;              
           }
 
-          public int getMessagesCount(AddMessageForm.messageType type)
+          public byte GetMessageHighByte(int index, MessageType type)
           {
-              if (type == AddMessageForm.messageType.company)
-                  return companyMessages.Count;
-              else
-                  return localMessages.Count;              
+               if (type == MessageType.Company)
+                    return companyMessages[index].id_high;
+               else
+                    return localMessages[index].id_high;
           }
 
-          public byte getMessageHigh(int index, AddMessageForm.messageType type)
+          public byte GetMessageLowByte(int index, MessageType type)
           {
-              if (type == AddMessageForm.messageType.company)
-                  return companyMessages[index].id_high;
-              else
-                  return localMessages[index].id_high;
+               if (type == MessageType.Company)
+                    return companyMessages[index].id_low;
+               else
+                    return localMessages[index].id_low;
           }
 
-          public byte getMessageLow(int index, AddMessageForm.messageType type)
+          public string GetMessageName(int index, MessageType type)
           {
-              if (type == AddMessageForm.messageType.company)
-                  return companyMessages[index].id_low;
-              else
-                  return localMessages[index].id_low;
-          }
-
-          public string getMessageName(int index, AddMessageForm.messageType type)
-          {
-              if (type == AddMessageForm.messageType.company)
-                  return companyMessages[index].name;
-              else
-                  return localMessages[index].name;
+               if (type == MessageType.Company)
+                    return companyMessages[index].name;
+               else
+                    return localMessages[index].name;
           }
 
           private MessageFormat GetMessageFormat(byte highByte, byte lowByte)
@@ -342,6 +337,26 @@ namespace MPacApplication
                numberOfStatusEntries++;
           }
 
+          public void AddMessageFormat(MessageFormat messageFormat, MessageType type)
+          {
+               if (type == MessageType.Company)
+                    companyMessages.Add(messageFormat);
+               else
+                    localMessages.Add(messageFormat);
+
+               lstMessageSummary.Items.Add(messageFormat.ToString());
+               lstMessageSummary.SelectedIndex = totalNumberOfMessages;
+               totalNumberOfMessages++;
+          }
+
+          public void RemoveMessageFormat(MessageFormat messageFormat)
+          {
+               //get index of selected message format
+               //remove from listbox
+               //delete from list
+               //decrement total number of messages
+          }
+
           private void tmrClockRefresh_Tick(object sender, EventArgs e)
           {
                String time = String.Format("{0:MM/dd/yyyy   HH:mm:ss tt}", DateTime.Now);
@@ -404,28 +419,28 @@ namespace MPacApplication
 
           private void btnAddMessage_Click(object sender, EventArgs e)
           {
-              try
-              {
-                  AddMessageForm.Show();
-              }
-              catch (Exception)
-              {
-                  AddMessageForm = new AddMessageForm(this, AddMessageForm.messageType.local);
-                  AddMessageForm.Show();
-              }
+               try
+               {
+                    AddMessageForm.Show();
+               }
+               catch (Exception)
+               {
+                    AddMessageForm = new AddMessageForm(this, MessageType.Local);
+                    AddMessageForm.Show();
+               }
           }
 
           private void btnAddCompanyMessage_Click(object sender, EventArgs e)
           {
-              try
-              {
-                  AddCompanyForm.Show();
-              }
-              catch (Exception)
-              {
-                  AddCompanyForm = new AddMessageForm(this, AddMessageForm.messageType.company);
-                  AddCompanyForm.Show();
-              }
+               try
+               {
+                   AddCompanyForm.Show();
+               }
+               catch (Exception)
+               {
+                    AddCompanyForm = new AddMessageForm(this, MessageType.Company);
+                    AddCompanyForm.Show();
+               }
           }
 
           private void btnSendMessageOne_Click(object sender, EventArgs e)
