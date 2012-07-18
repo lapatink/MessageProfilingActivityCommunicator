@@ -122,6 +122,36 @@ namespace MPacApplication
             return flag;
         }
 
+        public bool Remove(int id)
+        {
+            bool flag = true;
+            try
+            {
+                conn.Open();
+                cmd = new SqlCommand("DELETE FROM " + table + " WHERE id = @id", conn);
+
+                cmd.Parameters.AddWithValue("id", id);
+
+                flag = (cmd.ExecuteNonQuery() > 0);
+
+            }
+            catch (Exception e)
+            {
+                flag = false;
+                Console.WriteLine(e.ToString());
+            }
+            finally
+            {
+                conn.Close();
+                cmd = null;
+            }
+            return flag;
+        }
+
+        public bool Remove(MessageFormat m)
+        {
+            return Remove(m.Id);
+        }
 
         private object safeRead(SqlDataReader r, string s)
         {
