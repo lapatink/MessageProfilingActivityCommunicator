@@ -10,8 +10,11 @@ using System.IO.Ports;
 
 namespace MPacApplication
 {
+
      public partial class MainForm : Form
      {
+          public static short SOFTWARE_VERSION = 0x0100;
+
           private List<MessageFormat> localMessages = new List<MessageFormat>();
           private List<MessageFormat> companyMessages = new List<MessageFormat>(); 
 
@@ -87,6 +90,7 @@ namespace MPacApplication
                numberOfEntries = 0;
                totalNumberOfMessages = 0;
                lstMessageSummary.Sorted = true;
+               cmbViews.SelectedIndex = 0;
 
                PrintStatusMessage("Start Initialization");
                initialized = false;
@@ -347,6 +351,7 @@ namespace MPacApplication
 
                lstMessageSummary.Items.Add(messageFormat.ToString());
                lstMessageSummary.SelectedIndex = totalNumberOfMessages;
+               cmbViews.Items.Add(messageFormat.name);
                totalNumberOfMessages++;
           }
 
@@ -355,6 +360,7 @@ namespace MPacApplication
                //get index of selected message format
                //remove from listbox
                //delete from list
+               //delete from combobox list
                //decrement total number of messages
           }
 

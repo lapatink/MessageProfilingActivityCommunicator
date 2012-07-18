@@ -65,6 +65,7 @@
                this.label2 = new System.Windows.Forms.Label();
                this.label3 = new System.Windows.Forms.Label();
                this.lstMessageSummary = new System.Windows.Forms.ListBox();
+               this.cmbViews = new System.Windows.Forms.ComboBox();
                this.menuStrip1.SuspendLayout();
                this.SuspendLayout();
                // 
@@ -192,7 +193,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
                this.lstDisplayWindow.FormattingEnabled = true;
                this.lstDisplayWindow.HorizontalScrollbar = true;
-               this.lstDisplayWindow.Location = new System.Drawing.Point(12, 192);
+               this.lstDisplayWindow.Location = new System.Drawing.Point(12, 218);
                this.lstDisplayWindow.Name = "lstDisplayWindow";
                this.lstDisplayWindow.Size = new System.Drawing.Size(507, 82);
                this.lstDisplayWindow.TabIndex = 14;
@@ -350,9 +351,9 @@
                this.lstComPortDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
                this.lstComPortDisplay.FormattingEnabled = true;
                this.lstComPortDisplay.HorizontalScrollbar = true;
-               this.lstComPortDisplay.Location = new System.Drawing.Point(12, 277);
+               this.lstComPortDisplay.Location = new System.Drawing.Point(12, 303);
                this.lstComPortDisplay.Name = "lstComPortDisplay";
-               this.lstComPortDisplay.Size = new System.Drawing.Size(215, 173);
+               this.lstComPortDisplay.Size = new System.Drawing.Size(215, 147);
                this.lstComPortDisplay.TabIndex = 25;
                // 
                // lstStatusDisplay
@@ -361,9 +362,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
                this.lstStatusDisplay.FormattingEnabled = true;
                this.lstStatusDisplay.HorizontalScrollbar = true;
-               this.lstStatusDisplay.Location = new System.Drawing.Point(233, 277);
+               this.lstStatusDisplay.Location = new System.Drawing.Point(233, 303);
                this.lstStatusDisplay.Name = "lstStatusDisplay";
-               this.lstStatusDisplay.Size = new System.Drawing.Size(286, 173);
+               this.lstStatusDisplay.Size = new System.Drawing.Size(286, 147);
                this.lstStatusDisplay.TabIndex = 26;
                // 
                // label1
@@ -399,16 +400,28 @@
             | System.Windows.Forms.AnchorStyles.Right)));
                this.lstMessageSummary.FormattingEnabled = true;
                this.lstMessageSummary.HorizontalScrollbar = true;
-               this.lstMessageSummary.Location = new System.Drawing.Point(525, 192);
+               this.lstMessageSummary.Location = new System.Drawing.Point(525, 218);
                this.lstMessageSummary.Name = "lstMessageSummary";
-               this.lstMessageSummary.Size = new System.Drawing.Size(247, 264);
+               this.lstMessageSummary.Size = new System.Drawing.Size(247, 238);
                this.lstMessageSummary.TabIndex = 30;
+               // 
+               // cmbViews
+               // 
+               this.cmbViews.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+               this.cmbViews.FormattingEnabled = true;
+               this.cmbViews.Items.AddRange(new object[] {
+            "All"});
+               this.cmbViews.Location = new System.Drawing.Point(12, 192);
+               this.cmbViews.Name = "cmbViews";
+               this.cmbViews.Size = new System.Drawing.Size(121, 21);
+               this.cmbViews.TabIndex = 31;
                // 
                // MainForm
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
                this.ClientSize = new System.Drawing.Size(784, 462);
+               this.Controls.Add(this.cmbViews);
                this.Controls.Add(this.lstMessageSummary);
                this.Controls.Add(this.label3);
                this.Controls.Add(this.label2);
@@ -487,6 +500,7 @@
           private System.Windows.Forms.Label label2;
           private System.Windows.Forms.Label label3;
           private System.Windows.Forms.ListBox lstMessageSummary;
+          private System.Windows.Forms.ComboBox cmbViews;
      }
 }
 
