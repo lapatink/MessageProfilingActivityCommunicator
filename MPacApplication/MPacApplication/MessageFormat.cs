@@ -44,14 +44,10 @@ namespace MPacApplication
 
         public override string ToString()
         {
-            return "id: " + id.ToString() +
-                " version_major: " + version_major.ToString() +
-                " version_minor: " + version_minor.ToString() +
-                " name: " + name.ToString() +
-                " id_high: " + id_high.ToString() +
-                " id_low: " + id_low.ToString() +
-                " length: " + length.ToString() +
-                " format: " + format.ToString();
+            return name.ToString() + 
+                " - ID: 0x" + id_high.ToString() + id_low.ToString() +
+                " - Length: " + length.ToString() +
+                " - Format: " + format.ToString();
         }
 
         /// <summary>

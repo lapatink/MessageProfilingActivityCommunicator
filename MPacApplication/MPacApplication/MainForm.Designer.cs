@@ -67,6 +67,7 @@
             this.lstMessageSummary = new System.Windows.Forms.ListBox();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnRemove = new System.Windows.Forms.Button();
+            this.cmbViews = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -194,9 +195,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstDisplayWindow.FormattingEnabled = true;
             this.lstDisplayWindow.HorizontalScrollbar = true;
-            this.lstDisplayWindow.Location = new System.Drawing.Point(12, 192);
+            this.lstDisplayWindow.Location = new System.Drawing.Point(12, 218);
             this.lstDisplayWindow.Name = "lstDisplayWindow";
-            this.lstDisplayWindow.Size = new System.Drawing.Size(673, 82);
+            this.lstDisplayWindow.Size = new System.Drawing.Size(582, 82);
             this.lstDisplayWindow.TabIndex = 14;
             // 
             // tmrCheckForData
@@ -209,7 +210,7 @@
             // 
             this.btnAddMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddMessage.Location = new System.Drawing.Point(288, 27);
+            this.btnAddMessage.Location = new System.Drawing.Point(289, 25);
             this.btnAddMessage.Name = "btnAddMessage";
             this.btnAddMessage.Size = new System.Drawing.Size(75, 68);
             this.btnAddMessage.TabIndex = 15;
@@ -221,7 +222,7 @@
             // 
             this.btnAddCompanyMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddCompanyMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddCompanyMessage.Location = new System.Drawing.Point(369, 27);
+            this.btnAddCompanyMessage.Location = new System.Drawing.Point(370, 24);
             this.btnAddCompanyMessage.Name = "btnAddCompanyMessage";
             this.btnAddCompanyMessage.Size = new System.Drawing.Size(75, 68);
             this.btnAddCompanyMessage.TabIndex = 16;
@@ -235,7 +236,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMessageOne.Location = new System.Drawing.Point(95, 110);
             this.txtMessageOne.Name = "txtMessageOne";
-            this.txtMessageOne.Size = new System.Drawing.Size(671, 20);
+            this.txtMessageOne.Size = new System.Drawing.Size(670, 20);
             this.txtMessageOne.TabIndex = 17;
             // 
             // txtMessageTwo
@@ -244,7 +245,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMessageTwo.Location = new System.Drawing.Point(95, 137);
             this.txtMessageTwo.Name = "txtMessageTwo";
-            this.txtMessageTwo.Size = new System.Drawing.Size(671, 20);
+            this.txtMessageTwo.Size = new System.Drawing.Size(670, 20);
             this.txtMessageTwo.TabIndex = 18;
             // 
             // txtMessageThree
@@ -253,13 +254,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMessageThree.Location = new System.Drawing.Point(95, 164);
             this.txtMessageThree.Name = "txtMessageThree";
-            this.txtMessageThree.Size = new System.Drawing.Size(671, 20);
+            this.txtMessageThree.Size = new System.Drawing.Size(670, 20);
             this.txtMessageThree.TabIndex = 19;
             // 
             // btnSendMessageOne
             // 
             this.btnSendMessageOne.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendMessageOne.Location = new System.Drawing.Point(772, 108);
+            this.btnSendMessageOne.Location = new System.Drawing.Point(771, 107);
             this.btnSendMessageOne.Name = "btnSendMessageOne";
             this.btnSendMessageOne.Size = new System.Drawing.Size(75, 23);
             this.btnSendMessageOne.TabIndex = 20;
@@ -270,7 +271,7 @@
             // btnSendMessageTwo
             // 
             this.btnSendMessageTwo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendMessageTwo.Location = new System.Drawing.Point(772, 135);
+            this.btnSendMessageTwo.Location = new System.Drawing.Point(772, 134);
             this.btnSendMessageTwo.Name = "btnSendMessageTwo";
             this.btnSendMessageTwo.Size = new System.Drawing.Size(75, 23);
             this.btnSendMessageTwo.TabIndex = 21;
@@ -281,7 +282,7 @@
             // btnSendMessageThree
             // 
             this.btnSendMessageThree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendMessageThree.Location = new System.Drawing.Point(772, 162);
+            this.btnSendMessageThree.Location = new System.Drawing.Point(772, 163);
             this.btnSendMessageThree.Name = "btnSendMessageThree";
             this.btnSendMessageThree.Size = new System.Drawing.Size(75, 23);
             this.btnSendMessageThree.TabIndex = 22;
@@ -352,9 +353,9 @@
             this.lstComPortDisplay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lstComPortDisplay.FormattingEnabled = true;
             this.lstComPortDisplay.HorizontalScrollbar = true;
-            this.lstComPortDisplay.Location = new System.Drawing.Point(12, 277);
+            this.lstComPortDisplay.Location = new System.Drawing.Point(12, 303);
             this.lstComPortDisplay.Name = "lstComPortDisplay";
-            this.lstComPortDisplay.Size = new System.Drawing.Size(215, 173);
+            this.lstComPortDisplay.Size = new System.Drawing.Size(215, 147);
             this.lstComPortDisplay.TabIndex = 25;
             // 
             // lstStatusDisplay
@@ -363,9 +364,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstStatusDisplay.FormattingEnabled = true;
             this.lstStatusDisplay.HorizontalScrollbar = true;
-            this.lstStatusDisplay.Location = new System.Drawing.Point(233, 277);
+            this.lstStatusDisplay.Location = new System.Drawing.Point(233, 303);
             this.lstStatusDisplay.Name = "lstStatusDisplay";
-            this.lstStatusDisplay.Size = new System.Drawing.Size(452, 173);
+            this.lstStatusDisplay.Size = new System.Drawing.Size(361, 147);
             this.lstStatusDisplay.TabIndex = 26;
             // 
             // label1
@@ -401,16 +402,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstMessageSummary.FormattingEnabled = true;
             this.lstMessageSummary.HorizontalScrollbar = true;
-            this.lstMessageSummary.Location = new System.Drawing.Point(691, 192);
+            this.lstMessageSummary.Location = new System.Drawing.Point(600, 218);
             this.lstMessageSummary.Name = "lstMessageSummary";
-            this.lstMessageSummary.Size = new System.Drawing.Size(156, 264);
+            this.lstMessageSummary.Size = new System.Drawing.Size(247, 238);
             this.lstMessageSummary.TabIndex = 30;
             // 
             // btnRefresh
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefresh.Location = new System.Drawing.Point(450, 27);
+            this.btnRefresh.Location = new System.Drawing.Point(451, 25);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 68);
             this.btnRefresh.TabIndex = 31;
@@ -429,6 +430,17 @@
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
+            // cmbViews
+            // 
+            this.cmbViews.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbViews.FormattingEnabled = true;
+            this.cmbViews.Items.AddRange(new object[] {
+            "All"});
+            this.cmbViews.Location = new System.Drawing.Point(12, 192);
+            this.cmbViews.Name = "cmbViews";
+            this.cmbViews.Size = new System.Drawing.Size(121, 21);
+            this.cmbViews.TabIndex = 31;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -436,6 +448,7 @@
             this.ClientSize = new System.Drawing.Size(859, 462);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnRefresh);
+            this.Controls.Add(this.cmbViews);
             this.Controls.Add(this.lstMessageSummary);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -466,7 +479,7 @@
             this.Controls.Add(this.lblCurrentTime);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(875, 500);
+            this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "MainForm";
             this.Text = "Message-Profiling Activity Communicator";
             this.menuStrip1.ResumeLayout(false);
@@ -514,8 +527,12 @@
           private System.Windows.Forms.Label label2;
           private System.Windows.Forms.Label label3;
           private System.Windows.Forms.ListBox lstMessageSummary;
+
           private System.Windows.Forms.Button btnRefresh;
           private System.Windows.Forms.Button btnRemove;
+
+          private System.Windows.Forms.ComboBox cmbViews;
+
      }
 }
 
