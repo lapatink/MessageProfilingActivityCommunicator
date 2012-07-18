@@ -194,7 +194,7 @@
                this.lstDisplayWindow.HorizontalScrollbar = true;
                this.lstDisplayWindow.Location = new System.Drawing.Point(12, 192);
                this.lstDisplayWindow.Name = "lstDisplayWindow";
-               this.lstDisplayWindow.Size = new System.Drawing.Size(598, 82);
+               this.lstDisplayWindow.Size = new System.Drawing.Size(507, 82);
                this.lstDisplayWindow.TabIndex = 14;
                // 
                // tmrCheckForData
@@ -363,7 +363,7 @@
                this.lstStatusDisplay.HorizontalScrollbar = true;
                this.lstStatusDisplay.Location = new System.Drawing.Point(233, 277);
                this.lstStatusDisplay.Name = "lstStatusDisplay";
-               this.lstStatusDisplay.Size = new System.Drawing.Size(377, 173);
+               this.lstStatusDisplay.Size = new System.Drawing.Size(286, 173);
                this.lstStatusDisplay.TabIndex = 26;
                // 
                // label1
@@ -399,9 +399,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
                this.lstMessageSummary.FormattingEnabled = true;
                this.lstMessageSummary.HorizontalScrollbar = true;
-               this.lstMessageSummary.Location = new System.Drawing.Point(616, 192);
+               this.lstMessageSummary.Location = new System.Drawing.Point(525, 192);
                this.lstMessageSummary.Name = "lstMessageSummary";
-               this.lstMessageSummary.Size = new System.Drawing.Size(156, 264);
+               this.lstMessageSummary.Size = new System.Drawing.Size(247, 264);
                this.lstMessageSummary.TabIndex = 30;
                // 
                // MainForm

@@ -86,6 +86,7 @@ namespace MPacApplication
                numberOfStatusEntries = 0;
                numberOfEntries = 0;
                totalNumberOfMessages = 0;
+               lstMessageSummary.Sorted = true;
 
                PrintStatusMessage("Start Initialization");
                initialized = false;
@@ -245,7 +246,7 @@ namespace MPacApplication
                if (type == MessageType.Company)
                     return companyMessages.Count;
                else
-                    return localMessages.Count;              
+                    return localMessages.Count;
           }
 
           public byte GetMessageHighByte(int index, MessageType type)
