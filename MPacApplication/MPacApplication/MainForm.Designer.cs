@@ -76,7 +76,7 @@
             this.lblCurrentTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCurrentTime.AutoSize = true;
             this.lblCurrentTime.Font = new System.Drawing.Font("Quartz MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrentTime.Location = new System.Drawing.Point(539, 24);
+            this.lblCurrentTime.Location = new System.Drawing.Point(534, 24);
             this.lblCurrentTime.Name = "lblCurrentTime";
             this.lblCurrentTime.Size = new System.Drawing.Size(308, 25);
             this.lblCurrentTime.TabIndex = 0;
@@ -197,7 +197,7 @@
             this.lstDisplayWindow.HorizontalScrollbar = true;
             this.lstDisplayWindow.Location = new System.Drawing.Point(12, 218);
             this.lstDisplayWindow.Name = "lstDisplayWindow";
-            this.lstDisplayWindow.Size = new System.Drawing.Size(582, 82);
+            this.lstDisplayWindow.Size = new System.Drawing.Size(577, 82);
             this.lstDisplayWindow.TabIndex = 14;
             // 
             // tmrCheckForData
@@ -210,7 +210,7 @@
             // 
             this.btnAddMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddMessage.Location = new System.Drawing.Point(289, 25);
+            this.btnAddMessage.Location = new System.Drawing.Point(284, 25);
             this.btnAddMessage.Name = "btnAddMessage";
             this.btnAddMessage.Size = new System.Drawing.Size(75, 68);
             this.btnAddMessage.TabIndex = 15;
@@ -222,7 +222,7 @@
             // 
             this.btnAddCompanyMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddCompanyMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddCompanyMessage.Location = new System.Drawing.Point(370, 24);
+            this.btnAddCompanyMessage.Location = new System.Drawing.Point(365, 24);
             this.btnAddCompanyMessage.Name = "btnAddCompanyMessage";
             this.btnAddCompanyMessage.Size = new System.Drawing.Size(75, 68);
             this.btnAddCompanyMessage.TabIndex = 16;
@@ -236,7 +236,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMessageOne.Location = new System.Drawing.Point(95, 110);
             this.txtMessageOne.Name = "txtMessageOne";
-            this.txtMessageOne.Size = new System.Drawing.Size(670, 20);
+            this.txtMessageOne.Size = new System.Drawing.Size(665, 20);
             this.txtMessageOne.TabIndex = 17;
             // 
             // txtMessageTwo
@@ -245,7 +245,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMessageTwo.Location = new System.Drawing.Point(95, 137);
             this.txtMessageTwo.Name = "txtMessageTwo";
-            this.txtMessageTwo.Size = new System.Drawing.Size(670, 20);
+            this.txtMessageTwo.Size = new System.Drawing.Size(665, 20);
             this.txtMessageTwo.TabIndex = 18;
             // 
             // txtMessageThree
@@ -254,13 +254,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMessageThree.Location = new System.Drawing.Point(95, 164);
             this.txtMessageThree.Name = "txtMessageThree";
-            this.txtMessageThree.Size = new System.Drawing.Size(670, 20);
+            this.txtMessageThree.Size = new System.Drawing.Size(665, 20);
             this.txtMessageThree.TabIndex = 19;
             // 
             // btnSendMessageOne
             // 
             this.btnSendMessageOne.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendMessageOne.Location = new System.Drawing.Point(771, 107);
+            this.btnSendMessageOne.Location = new System.Drawing.Point(766, 107);
             this.btnSendMessageOne.Name = "btnSendMessageOne";
             this.btnSendMessageOne.Size = new System.Drawing.Size(75, 23);
             this.btnSendMessageOne.TabIndex = 20;
@@ -271,7 +271,7 @@
             // btnSendMessageTwo
             // 
             this.btnSendMessageTwo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendMessageTwo.Location = new System.Drawing.Point(772, 134);
+            this.btnSendMessageTwo.Location = new System.Drawing.Point(767, 134);
             this.btnSendMessageTwo.Name = "btnSendMessageTwo";
             this.btnSendMessageTwo.Size = new System.Drawing.Size(75, 23);
             this.btnSendMessageTwo.TabIndex = 21;
@@ -282,7 +282,7 @@
             // btnSendMessageThree
             // 
             this.btnSendMessageThree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendMessageThree.Location = new System.Drawing.Point(772, 163);
+            this.btnSendMessageThree.Location = new System.Drawing.Point(767, 163);
             this.btnSendMessageThree.Name = "btnSendMessageThree";
             this.btnSendMessageThree.Size = new System.Drawing.Size(75, 23);
             this.btnSendMessageThree.TabIndex = 22;
@@ -296,7 +296,7 @@
             this.File});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(859, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(854, 24);
             this.menuStrip1.TabIndex = 23;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -366,7 +366,7 @@
             this.lstStatusDisplay.HorizontalScrollbar = true;
             this.lstStatusDisplay.Location = new System.Drawing.Point(233, 303);
             this.lstStatusDisplay.Name = "lstStatusDisplay";
-            this.lstStatusDisplay.Size = new System.Drawing.Size(361, 147);
+            this.lstStatusDisplay.Size = new System.Drawing.Size(356, 147);
             this.lstStatusDisplay.TabIndex = 26;
             // 
             // label1
@@ -402,7 +402,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstMessageSummary.FormattingEnabled = true;
             this.lstMessageSummary.HorizontalScrollbar = true;
-            this.lstMessageSummary.Location = new System.Drawing.Point(600, 218);
+            this.lstMessageSummary.Location = new System.Drawing.Point(595, 218);
             this.lstMessageSummary.Name = "lstMessageSummary";
             this.lstMessageSummary.Size = new System.Drawing.Size(247, 238);
             this.lstMessageSummary.TabIndex = 30;
@@ -411,7 +411,7 @@
             // 
             this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnRefresh.Location = new System.Drawing.Point(451, 25);
+            this.btnRefresh.Location = new System.Drawing.Point(446, 25);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(75, 68);
             this.btnRefresh.TabIndex = 31;
@@ -422,7 +422,7 @@
             // btnRemove
             // 
             this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemove.Location = new System.Drawing.Point(772, 79);
+            this.btnRemove.Location = new System.Drawing.Point(767, 79);
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(75, 23);
             this.btnRemove.TabIndex = 32;
@@ -445,7 +445,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(859, 462);
+            this.ClientSize = new System.Drawing.Size(854, 462);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnRefresh);
             this.Controls.Add(this.cmbViews);
@@ -479,7 +479,7 @@
             this.Controls.Add(this.lblCurrentTime);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.MinimumSize = new System.Drawing.Size(800, 500);
+            this.MinimumSize = new System.Drawing.Size(870, 500);
             this.Name = "MainForm";
             this.Text = "Message-Profiling Activity Communicator";
             this.menuStrip1.ResumeLayout(false);
