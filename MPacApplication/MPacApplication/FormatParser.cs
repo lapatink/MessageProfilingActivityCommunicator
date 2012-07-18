@@ -20,6 +20,8 @@ namespace MPacApplication
         /// <returns>Returns a formatted string of the data.</returns>
         public static string Parse(string format, byte[] bytes)
         {
+            index = 0;
+
             if (bytes == null)
                 return "";
             if (bytes.Length < 1 || format.Length < 1)

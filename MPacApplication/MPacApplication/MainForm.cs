@@ -39,6 +39,14 @@ namespace MPacApplication
 
           private bool initialized;
 
+          private bool isAdministrator = false;
+          public bool IsAdministrator
+          {
+              get
+              {
+                  return isAdministrator;
+              }
+          }
           private String comPortName;
           public String ComPortName
           {
@@ -125,14 +133,20 @@ namespace MPacApplication
                string[] connections = config.Read();
               PrintStatusMessage("Configuration read complete. Found " + connections.Length + " connection(s).");
 
-               if (!config.IsAdministrator)
-                   btnAddCompanyMessage.Hide();
+              if (!config.IsAdministrator)
+                  btnAddCompanyMessage.Hide();
+              else
+                  isAdministrator = true;
 
                PrintStatusMessage("End Configuration");
                PrintStatusMessage("Start SQL Import");
 
+               List<MessageFormat> messages = new List<MessageFormat>();
                foreach (string connection in connections)
-                   companyMessages.AddRange(new SqlMessageConnection(connection).GetMessageList());
+                   messages.AddRange(new SqlMessageConnection(connection).GetMessageList());
+
+               foreach (MessageFormat m in messages)
+                   AddMessageFormat(m, MessageType.Company);
 
               PrintStatusMessage("End SQL Import. " + companyMessages.Count + " custom messages loaded.");
 
@@ -349,19 +363,33 @@ namespace MPacApplication
                else
                     localMessages.Add(messageFormat);
 
-               lstMessageSummary.Items.Add(messageFormat.ToString());
+               lstMessageSummary.Items.Add(messageFormat);
                lstMessageSummary.SelectedIndex = totalNumberOfMessages;
                cmbViews.Items.Add(messageFormat.name);
                totalNumberOfMessages++;
           }
 
-          public void RemoveMessageFormat(MessageFormat messageFormat)
+          public bool RemoveMessageFormat(MessageFormat messageFormat)
           {
-               //get index of selected message format
-               //remove from listbox
-               //delete from list
-               //delete from combobox list
-               //decrement total number of messages
+              bool flag = false;
+
+              if (localMessages.Remove(messageFormat))
+                  flag = true;
+              if (IsAdministrator)
+                  if (companyMessages.Remove(messageFormat))
+                      flag = true;
+
+              if (flag)
+              {
+                  lstMessageSummary.Items.Remove(messageFormat);
+                  totalNumberOfMessages--;
+              }
+
+              return flag;
+          }
+          public bool RemoveMessageFormat(int index)
+          {
+              return RemoveMessageFormat((MessageFormat)lstMessageSummary.Items[index]);
           }
 
           private void tmrClockRefresh_Tick(object sender, EventArgs e)
@@ -494,10 +522,16 @@ namespace MPacApplication
 
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
-                  //TODO: error checking
-                  Console.WriteLine(fileDialog.FileName);
-                  //TODO: do something with the message formats
-                  //List<MessageFormat> messages = Import.ToMessages(fileDialog.FileName);
+                  List<MessageFormat> messages = new List<MessageFormat>();
+                  messages.AddRange(localMessages);
+
+                  foreach (MessageFormat m in messages)
+                      RemoveMessageFormat(m);
+
+                  messages = new List<MessageFormat>();
+                  messages = Import.ToMessages(fileDialog.FileName);
+                  foreach (MessageFormat m in messages)
+                      AddMessageFormat(m, MessageType.Local);
               }
           }
 
@@ -506,12 +540,48 @@ namespace MPacApplication
               SaveFileDialog fileDialog = new SaveFileDialog();
               fileDialog.Filter = "CSV Files|*.csv|All Files|*.*";
               fileDialog.InitialDirectory = "%USERPROFILE%";
+              
 
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
-                  //TODO: Export an actual list of objects. Add error checking
-                  Export.FromMessages(new List<MessageFormat>(), fileDialog.FileName);
+                  Export.FromMessages(localMessages, fileDialog.FileName);
               }
+          }
+
+          private void btnRefresh_Click(object sender, EventArgs e)
+          {
+              btnRefresh.Enabled = false; //prevent spam
+
+              Configuration config = new Configuration();
+
+              string[] connections = config.Read();
+
+              List<MessageFormat> messages = new List<MessageFormat>();
+
+              messages.AddRange(companyMessages);
+
+              foreach (MessageFormat m in messages)
+                  RemoveMessageFormat(m);
+              
+              messages = new List<MessageFormat>();
+
+              foreach (string connection in connections)
+                  messages.AddRange(new SqlMessageConnection(connection).GetMessageList());
+              foreach (MessageFormat m in messages)
+                  AddMessageFormat(m, MessageType.Company);
+
+              btnRefresh.Enabled = true;
+          }
+
+          private void btnRemove_Click(object sender, EventArgs e)
+          {
+              int index = lstMessageSummary.SelectedIndex;
+
+              if (index < 0)
+                  return;
+
+              RemoveMessageFormat(index);
+              
           }
      }
 }
