@@ -16,6 +16,11 @@ namespace MPacApplication
         public string name = "";
         public string format = "";
 
+        public int Id
+        {
+            get { return id; }
+        }
+
         public MessageFormat()
         {
 
