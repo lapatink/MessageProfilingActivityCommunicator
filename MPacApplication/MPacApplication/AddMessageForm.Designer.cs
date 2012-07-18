@@ -72,6 +72,8 @@
             this.cmbCount = new System.Windows.Forms.ComboBox();
             this.cmbGroup = new System.Windows.Forms.ComboBox();
             this.lstFormats = new System.Windows.Forms.ListBox();
+            this.cmbConnections = new System.Windows.Forms.ComboBox();
+            this.lblConnection = new System.Windows.Forms.Label();
             this.pnlUniformGroup.SuspendLayout();
             this.pnlExternalProgram.SuspendLayout();
             this.pnlCustomFormat.SuspendLayout();
@@ -212,7 +214,7 @@
             // 
             // txtFormat
             // 
-            this.txtFormat.Location = new System.Drawing.Point(16, 192);
+            this.txtFormat.Location = new System.Drawing.Point(716, 231);
             this.txtFormat.Name = "txtFormat";
             this.txtFormat.ReadOnly = true;
             this.txtFormat.Size = new System.Drawing.Size(231, 20);
@@ -317,6 +319,7 @@
             // 
             // cmbUniformGroup
             // 
+            this.cmbUniformGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbUniformGroup.FormattingEnabled = true;
             this.cmbUniformGroup.Items.AddRange(new object[] {
             "1",
@@ -326,9 +329,7 @@
             "5",
             "6",
             "7",
-            "8",
-            "16",
-            "32"});
+            "8"});
             this.cmbUniformGroup.Location = new System.Drawing.Point(99, 15);
             this.cmbUniformGroup.Name = "cmbUniformGroup";
             this.cmbUniformGroup.Size = new System.Drawing.Size(81, 21);
@@ -542,11 +543,33 @@
             this.lstFormats.Size = new System.Drawing.Size(305, 82);
             this.lstFormats.TabIndex = 0;
             // 
+            // cmbConnections
+            // 
+            this.cmbConnections.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbConnections.FormattingEnabled = true;
+            this.cmbConnections.Location = new System.Drawing.Point(16, 202);
+            this.cmbConnections.Name = "cmbConnections";
+            this.cmbConnections.Size = new System.Drawing.Size(231, 21);
+            this.cmbConnections.TabIndex = 32;
+            this.cmbConnections.Visible = false;
+            // 
+            // lblConnection
+            // 
+            this.lblConnection.AutoSize = true;
+            this.lblConnection.Location = new System.Drawing.Point(13, 183);
+            this.lblConnection.Name = "lblConnection";
+            this.lblConnection.Size = new System.Drawing.Size(88, 13);
+            this.lblConnection.TabIndex = 33;
+            this.lblConnection.Text = "SQL Connection:";
+            this.lblConnection.Visible = false;
+            // 
             // AddMessageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(677, 282);
+            this.ClientSize = new System.Drawing.Size(680, 283);
+            this.Controls.Add(this.lblConnection);
+            this.Controls.Add(this.cmbConnections);
             this.Controls.Add(this.pnlCustomFormat);
             this.Controls.Add(this.pnlExternalProgram);
             this.Controls.Add(this.pnlUniformGroup);
@@ -632,6 +655,8 @@
         private System.Windows.Forms.ComboBox cmbCount;
         private System.Windows.Forms.ComboBox cmbGroup;
         private System.Windows.Forms.ListBox lstFormats;
+        private System.Windows.Forms.ComboBox cmbConnections;
+        private System.Windows.Forms.Label lblConnection;
 
 
     }

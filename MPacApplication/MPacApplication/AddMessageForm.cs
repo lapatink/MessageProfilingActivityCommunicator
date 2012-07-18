@@ -18,14 +18,7 @@ namespace MPacApplication
         public AddMessageForm(MainForm sourceForm)
           {
                InitializeComponent();
-            //this causes problems with other windows. Do not use yet.
-               //new Focus(this);
                parentForm = sourceForm;
-
-               pnlCustomFormat.Location = new Point(271, 135);
-               pnlExternalProgram.Location = new Point(271, 135);
-               pnlUniformGroup.Location = new Point(271, 135);
-            
                reset();
           }
         public AddMessageForm(MainForm sourceForm, MessageType type)
@@ -38,10 +31,6 @@ namespace MPacApplication
                 this.Text = "Add Company Message";
             else
                 this.Text = "Add Local Message";
-
-            pnlCustomFormat.Location = new Point(271, 135);
-            pnlExternalProgram.Location = new Point(271, 135);
-            pnlUniformGroup.Location = new Point(271, 135);
 
             reset();
         }
@@ -179,6 +168,9 @@ namespace MPacApplication
             if (cmbFormatType.SelectedIndex == 0)
             {
                 txtFormat.Text += "g * " + cmbUniformGroup.Text + " " + Format.getTokenString(cmbUniformFormat.Text);
+
+                if (txtFormat.Text == "g * 1 h")
+                    txtFormat.Text = "%"; //slight optimization, the parser will skip some extra work
             }
             else if (cmbFormatType.SelectedIndex == 1)
             {
@@ -202,9 +194,13 @@ namespace MPacApplication
 
             if (msgType == MessageType.Company)
             {
-                Configuration config = new Configuration();
-                string[] connections = config.Read();
-                SqlMessageConnection sql = new SqlMessageConnection(connections[0]);
+                if (cmbConnections.SelectedIndex < 0)
+                {
+                    MessageBox.Show("Please select a database connection.", "Company message failed", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    return;
+                }
+                Connection c = (Connection)cmbConnections.Items[cmbConnections.SelectedIndex];
+                SqlMessageConnection sql = new SqlMessageConnection(c.connection);
                 if (sql.Write(message) == false)
                 {
                     MessageBox.Show("Company message failed", "Company message failed", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
@@ -241,15 +237,41 @@ namespace MPacApplication
             cmbType.SelectedIndex = 0;
             cmbFormat.SelectedIndex = 3;
             cmbUniformFormat.SelectedIndex = 1;
-            cmbUniformGroup.SelectedIndex = 1;
-            cmbFormatType.SelectedIndex = -1;
+            cmbUniformGroup.SelectedIndex = 0;
+            cmbFormatType.SelectedIndex = 0;
+
+            pnlCustomFormat.Location = new Point(271, 135);
+            pnlExternalProgram.Location = new Point(271, 135);
+            pnlUniformGroup.Location = new Point(271, 135);
 
             pnlCustomFormat.Hide();
             pnlExternalProgram.Hide();
-            pnlUniformGroup.Hide();
+            pnlUniformGroup.Show();
 
             lstFormats.Items.Clear();
             txtExternalFile.Text = "";
+
+            cmbConnections.Items.Clear();
+            cmbConnections.Hide();
+            lblConnection.Hide();
+
+            if (parentForm.IsAdministrator && msgType == MessageType.Company)
+            {
+                Configuration config = new Configuration();
+
+                string[] connections = config.Read();
+
+                foreach (string connection in connections)
+                    cmbConnections.Items.Add(new Connection(connection));
+
+                if (cmbConnections.Items.Count == 1)
+                    cmbConnections.SelectedIndex = 0;
+
+                lblConnection.Show();
+                cmbConnections.Show();
+            }
+
+
         }
 
         private void cmbFormatType_SelectedIndexChanged(object sender, EventArgs e)
@@ -370,5 +392,21 @@ namespace MPacApplication
             }
         }
         #endregion
+        
+        #region Class Connection
+        private class Connection
+        {
+            public string connection;
+            public Connection(string connection)
+            {
+                this.connection = connection;
+            }
+            public override string ToString()
+            {
+                return connection.Split(';')[1] + " Table=" + connection.Split(';')[4];
+            }
+        }
+        #endregion
+
     }
 }
