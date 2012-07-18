@@ -198,6 +198,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(130, 20);
             this.txtName.TabIndex = 16;
+            this.txtName.LostFocus += new System.EventHandler(this.txtName_LostFocus);
             // 
             // lblName
             // 

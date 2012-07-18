@@ -34,6 +34,11 @@ namespace MPacApplication
             parentForm = sourceForm;
             msgType = type;
 
+            if (type == MessageType.Company)
+                this.Text = "Add Company Message";
+            else
+                this.Text = "Add Local Message";
+
             pnlCustomFormat.Location = new Point(271, 135);
             pnlExternalProgram.Location = new Point(271, 135);
             pnlUniformGroup.Location = new Point(271, 135);
@@ -43,8 +48,6 @@ namespace MPacApplication
 
         private void txtVersion1_LostFocus(object sender, EventArgs e)
         {
-            if (txtVersion1.Text != "")
-            {
                 try
                 {
                     int n = int.Parse(txtVersion1.Text, System.Globalization.NumberStyles.HexNumber);
@@ -59,13 +62,10 @@ namespace MPacApplication
                     txtVersion1.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
-            }
         }
 
         private void txtVersion2_LostFocus(object sender, EventArgs e)
         {
-            if (txtVersion2.Text != "")
-            {
                 try
                 {
                     int n = int.Parse(txtVersion2.Text, System.Globalization.NumberStyles.HexNumber);
@@ -80,13 +80,10 @@ namespace MPacApplication
                     txtVersion2.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
-            }
         }
 
         private void txtID1_LostFocus(object sender, EventArgs e)
         {
-            if (txtID1.Text != "")
-            {
                 try
                 {
                     int n = int.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber);
@@ -95,19 +92,26 @@ namespace MPacApplication
                         txtID1.Text = "00";
                         MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     }
+                    else if (msgType == MessageType.Company && n <= 127)
+                    {
+                        txtID1.Text = "00";
+                        MessageBox.Show("Company message ID must be 0x8000 and above", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
+                    else if (msgType == MessageType.Local && n > 127)
+                    {
+                        txtID1.Text = "00";
+                        MessageBox.Show("Local message ID must be below 0x8000", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
                 }
                 catch
                 {
                     txtID1.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
-            }
         }
 
         private void txtID2_LostFocus(object sender, EventArgs e)
         {
-            if (txtID2.Text != "")
-            {
                 try
                 {
                     int n = int.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber);
@@ -122,13 +126,10 @@ namespace MPacApplication
                     txtID2.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
-            }
         }
 
         private void txtLength_LostFocus(object sender, EventArgs e)
         {
-            if (txtLength.Text != "")
-            {
                 try
                 {
                     int n = int.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber);
@@ -143,7 +144,20 @@ namespace MPacApplication
                     txtLength.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                 }
-            }
+        }
+        private void txtName_LostFocus(object sender, EventArgs e)
+        {
+                try
+                {
+                    if (txtName.Text.Trim() == "")
+                    {
+                        MessageBox.Show("Name must not be left blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Name must not be left blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -191,7 +205,11 @@ namespace MPacApplication
                 Configuration config = new Configuration();
                 string[] connections = config.Read();
                 SqlMessageConnection sql = new SqlMessageConnection(connections[0]);
-                sql.Write(message);
+                if (sql.Write(message) == false)
+                {
+                    MessageBox.Show("Company message failed", "Company message failed", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    return;
+                }
                 MessageBox.Show("Company message created", "Company message created", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
             }
             else
