@@ -18,7 +18,7 @@ namespace MPacApplication
           private List<MessageFormat> localMessages = new List<MessageFormat>();
           private List<MessageFormat> companyMessages = new List<MessageFormat>(); 
 
-          public const int DEFAULT_BAUD_RATE = 240;
+          public const int DEFAULT_BAUD_RATE = 9600;
           public const Parity DEFAULT_PARITY = Parity.None;
           public const int DEFAULT_DATA_BITS = 8;
           public const StopBits DEFAULT_STOP_BITS = StopBits.One;
@@ -35,6 +35,7 @@ namespace MPacApplication
           private DataProcessor dataProcessor;
           private int numberOfStatusEntries;
           private int numberOfEntries;
+          private int numberOfLinesOfBytesEntries;
           private int totalNumberOfMessages;
 
           private bool initialized;
@@ -96,6 +97,7 @@ namespace MPacApplication
                dataProcessor = new DataProcessor(this);
                numberOfStatusEntries = 0;
                numberOfEntries = 0;
+               numberOfLinesOfBytesEntries = 0;
                totalNumberOfMessages = 0;
                lstMessageSummary.Sorted = true;
                cmbViews.SelectedIndex = 0;
@@ -115,7 +117,7 @@ namespace MPacApplication
                }
                availablePortNames.Sort();
 
-               OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
+               OpenComPort(/*availablePortNames.ElementAt<String>(0)*/"COM19", DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
 
                PrintStatusMessage("Remaining List");
                foreach (String name in availablePortNames)
@@ -181,6 +183,9 @@ namespace MPacApplication
                {
                     PrintStatusMessage("Create new SerialPort " + this.comPortName + " " + this.baudRate + " " + this.parity + " " + this.dataBits + " " + this.stopBits);
                     listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
+                    listeningPort.Handshake = Handshake.RequestToSendXOnXOff;
+                    listeningPort.RtsEnable = true;
+                    listeningPort.DtrEnable = true;
                }
                else
                {
@@ -189,6 +194,9 @@ namespace MPacApplication
                     listeningPort.Parity = this.parity;
                     listeningPort.DataBits = this.dataBits;
                     listeningPort.StopBits = this.stopBits;
+                    listeningPort.Handshake = Handshake.RequestToSendXOnXOff;
+                    listeningPort.RtsEnable = true;
+                    listeningPort.DtrEnable = true;
                }
 
                lblvPortName.Text = this.comPortName;
@@ -349,6 +357,13 @@ namespace MPacApplication
                //TODO - this may be used to record all bytes not in messages
           }
 
+          public void PrintComPortMessage(String message)
+          {
+               lstComPortDisplay.Items.Add(message);
+               lstComPortDisplay.SelectedIndex = numberOfLinesOfBytesEntries;
+               numberOfLinesOfBytesEntries++;
+          }
+
           public void PrintStatusMessage(String message)
           {
                lstStatusDisplay.Items.Add(message);
@@ -427,6 +442,7 @@ namespace MPacApplication
                     return;
 
                byte[] buffer = new byte[numberOfBytes];
+               String byteString = "";
 
                numberOfBytes = listeningPort.Read(buffer, 0, numberOfBytes);
 
@@ -435,8 +451,9 @@ namespace MPacApplication
                     dataProcessor.ProcessData(buffer);
                     foreach (byte b in buffer)
                     {
-                         lstComPortDisplay.Items.Add(Convert.ToString(b, 16).PadLeft(2, '0').ToUpper());
+                         byteString += Convert.ToString(b, 16).PadLeft(2, '0').ToUpper() + " ";
                     }
+                    PrintComPortMessage(byteString);
                }
           }
 
