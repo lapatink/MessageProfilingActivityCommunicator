@@ -8,6 +8,8 @@ namespace MPacApplication
 {
      class DataProcessor
      {
+          private bool busy;
+
           private const byte START_OF_HEADER = 0xA5;
           private const byte SYSTEM_ID = 0x00;
           private const byte SUBSYSTEM_ID = 0x00;
@@ -16,6 +18,7 @@ namespace MPacApplication
           private const byte MAJOR_SOFTWARE_VERSION = 0x01;
           private const byte MINOR_SOFTWARE_VERSION = 0x00;
 
+          private DateTime timestamp;
           private byte majorSoftwareVersion;
           private byte minorSoftwareVersion;
           private byte messageIdHighByte;
@@ -54,6 +57,8 @@ namespace MPacApplication
           {
                owner = parent;
 
+               busy = false;
+
                majorSoftwareVersion = 0x00;
                minorSoftwareVersion = 0x00;
                messageIdHighByte = 0x00;
@@ -68,8 +73,16 @@ namespace MPacApplication
 
                crcCheckFails = 0;
           }
-          public void ProcessData(byte[] data)
+          public bool IsBusy()
           {
+               return busy;
+          }
+          public int ProcessData(byte[] data)
+          {
+               busy = true;
+               //TODO - take these out and turn functions back into void function
+               DateTime timestamp1 = DateTime.Now;
+               DateTime timestamp2;
                byte dataCrcHighByte, dataCrcLowByte;
                for (int i = 0; i < data.Length; i++)
                {
@@ -78,6 +91,7 @@ namespace MPacApplication
                          case ProcessingState.WAITING_FOR_START_OF_HEADER:
                               if (data[i] == START_OF_HEADER)
                               {
+                                   timestamp = DateTime.Now;
                                    currentCRC = XModemCRC.CalculateCRC(data[i], 0);
                                    currentState = ProcessingState.WAITING_FOR_SYSTEM_ID;
                               }
@@ -201,7 +215,7 @@ namespace MPacApplication
 
                               if((dataCrcHighByte == CRC_BYTE_0) && (dataCrcLowByte == CRC_BYTE_1))
                               {
-                                   owner.LogData(new Message(majorSoftwareVersion, minorSoftwareVersion, messageIdHighByte, messageIdLowByte, payload));
+                                   owner.LogData(new Message(majorSoftwareVersion, minorSoftwareVersion, messageIdHighByte, messageIdLowByte, payload, timestamp));
                               }
                               else //Failed CRC Check
                               {
@@ -215,19 +229,22 @@ namespace MPacApplication
                               break;
                     }
                }
+               //TODO - take timestamp comparision out
+               timestamp2 = DateTime.Now;
+               int time;
+
+               if(timestamp1.Millisecond > timestamp2.Millisecond)
+               {
+                    time = timestamp2.Millisecond + (1000 - timestamp1.Millisecond);
+               }
+               else
+               {
+                    time = timestamp2.Millisecond - timestamp1.Millisecond;
+               }
+               
+               busy = false;
+
+               return time;
           }
-          /*
-        private int combineBytes(byte b1, byte b2)
-        {//b1 is MSB
-            int combined = b1 << 8 | b2;
-            return combined;
-        }
-        private int combineBytes(byte b1, byte b2, byte b3)
-        {//b1 is MSB
-            int combined = b1 << 8 | b2;
-            combined = combined << 8 | b3;
-            return combined;
-        }
-*/
      }
 }

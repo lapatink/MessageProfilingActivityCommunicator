@@ -117,7 +117,7 @@ namespace MPacApplication
                }
                availablePortNames.Sort();
 
-               OpenComPort(/*availablePortNames.ElementAt<String>(0)*/"COM19", DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
+               OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
 
                PrintStatusMessage("Remaining List");
                foreach (String name in availablePortNames)
@@ -236,6 +236,7 @@ namespace MPacApplication
                try
                {
                     PrintStatusMessage("Opening Serial Port " + this.comPortName);
+                    tmrCheckForData.Enabled = true;
                     this.listeningPort.Open();
                }
                catch (Exception)
@@ -259,6 +260,7 @@ namespace MPacApplication
                {
                     PrintStatusMessage("Closing serial port");
                     listeningPort.Close();
+                    tmrCheckForData.Enabled = false;
                }
 
                btnOpenAndClose.BackColor = Color.Red;
@@ -328,18 +330,18 @@ namespace MPacApplication
 
                if (format == null)
                {
-                    message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}\t\t", DateTime.Now) + completedMessage.ToString();
+                    message = completedMessage.ToString();
                }
                else
                {
-                    message = format.name;
+                    message = completedMessage.GetTimestamp() + format.name;
                     if (completedMessage.data == null || completedMessage.data.Length == format.length)
                     {
-                         String str = FormatParser.Parse(format.format, completedMessage.data); // if data length == 0, this can still return string via external program
+                         String formattedString = FormatParser.Parse(format.format, completedMessage.data); // if data length == 0, this can still return string via external program
 
-                         if (str != null && str.Length != 0)
+                         if (formattedString != null && formattedString.Length != 0)
                          {
-                              message += ":  " + str;
+                              message += ":  " + formattedString;
                          }
                     }
                     else
@@ -438,7 +440,7 @@ namespace MPacApplication
 
                int numberOfBytes = listeningPort.BytesToRead;
 
-               if (listeningPort.BytesToRead <= 0)
+               if (listeningPort.BytesToRead <= 0 || dataProcessor.IsBusy())
                     return;
 
                byte[] buffer = new byte[numberOfBytes];
@@ -448,7 +450,7 @@ namespace MPacApplication
 
                if (numberOfBytes > 0)
                {
-                    dataProcessor.ProcessData(buffer);
+                    PrintStatusMessage("Milliseconds:" + dataProcessor.ProcessData(buffer) + "\n");
                     foreach (byte b in buffer)
                     {
                          byteString += Convert.ToString(b, 16).PadLeft(2, '0').ToUpper() + " ";
