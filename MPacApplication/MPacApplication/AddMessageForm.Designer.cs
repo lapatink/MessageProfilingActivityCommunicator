@@ -74,6 +74,8 @@
             this.lstFormats = new System.Windows.Forms.ListBox();
             this.cmbConnections = new System.Windows.Forms.ComboBox();
             this.lblConnection = new System.Windows.Forms.Label();
+            this.lblRemaining = new System.Windows.Forms.Label();
+            this.lblvBytes = new System.Windows.Forms.Label();
             this.pnlUniformGroup.SuspendLayout();
             this.pnlExternalProgram.SuspendLayout();
             this.pnlCustomFormat.SuspendLayout();
@@ -182,6 +184,7 @@
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(46, 20);
             this.txtLength.TabIndex = 11;
+            this.txtLength.TextChanged += new System.EventHandler(this.txtLength_TextChanged);
             this.txtLength.LostFocus += new System.EventHandler(this.txtLength_LostFocus);
             // 
             // lblLength
@@ -374,6 +377,8 @@
             // 
             // pnlCustomFormat
             // 
+            this.pnlCustomFormat.Controls.Add(this.lblvBytes);
+            this.pnlCustomFormat.Controls.Add(this.lblRemaining);
             this.pnlCustomFormat.Controls.Add(this.lblType);
             this.pnlCustomFormat.Controls.Add(this.lblFormat2);
             this.pnlCustomFormat.Controls.Add(this.lblCount);
@@ -387,9 +392,9 @@
             this.pnlCustomFormat.Controls.Add(this.cmbCount);
             this.pnlCustomFormat.Controls.Add(this.cmbGroup);
             this.pnlCustomFormat.Controls.Add(this.lstFormats);
-            this.pnlCustomFormat.Location = new System.Drawing.Point(271, 134);
+            this.pnlCustomFormat.Location = new System.Drawing.Point(271, 108);
             this.pnlCustomFormat.Name = "pnlCustomFormat";
-            this.pnlCustomFormat.Size = new System.Drawing.Size(404, 144);
+            this.pnlCustomFormat.Size = new System.Drawing.Size(404, 173);
             this.pnlCustomFormat.TabIndex = 31;
             this.pnlCustomFormat.Visible = false;
             // 
@@ -474,28 +479,29 @@
             this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbType.FormattingEnabled = true;
             this.cmbType.Items.AddRange(new object[] {
-            "Byte",
-            "Short",
-            "Int",
-            "Long"});
+            "byte",
+            "short",
+            "int",
+            "long"});
             this.cmbType.Location = new System.Drawing.Point(246, 27);
             this.cmbType.Name = "cmbType";
             this.cmbType.Size = new System.Drawing.Size(71, 21);
             this.cmbType.TabIndex = 4;
+            this.cmbType.TextChanged += new System.EventHandler(this.cmbType_TextChanged);
             // 
             // cmbFormat
             // 
             this.cmbFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFormat.FormattingEnabled = true;
             this.cmbFormat.Items.AddRange(new object[] {
-            "Binary",
-            "Octal",
-            "Decimal",
-            "Hex"});
+            "binary",
+            "decimal",
+            "hex"});
             this.cmbFormat.Location = new System.Drawing.Point(168, 27);
             this.cmbFormat.Name = "cmbFormat";
             this.cmbFormat.Size = new System.Drawing.Size(72, 21);
             this.cmbFormat.TabIndex = 3;
+            this.cmbFormat.TextChanged += new System.EventHandler(this.cmbFormat_TextChanged);
             // 
             // cmbCount
             // 
@@ -515,9 +521,11 @@
             this.cmbCount.Name = "cmbCount";
             this.cmbCount.Size = new System.Drawing.Size(72, 21);
             this.cmbCount.TabIndex = 2;
+            this.cmbCount.TextChanged += new System.EventHandler(this.cmbCount_TextChanged);
             // 
             // cmbGroup
             // 
+            this.cmbGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbGroup.FormattingEnabled = true;
             this.cmbGroup.Items.AddRange(new object[] {
             "1",
@@ -527,13 +535,12 @@
             "5",
             "6",
             "7",
-            "8",
-            "16",
-            "32"});
+            "8"});
             this.cmbGroup.Location = new System.Drawing.Point(12, 27);
             this.cmbGroup.Name = "cmbGroup";
             this.cmbGroup.Size = new System.Drawing.Size(72, 21);
             this.cmbGroup.TabIndex = 1;
+            this.cmbGroup.TextChanged += new System.EventHandler(this.cmbGroup_TextChanged);
             // 
             // lstFormats
             // 
@@ -562,6 +569,26 @@
             this.lblConnection.TabIndex = 33;
             this.lblConnection.Text = "SQL Connection:";
             this.lblConnection.Visible = false;
+            // 
+            // lblRemaining
+            // 
+            this.lblRemaining.AutoSize = true;
+            this.lblRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRemaining.Location = new System.Drawing.Point(9, 150);
+            this.lblRemaining.Name = "lblRemaining";
+            this.lblRemaining.Size = new System.Drawing.Size(129, 16);
+            this.lblRemaining.TabIndex = 13;
+            this.lblRemaining.Text = "Remaining Bytes:";
+            // 
+            // lblvBytes
+            // 
+            this.lblvBytes.AutoSize = true;
+            this.lblvBytes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblvBytes.Location = new System.Drawing.Point(144, 150);
+            this.lblvBytes.Name = "lblvBytes";
+            this.lblvBytes.Size = new System.Drawing.Size(16, 16);
+            this.lblvBytes.TabIndex = 14;
+            this.lblvBytes.Text = "0";
             // 
             // AddMessageForm
             // 
@@ -657,6 +684,8 @@
         private System.Windows.Forms.ListBox lstFormats;
         private System.Windows.Forms.ComboBox cmbConnections;
         private System.Windows.Forms.Label lblConnection;
+        private System.Windows.Forms.Label lblvBytes;
+        private System.Windows.Forms.Label lblRemaining;
 
 
     }
