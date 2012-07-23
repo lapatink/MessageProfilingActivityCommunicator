@@ -15,6 +15,7 @@ namespace MPacApplication
     {
         private MainForm parentForm;
         private MessageType msgType;
+        private bool error;
 
         private int _bytes = 0;
         private int _bytes_used = 0;
@@ -37,7 +38,7 @@ namespace MPacApplication
                 lblvBytes.Text = (_bytes - _bytes_used).ToString();
             }
 
-        }
+        }  
 
         public AddMessageForm(MainForm sourceForm)
           {
@@ -104,22 +105,26 @@ namespace MPacApplication
                     {
                         txtID1.Text = "00";
                         MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        error = true;
                     }
                     else if (msgType == MessageType.Company && n <= 127)
                     {
                         txtID1.Text = "00";
                         MessageBox.Show("Company message ID must be 0x8000 and above", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        error = true;
                     }
                     else if (msgType == MessageType.Local && n > 127)
                     {
                         txtID1.Text = "00";
                         MessageBox.Show("Local message ID must be below 0x8000", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        error = true;
                     }
                 }
                 catch
                 {
                     txtID1.Text = "00";
                     MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    error = true;
                 }
         }
 
@@ -166,16 +171,24 @@ namespace MPacApplication
                     if (txtName.Text.Trim() == "")
                     {
                         MessageBox.Show("Name must not be left blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        error = true;
                     }
                 }
                 catch
                 {
                     MessageBox.Show("Name must not be left blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    error = true;
                 }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
-        { 
+        {
+            error = false;
+            txtID1_LostFocus(sender, e);
+            txtName_LostFocus(sender, e);
+            if (error == true)
+                return;
+
             for (int i = 0; i < parentForm.GetMessagesCount(msgType); i++)
             {
                 if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.GetMessageHighByte(i, msgType)) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.GetMessageLowByte(i, msgType)))
@@ -257,7 +270,10 @@ namespace MPacApplication
         {
             txtVersion1.Text = "01";
             txtVersion2.Text = "00";
-            txtID1.Text = "00";
+            if (msgType == MessageType.Company)
+                txtID1.Text = "80";
+            else
+                txtID1.Text = "00";
             txtID2.Text = "00";
             txtLength.Text = "00";
             txtName.Text = "";
