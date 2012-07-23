@@ -7,23 +7,57 @@ namespace MPacApplication
 {
     public class MessageFormat
     {
-        private int id = -1;
-        public byte version_major;
-        public byte version_minor;
-        public byte id_high;
-        public byte id_low;
-        public byte length;
-        public string name = "";
-        public string format = "";
+        private int _id = -1;
+        private byte _version_major;
+        private byte _version_minor;
+        private byte _id_high;
+        private byte _id_low;
+        private byte _length;
+        private string _name = "";
+        private string _format = "";
 
-        public int Id
+        public int id
         {
-            get { return id; }
+            get { return _id; }
+        }
+        public byte version_major
+        {
+            get { return _version_major; }
+            set { _version_major = value; }
+        }
+        public byte version_minor
+        {
+            get { return _version_minor; }
+            set { _version_minor = value; }
+        }
+        public byte id_high
+        {
+            get { return _id_high; }
+            set { _id_high = value; }
+        }
+        public byte id_low
+        {
+            get { return _id_low; }
+            set { _id_low = value; }
+        }
+        public byte length
+        {
+            get { return _length; }
+            set { _length = value; }
+        }
+        public string name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+        public string format
+        {
+            get { return _format; }
+            set { _format = value; }
         }
 
         public MessageFormat()
         {
-
         }
 
         public MessageFormat(byte version_major, byte version_minor, byte id_high, byte id_low, byte length, string name, string format)
@@ -78,7 +112,7 @@ namespace MPacApplication
             string[] values = csvString.Split(',');
             bool flag = true;
 
-            try { id = int.Parse(values[0]); }
+            try { _id = int.Parse(values[0]); }
             catch { flag = false; }
             try { version_major = byte.Parse(values[1]); }
             catch { flag = false; }
