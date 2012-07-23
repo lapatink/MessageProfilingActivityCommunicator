@@ -16,6 +16,30 @@ namespace MPacApplication
         private MainForm parentForm;
         private MessageType msgType;
         private bool error;
+
+        private int _bytes = 0;
+        private int _bytes_used = 0;
+
+        private int bytes
+        {
+            get { return _bytes; }
+            set
+            {
+                _bytes = value;
+                lblvBytes.Text = (_bytes - _bytes_used).ToString();
+            }
+        }
+        private int bytes_used
+        {
+            get { return _bytes_used; }
+            set
+            {
+                _bytes_used = value;
+                lblvBytes.Text = (_bytes - _bytes_used).ToString();
+            }
+
+        }  
+
         public AddMessageForm(MainForm sourceForm)
           {
                InitializeComponent();
@@ -127,6 +151,7 @@ namespace MPacApplication
                 try
                 {
                     int n = int.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber);
+                    bytes = n;
                     if (n < 0 || n > 255)
                     {
                         txtLength.Text = "00";
@@ -187,6 +212,11 @@ namespace MPacApplication
             }
             else if (cmbFormatType.SelectedIndex == 1)
             {
+                if ((bytes - bytes_used) < 0)
+                {
+                    MessageBox.Show("The custom format specified is too long.", "Invalid Custom Format", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    return;
+                }
                 foreach (FormatLine f in lstFormats.Items)
                     txtFormat.Text += f.ToFormatString();
             }
@@ -251,14 +281,17 @@ namespace MPacApplication
             cmbGroup.SelectedIndex = 0;
             cmbCount.SelectedIndex = 0;
             cmbType.SelectedIndex = 0;
-            cmbFormat.SelectedIndex = 3;
+            cmbFormat.SelectedIndex = 2;
             cmbUniformFormat.SelectedIndex = 1;
             cmbUniformGroup.SelectedIndex = 0;
             cmbFormatType.SelectedIndex = 0;
 
-            pnlCustomFormat.Location = new Point(271, 135);
-            pnlExternalProgram.Location = new Point(271, 135);
-            pnlUniformGroup.Location = new Point(271, 135);
+            pnlCustomFormat.Location = new Point(271, 110);
+            pnlExternalProgram.Location = new Point(271, 110);
+            pnlUniformGroup.Location = new Point(271, 110);
+
+            bytes = 0;
+            bytes_used = 0;
 
             pnlCustomFormat.Hide();
             pnlExternalProgram.Hide();
@@ -286,6 +319,84 @@ namespace MPacApplication
                 lblConnection.Show();
                 cmbConnections.Show();
             }
+
+
+        }
+
+        private void UpdateControls(bool typefield = false)
+        {
+            bytes = 0;
+            int group = 0;
+            int count = 0;
+            int type = 0;
+
+            try { bytes = int.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber); }
+            catch { }
+
+            try { group = int.Parse(cmbGroup.Text); }
+            catch { }
+
+            try { count = int.Parse(cmbCount.Text); }
+            catch { }
+
+            type = FormatParser.sizeOf(cmbType.Text);
+
+            int size = 0;
+
+            string old_type = "";
+            if (cmbType.SelectedIndex > -1)
+                old_type = (string)cmbType.Items[cmbType.SelectedIndex];
+
+            if (cmbFormat.Text == "decimal" && !typefield)
+            {
+                cmbType.Items.Clear();
+                cmbType.Items.Add("byte");
+                cmbType.Items.Add("ushort");
+                cmbType.Items.Add("short");
+                cmbType.Items.Add("uint");
+                cmbType.Items.Add("int");
+                cmbType.Items.Add("ulong");
+                cmbType.Items.Add("long");
+
+            }
+            else if (!typefield)
+            {
+                cmbType.Items.Clear();
+                cmbType.Items.Add("byte");
+                cmbType.Items.Add("short");
+                cmbType.Items.Add("int");
+                cmbType.Items.Add("long");
+            }
+
+            if (old_type.Length > 0)
+            {
+                if (old_type[0] == 'u')
+                    old_type = old_type.Substring(1);
+                if (!typefield)
+                    cmbType.Text = old_type;
+            }
+
+
+            if (group > 1)
+            {
+                if (!typefield)
+                {
+                    cmbType.Text = "byte";
+                    cmbType.Enabled = false;
+                }
+
+                size = group * count;
+            }
+            else
+            {
+                cmbType.Enabled = true;
+                size = type * count;
+            }
+
+            if (size > (bytes - bytes_used))
+                btnAdd.Enabled = false;
+            else
+                btnAdd.Enabled = true;
 
 
         }
@@ -333,6 +444,9 @@ namespace MPacApplication
             f.group = cmbGroup.Text;
             f.display = cmbFormat.Text;
 
+            bytes_used += f.getSize();
+            UpdateControls();
+
             lstFormats.Items.Add(f);
         }
 
@@ -364,7 +478,12 @@ namespace MPacApplication
         private void btnRemove_Click(object sender, EventArgs e)
         {
             if (lstFormats.SelectedIndex >= 0 && lstFormats.SelectedIndex < lstFormats.Items.Count)
+            {
+                FormatLine f = (FormatLine)lstFormats.Items[lstFormats.SelectedIndex];
+                bytes_used -= f.getSize();
+                UpdateControls();
                 lstFormats.Items.RemoveAt(lstFormats.SelectedIndex);
+            }
         }
 
         #region  Class FormatLine
@@ -406,6 +525,28 @@ namespace MPacApplication
                     return count + " " + Format.getTokenString(display) + " " + Format.getTokenString(type) + " ";
                 }
             }
+            public int getSize()
+            {
+
+                int t = FormatParser.sizeOf(type);
+                int g = 0;
+                int c = 0;
+
+                try { c = int.Parse(count); }
+                catch { }
+                try { g = int.Parse(group); }
+                catch { }
+
+                if (g < 2)
+                {
+                    return t * c;
+                }
+                else
+                {
+                    return g * c * t;
+                }
+
+            }
         }
         #endregion
         
@@ -423,6 +564,31 @@ namespace MPacApplication
             }
         }
         #endregion
+
+        private void txtLength_TextChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
+        private void cmbGroup_TextChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
+        private void cmbCount_TextChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
+        private void cmbFormat_TextChanged(object sender, EventArgs e)
+        {
+            UpdateControls();
+        }
+
+        private void cmbType_TextChanged(object sender, EventArgs e)
+        {
+            UpdateControls(true);
+        }
 
     }
 }
