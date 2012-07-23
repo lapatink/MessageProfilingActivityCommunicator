@@ -164,7 +164,7 @@ namespace MPacApplication
                                    currentCRC = XModemCRC.CalculateCRC(data[i], currentCRC);
                                    currentState = ProcessingState.WAITING_FOR_MESSAGE_ID_0;
                               }
-                              else//if majorSoftwareVersion == MAJOR_SOFTWARE_VERSION && minorSoftwareVersion > MINOR_SOFTWARE_VERSION
+                              else//if majorSoftwareVersion == MAJOR_SOFTWARE_VERSION && minorSoftwareVersion > MINOR_SOFTWARE_VERSION || majorSoftwareVersion > MAJOR_SOFTWARE_VERSION
                               {
                                    currentState = ProcessingState.WAITING_FOR_START_OF_HEADER;
                                    goto case ProcessingState.WAITING_FOR_START_OF_HEADER;
