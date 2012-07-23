@@ -44,8 +44,9 @@ namespace MPacApplication
 
         public override string ToString()
         {
-            return name.ToString() + 
-                " - ID: 0x" + id_high.ToString() + id_low.ToString() +
+            return 
+                "0x" + Format.AsHex(id_high) + Format.AsHex(id_low) +
+                "     " + name.ToString() + 
                 " - Length: " + length.ToString() +
                 " - Format: " + format.ToString();
         }

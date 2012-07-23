@@ -18,7 +18,7 @@ namespace MPacApplication
           private List<MessageFormat> localMessages = new List<MessageFormat>();
           private List<MessageFormat> companyMessages = new List<MessageFormat>(); 
 
-          public const int DEFAULT_BAUD_RATE = 240;
+          public const int DEFAULT_BAUD_RATE = 9600;
           public const Parity DEFAULT_PARITY = Parity.None;
           public const int DEFAULT_DATA_BITS = 8;
           public const StopBits DEFAULT_STOP_BITS = StopBits.One;
@@ -35,6 +35,7 @@ namespace MPacApplication
           private DataProcessor dataProcessor;
           private int numberOfStatusEntries;
           private int numberOfEntries;
+          private int numberOfLinesOfBytesEntries;
           private int totalNumberOfMessages;
 
           private bool initialized;
@@ -96,6 +97,7 @@ namespace MPacApplication
                dataProcessor = new DataProcessor(this);
                numberOfStatusEntries = 0;
                numberOfEntries = 0;
+               numberOfLinesOfBytesEntries = 0;
                totalNumberOfMessages = 0;
                lstMessageSummary.Sorted = true;
                cmbViews.SelectedIndex = 0;
@@ -181,6 +183,9 @@ namespace MPacApplication
                {
                     PrintStatusMessage("Create new SerialPort " + this.comPortName + " " + this.baudRate + " " + this.parity + " " + this.dataBits + " " + this.stopBits);
                     listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
+                    listeningPort.Handshake = Handshake.RequestToSendXOnXOff;
+                    listeningPort.RtsEnable = true;
+                    listeningPort.DtrEnable = true;
                }
                else
                {
@@ -189,6 +194,9 @@ namespace MPacApplication
                     listeningPort.Parity = this.parity;
                     listeningPort.DataBits = this.dataBits;
                     listeningPort.StopBits = this.stopBits;
+                    listeningPort.Handshake = Handshake.RequestToSendXOnXOff;
+                    listeningPort.RtsEnable = true;
+                    listeningPort.DtrEnable = true;
                }
 
                lblvPortName.Text = this.comPortName;
@@ -228,6 +236,7 @@ namespace MPacApplication
                try
                {
                     PrintStatusMessage("Opening Serial Port " + this.comPortName);
+                    tmrCheckForData.Enabled = true;
                     this.listeningPort.Open();
                }
                catch (Exception)
@@ -251,6 +260,7 @@ namespace MPacApplication
                {
                     PrintStatusMessage("Closing serial port");
                     listeningPort.Close();
+                    tmrCheckForData.Enabled = false;
                }
 
                btnOpenAndClose.BackColor = Color.Red;
@@ -320,18 +330,18 @@ namespace MPacApplication
 
                if (format == null)
                {
-                    message = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}\t\t", DateTime.Now) + completedMessage.ToString();
+                    message = completedMessage.ToString();
                }
                else
                {
-                    message = format.name;
+                    message = completedMessage.GetTimestamp() + format.name;
                     if (completedMessage.data == null || completedMessage.data.Length == format.length)
                     {
-                         String str = FormatParser.Parse(format.format, completedMessage.data); // if data length == 0, this can still return string via external program
+                         String formattedString = FormatParser.Parse(format.format, completedMessage.data); // if data length == 0, this can still return string via external program
 
-                         if (str != null && str.Length != 0)
+                         if (formattedString != null && formattedString.Length != 0)
                          {
-                              message += ":  " + str;
+                              message += ":  " + formattedString;
                          }
                     }
                     else
@@ -347,6 +357,13 @@ namespace MPacApplication
           public void RecordTrash(byte[] trashBytes)
           {
                //TODO - this may be used to record all bytes not in messages
+          }
+
+          public void PrintComPortMessage(String message)
+          {
+               lstComPortDisplay.Items.Add(message);
+               lstComPortDisplay.SelectedIndex = numberOfLinesOfBytesEntries;
+               numberOfLinesOfBytesEntries++;
           }
 
           public void PrintStatusMessage(String message)
@@ -423,20 +440,22 @@ namespace MPacApplication
 
                int numberOfBytes = listeningPort.BytesToRead;
 
-               if (listeningPort.BytesToRead <= 0)
+               if (listeningPort.BytesToRead <= 0 || dataProcessor.IsBusy())
                     return;
 
                byte[] buffer = new byte[numberOfBytes];
+               String byteString = "";
 
                numberOfBytes = listeningPort.Read(buffer, 0, numberOfBytes);
 
                if (numberOfBytes > 0)
                {
-                    dataProcessor.ProcessData(buffer);
+                    PrintStatusMessage("Milliseconds:" + dataProcessor.ProcessData(buffer) + "\n");
                     foreach (byte b in buffer)
                     {
-                         lstComPortDisplay.Items.Add(Convert.ToString(b, 16).PadLeft(2, '0').ToUpper());
+                         byteString += Convert.ToString(b, 16).PadLeft(2, '0').ToUpper() + " ";
                     }
+                    PrintComPortMessage(byteString);
                }
           }
 
