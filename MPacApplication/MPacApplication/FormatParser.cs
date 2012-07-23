@@ -300,20 +300,29 @@ namespace MPacApplication
         /// </summary>
         /// <param name="s">The token to parse.</param>
         /// <returns>Returns an integer size, or 0 by default.</returns>
-        private static int sizeOf(string s)
+        public static int sizeOf(string s)
         {
+            s = s.ToLower();
+
             switch (s)
             {
                 case "b":
+                case "byte":
                     return 1;
                 case "s":
                 case "us":
+                case "short":
+                case "ushort":
                     return 2;
                 case "i":
                 case "ui":
+                case "int":
+                case "uint":
                     return 4;
                 case "l":
                 case "ul":
+                case "long":
+                case "ulong":
                     return 8;
                 default:
                     return 0;
