@@ -150,7 +150,7 @@ namespace MPacApplication
 
         public bool Remove(MessageFormat m)
         {
-            return Remove(m.Id);
+            return Remove(m.id);
         }
 
         private object safeRead(SqlDataReader r, string s)

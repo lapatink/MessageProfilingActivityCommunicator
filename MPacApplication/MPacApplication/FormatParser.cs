@@ -24,7 +24,7 @@ namespace MPacApplication
 
             if (bytes == null)
                 return "";
-            if (bytes.Length < 1 || format.Length < 1)
+            if (format.Length < 1)
                 return "";
 
             data = bytes;
@@ -71,7 +71,7 @@ namespace MPacApplication
                 index++;
             }
 
-            output = output.Substring(0, output.Length - delim.Length);
+            output = output.Substring(0, Math.Max(output.Length - delim.Length, 0));
             return output;
 
         }
