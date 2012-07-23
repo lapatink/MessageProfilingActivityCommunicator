@@ -7,13 +7,44 @@ namespace MPacApplication
 {
      public class Message
      {
-          public byte version_major;
-          public byte version_minor;
-          public byte id_high;
-          public byte id_low;
-          public byte length;
-          public byte[] data;
+          private byte _version_major;
+          private byte _version_minor;
+          private byte _id_high;
+          private byte _id_low;
+          private byte _length;
+          private byte[] _data;
           private DateTime timestamp;
+
+          public byte version_major
+          {
+              get { return _version_major; }
+              set { _version_major = value; }
+          }
+          public byte version_minor
+          {
+              get { return _version_minor; }
+              set { _version_minor = value; }
+          }
+          public byte id_high
+          {
+              get { return _id_high; }
+              set { _id_high = value; }
+          }
+          public byte id_low
+          {
+              get { return _id_low; }
+              set { _id_low = value; }
+          }
+          public byte length
+          {
+              get { return _length; }
+              set { _length = value; }
+          }
+          public byte[] data
+          {
+              get { return _data; }
+              set { _data = value; }
+          }
 
           public Message()
           {
