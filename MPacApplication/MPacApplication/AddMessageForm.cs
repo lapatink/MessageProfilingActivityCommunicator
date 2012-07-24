@@ -16,6 +16,7 @@ namespace MPacApplication
         private MainForm parentForm;
         private MessageType msgType;
         private bool error;
+        private ushort ID;
 
         private int _bytes = 0;
         private int _bytes_used = 0;
@@ -59,93 +60,60 @@ namespace MPacApplication
 
             reset();
         }
-
-        private void txtVersion1_LostFocus(object sender, EventArgs e)
+        private void txtID_LostFocus(object sender, EventArgs e)
         {
                 try
                 {
-                    int n = int.Parse(txtVersion1.Text, System.Globalization.NumberStyles.HexNumber);
-                    if (n < 0 || n > 255)
+                    int n = int.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);
+                    if (n < 0 || n > 65535)
                     {
-                        txtVersion1.Text = "00";
-                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        if (msgType == MessageType.Company)
+                        {
+                            txtID.Text = "8000";
+                            lblIdError2.Visible = true;
+                        }
+                        else
+                        {
+                            txtID.Text = "0000";
+                            lblIdError1.Visible = true;
+                        }
+                        error = true;
+                    }
+                    else if (msgType == MessageType.Company && n <= 32767)
+                    {
+                        txtID.Text = "8000";
+                        lblIdError2.Visible = true;
+                        error = true;
+                    }
+                    else if (msgType == MessageType.Local && n > 32767)
+                    {
+                        txtID.Text = "0000";
+                        lblIdError1.Visible = true;
+                        error = true;
+                    }
+                    else
+                    {
+                        lblIdError1.Visible = false;
+                        lblIdError2.Visible = false;
+                        ID = ushort.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);
+                            //Byte.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);
                     }
                 }
                 catch
                 {
-                    txtVersion1.Text = "00";
-                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                }
-        }
-
-        private void txtVersion2_LostFocus(object sender, EventArgs e)
-        {
-                try
-                {
-                    int n = int.Parse(txtVersion2.Text, System.Globalization.NumberStyles.HexNumber);
-                    if (n < 0 || n > 255)
+                    if (msgType == MessageType.Company)
                     {
-                        txtVersion2.Text = "00";
-                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        txtID.Text = "8000";
+                        lblIdError2.Visible = true;
                     }
-                }
-                catch
-                {
-                    txtVersion2.Text = "00";
-                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                }
-        }
-
-        private void txtID1_LostFocus(object sender, EventArgs e)
-        {
-                try
-                {
-                    int n = int.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber);
-                    if (n < 0 || n > 255)
+                    else
                     {
-                        txtID1.Text = "00";
-                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                        error = true;
+                        txtID.Text = "0000";
+                        lblIdError1.Visible = true;
                     }
-                    else if (msgType == MessageType.Company && n <= 127)
-                    {
-                        txtID1.Text = "00";
-                        MessageBox.Show("Company message ID must be 0x8000 and above", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                        error = true;
-                    }
-                    else if (msgType == MessageType.Local && n > 127)
-                    {
-                        txtID1.Text = "00";
-                        MessageBox.Show("Local message ID must be below 0x8000", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                        error = true;
-                    }
-                }
-                catch
-                {
-                    txtID1.Text = "00";
-                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
                     error = true;
                 }
         }
-
-        private void txtID2_LostFocus(object sender, EventArgs e)
-        {
-                try
-                {
-                    int n = int.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber);
-                    if (n < 0 || n > 255)
-                    {
-                        txtID2.Text = "00";
-                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                    }
-                }
-                catch
-                {
-                    txtID2.Text = "00";
-                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
-                }
-        }
-
         private void txtLength_LostFocus(object sender, EventArgs e)
         {
                 try
@@ -155,13 +123,15 @@ namespace MPacApplication
                     if (n < 0 || n > 255)
                     {
                         txtLength.Text = "00";
-                        MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        lblLengthError.Visible = true;
                     }
+                    else
+                        lblLengthError.Visible = false;
                 }
                 catch
                 {
                     txtLength.Text = "00";
-                    MessageBox.Show("Enter a Hex number between 00 and FF", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    lblLengthError.Visible = true;
                 }
         }
         private void txtName_LostFocus(object sender, EventArgs e)
@@ -170,37 +140,45 @@ namespace MPacApplication
                 {
                     if (txtName.Text.Trim() == "")
                     {
-                        MessageBox.Show("Name must not be left blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                        lblNameError1.Visible = true;
                         error = true;
                     }
+                    else
+                        lblNameError1.Visible = false;
                 }
                 catch
                 {
-                    MessageBox.Show("Name must not be left blank", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    lblNameError1.Visible = true;
                     error = true;
                 }
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            byte[] versionBytes = BitConverter.GetBytes(MainForm.SOFTWARE_VERSION);
+            byte[] IdBytes = BitConverter.GetBytes(ID);
             error = false;
-            txtID1_LostFocus(sender, e);
+            txtID_LostFocus(sender, e);
             txtName_LostFocus(sender, e);
             if (error == true)
                 return;
 
             for (int i = 0; i < parentForm.GetMessagesCount(msgType); i++)
             {
-                if ((Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.GetMessageHighByte(i, msgType)) && (Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber) == parentForm.GetMessageLowByte(i, msgType)))
+                if (IdBytes[0] == parentForm.GetMessageHighByte(i, msgType) && IdBytes[1] == parentForm.GetMessageLowByte(i, msgType))
                 {
-                    MessageBox.Show("Message ID already exists", "Duplicate ID", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    lblIdError3.Visible = true;
                     return;
                 }
+                else
+                    lblIdError3.Visible = false;
 			 if (txtName.Text == parentForm.GetMessageName(i, msgType))
                 {
-                    MessageBox.Show("Message name already exists", "Duplicate name", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    lblNameError2.Visible = true;
                     return;
                 }
+             else
+                 lblNameError2.Visible = false;
             }
 
             if (cmbFormatType.SelectedIndex == 0)
@@ -214,9 +192,11 @@ namespace MPacApplication
             {
                 if ((bytes - bytes_used) < 0)
                 {
-                    MessageBox.Show("The custom format specified is too long.", "Invalid Custom Format", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    lblCustomError.Visible = true;
                     return;
                 }
+                else
+                    lblCustomError.Visible = false;
                 foreach (FormatLine f in lstFormats.Items)
                     txtFormat.Text += f.ToFormatString();
             }
@@ -224,13 +204,12 @@ namespace MPacApplication
             {
                 txtFormat.Text = "call " + txtExternalFile.Text;
             }
-
             parentForm.PrintStatusMessage("Format string: " + txtFormat.Text);
             MessageFormat message = new MessageFormat(
-                Byte.Parse(txtVersion1.Text, System.Globalization.NumberStyles.HexNumber),
-                Byte.Parse(txtVersion2.Text, System.Globalization.NumberStyles.HexNumber),
-                Byte.Parse(txtID1.Text, System.Globalization.NumberStyles.HexNumber),
-                Byte.Parse(txtID2.Text, System.Globalization.NumberStyles.HexNumber),
+                versionBytes[1],
+                versionBytes[0],
+                IdBytes[1],
+                IdBytes[0],
                 Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
                 txtName.Text,
                 txtFormat.Text);
@@ -239,21 +218,20 @@ namespace MPacApplication
             {
                 if (cmbConnections.SelectedIndex < 0)
                 {
-                    MessageBox.Show("Please select a database connection.", "Company message failed", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    lblCompanyError1.Visible = true;
                     return;
                 }
+                else
+                    lblCompanyError1.Visible = false;
                 Connection c = (Connection)cmbConnections.Items[cmbConnections.SelectedIndex];
                 SqlMessageConnection sql = new SqlMessageConnection(c.connection);
                 if (sql.Write(message) == false)
                 {
-                    MessageBox.Show("Company message failed", "Company message failed", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    lblCompanyError2.Visible = true;
                     return;
                 }
-                MessageBox.Show("Company message created", "Company message created", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
-            }
-            else
-            {
-                MessageBox.Show("Local message created", "Local message created", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
+                else
+                    lblCompanyError2.Visible = false;
             }
             parentForm.AddMessageFormat(message, msgType);
             this.Visible = false;
@@ -268,13 +246,10 @@ namespace MPacApplication
 
         private void reset()
         {
-            txtVersion1.Text = "01";
-            txtVersion2.Text = "00";
             if (msgType == MessageType.Company)
-                txtID1.Text = "80";
+                txtID.Text = "8000";
             else
-                txtID1.Text = "00";
-            txtID2.Text = "00";
+                txtID.Text = "0000";
             txtLength.Text = "00";
             txtName.Text = "";
             txtFormat.Text = "";
@@ -589,6 +564,7 @@ namespace MPacApplication
         {
             UpdateControls(true);
         }
+
 
     }
 }
