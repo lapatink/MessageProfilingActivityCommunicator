@@ -9,7 +9,7 @@ namespace MPacApplication
     static class Export
     {
         private static StreamWriter writer = null;
-        private static string header = "id, version_major, version_minor, name, id_high, id_low, length, format";
+        private static string header = "version_major, version_minor, name, id_high, id_low, length, format";
 
         /// <summary>
         /// Export a set of messages to a csv file.
