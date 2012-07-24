@@ -28,17 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblVersion = new System.Windows.Forms.Label();
-            this.txtVersion1 = new System.Windows.Forms.TextBox();
-            this.txtVersion2 = new System.Windows.Forms.TextBox();
-            this.lblHex1 = new System.Windows.Forms.Label();
-            this.lblHex2 = new System.Windows.Forms.Label();
-            this.lblHex4 = new System.Windows.Forms.Label();
-            this.lblHex3 = new System.Windows.Forms.Label();
-            this.txtID2 = new System.Windows.Forms.TextBox();
-            this.txtID1 = new System.Windows.Forms.TextBox();
+            this.lblIdError1 = new System.Windows.Forms.Label();
+            this.txtID = new System.Windows.Forms.TextBox();
             this.lblID = new System.Windows.Forms.Label();
-            this.lblHex5 = new System.Windows.Forms.Label();
+            this.lblLengthError = new System.Windows.Forms.Label();
             this.txtLength = new System.Windows.Forms.TextBox();
             this.lblLength = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -59,6 +52,8 @@
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.txtExternalFile = new System.Windows.Forms.TextBox();
             this.pnlCustomFormat = new System.Windows.Forms.Panel();
+            this.lblvBytes = new System.Windows.Forms.Label();
+            this.lblRemaining = new System.Windows.Forms.Label();
             this.lblType = new System.Windows.Forms.Label();
             this.lblFormat2 = new System.Windows.Forms.Label();
             this.lblCount = new System.Windows.Forms.Label();
@@ -74,115 +69,63 @@
             this.lstFormats = new System.Windows.Forms.ListBox();
             this.cmbConnections = new System.Windows.Forms.ComboBox();
             this.lblConnection = new System.Windows.Forms.Label();
-            this.lblRemaining = new System.Windows.Forms.Label();
-            this.lblvBytes = new System.Windows.Forms.Label();
+            this.lblNameError1 = new System.Windows.Forms.Label();
+            this.lblIdError3 = new System.Windows.Forms.Label();
+            this.lblNameError2 = new System.Windows.Forms.Label();
+            this.lblIdError2 = new System.Windows.Forms.Label();
+            this.lblCompanyError1 = new System.Windows.Forms.Label();
+            this.lblCompanyError2 = new System.Windows.Forms.Label();
+            this.lblCustomError = new System.Windows.Forms.Label();
             this.pnlUniformGroup.SuspendLayout();
             this.pnlExternalProgram.SuspendLayout();
             this.pnlCustomFormat.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lblVersion
+            // lblIdError1
             // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(12, 22);
-            this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(63, 20);
-            this.lblVersion.TabIndex = 0;
-            this.lblVersion.Text = "Version";
+            this.lblIdError1.AutoSize = true;
+            this.lblIdError1.ForeColor = System.Drawing.Color.Red;
+            this.lblIdError1.Location = new System.Drawing.Point(117, 46);
+            this.lblIdError1.Name = "lblIdError1";
+            this.lblIdError1.Size = new System.Drawing.Size(99, 13);
+            this.lblIdError1.TabIndex = 8;
+            this.lblIdError1.Text = "Must be 0000-7FFF";
+            this.lblIdError1.Visible = false;
             // 
-            // txtVersion1
+            // txtID
             // 
-            this.txtVersion1.Location = new System.Drawing.Point(117, 22);
-            this.txtVersion1.Name = "txtVersion1";
-            this.txtVersion1.Size = new System.Drawing.Size(46, 20);
-            this.txtVersion1.TabIndex = 1;
-            this.txtVersion1.LostFocus += new System.EventHandler(this.txtVersion1_LostFocus);
-            // 
-            // txtVersion2
-            // 
-            this.txtVersion2.Location = new System.Drawing.Point(201, 22);
-            this.txtVersion2.Name = "txtVersion2";
-            this.txtVersion2.Size = new System.Drawing.Size(46, 20);
-            this.txtVersion2.TabIndex = 2;
-            this.txtVersion2.LostFocus += new System.EventHandler(this.txtVersion2_LostFocus);
-            // 
-            // lblHex1
-            // 
-            this.lblHex1.AutoSize = true;
-            this.lblHex1.Location = new System.Drawing.Point(117, 49);
-            this.lblHex1.Name = "lblHex1";
-            this.lblHex1.Size = new System.Drawing.Size(34, 13);
-            this.lblHex1.TabIndex = 3;
-            this.lblHex1.Text = "00-FF";
-            // 
-            // lblHex2
-            // 
-            this.lblHex2.AutoSize = true;
-            this.lblHex2.Location = new System.Drawing.Point(198, 49);
-            this.lblHex2.Name = "lblHex2";
-            this.lblHex2.Size = new System.Drawing.Size(34, 13);
-            this.lblHex2.TabIndex = 4;
-            this.lblHex2.Text = "00-FF";
-            // 
-            // lblHex4
-            // 
-            this.lblHex4.AutoSize = true;
-            this.lblHex4.Location = new System.Drawing.Point(198, 92);
-            this.lblHex4.Name = "lblHex4";
-            this.lblHex4.Size = new System.Drawing.Size(34, 13);
-            this.lblHex4.TabIndex = 9;
-            this.lblHex4.Text = "00-FF";
-            // 
-            // lblHex3
-            // 
-            this.lblHex3.AutoSize = true;
-            this.lblHex3.Location = new System.Drawing.Point(117, 92);
-            this.lblHex3.Name = "lblHex3";
-            this.lblHex3.Size = new System.Drawing.Size(34, 13);
-            this.lblHex3.TabIndex = 8;
-            this.lblHex3.Text = "00-FF";
-            // 
-            // txtID2
-            // 
-            this.txtID2.Location = new System.Drawing.Point(201, 65);
-            this.txtID2.Name = "txtID2";
-            this.txtID2.Size = new System.Drawing.Size(46, 20);
-            this.txtID2.TabIndex = 7;
-            this.txtID2.LostFocus += new System.EventHandler(this.txtID2_LostFocus);
-            // 
-            // txtID1
-            // 
-            this.txtID1.Location = new System.Drawing.Point(117, 65);
-            this.txtID1.Name = "txtID1";
-            this.txtID1.Size = new System.Drawing.Size(46, 20);
-            this.txtID1.TabIndex = 6;
-            this.txtID1.LostFocus += new System.EventHandler(this.txtID1_LostFocus);
+            this.txtID.Location = new System.Drawing.Point(117, 23);
+            this.txtID.Name = "txtID";
+            this.txtID.Size = new System.Drawing.Size(83, 20);
+            this.txtID.TabIndex = 6;
+            this.txtID.LostFocus += new System.EventHandler(this.txtID_LostFocus);
             // 
             // lblID
             // 
             this.lblID.AutoSize = true;
             this.lblID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblID.Location = new System.Drawing.Point(12, 65);
+            this.lblID.Location = new System.Drawing.Point(12, 23);
             this.lblID.Name = "lblID";
             this.lblID.Size = new System.Drawing.Size(26, 20);
             this.lblID.TabIndex = 5;
             this.lblID.Text = "ID";
             // 
-            // lblHex5
+            // lblLengthError
             // 
-            this.lblHex5.AutoSize = true;
-            this.lblHex5.Location = new System.Drawing.Point(117, 135);
-            this.lblHex5.Name = "lblHex5";
-            this.lblHex5.Size = new System.Drawing.Size(34, 13);
-            this.lblHex5.TabIndex = 13;
-            this.lblHex5.Text = "00-FF";
+            this.lblLengthError.AutoSize = true;
+            this.lblLengthError.ForeColor = System.Drawing.Color.Red;
+            this.lblLengthError.Location = new System.Drawing.Point(117, 101);
+            this.lblLengthError.Name = "lblLengthError";
+            this.lblLengthError.Size = new System.Drawing.Size(75, 13);
+            this.lblLengthError.TabIndex = 13;
+            this.lblLengthError.Text = "Must be 00-FF";
+            this.lblLengthError.Visible = false;
             // 
             // txtLength
             // 
-            this.txtLength.Location = new System.Drawing.Point(117, 108);
+            this.txtLength.Location = new System.Drawing.Point(117, 78);
             this.txtLength.Name = "txtLength";
-            this.txtLength.Size = new System.Drawing.Size(46, 20);
+            this.txtLength.Size = new System.Drawing.Size(83, 20);
             this.txtLength.TabIndex = 11;
             this.txtLength.TextChanged += new System.EventHandler(this.txtLength_TextChanged);
             this.txtLength.LostFocus += new System.EventHandler(this.txtLength_LostFocus);
@@ -191,7 +134,7 @@
             // 
             this.lblLength.AutoSize = true;
             this.lblLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLength.Location = new System.Drawing.Point(12, 108);
+            this.lblLength.Location = new System.Drawing.Point(12, 78);
             this.lblLength.Name = "lblLength";
             this.lblLength.Size = new System.Drawing.Size(59, 20);
             this.lblLength.TabIndex = 10;
@@ -199,7 +142,7 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(117, 151);
+            this.txtName.Location = new System.Drawing.Point(117, 135);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(130, 20);
             this.txtName.TabIndex = 16;
@@ -209,7 +152,7 @@
             // 
             this.lblName.AutoSize = true;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(12, 151);
+            this.lblName.Location = new System.Drawing.Point(12, 135);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(51, 20);
             this.lblName.TabIndex = 15;
@@ -377,6 +320,7 @@
             // 
             // pnlCustomFormat
             // 
+            this.pnlCustomFormat.Controls.Add(this.lblCustomError);
             this.pnlCustomFormat.Controls.Add(this.lblvBytes);
             this.pnlCustomFormat.Controls.Add(this.lblRemaining);
             this.pnlCustomFormat.Controls.Add(this.lblType);
@@ -397,6 +341,26 @@
             this.pnlCustomFormat.Size = new System.Drawing.Size(404, 173);
             this.pnlCustomFormat.TabIndex = 31;
             this.pnlCustomFormat.Visible = false;
+            // 
+            // lblvBytes
+            // 
+            this.lblvBytes.AutoSize = true;
+            this.lblvBytes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblvBytes.Location = new System.Drawing.Point(144, 150);
+            this.lblvBytes.Name = "lblvBytes";
+            this.lblvBytes.Size = new System.Drawing.Size(16, 16);
+            this.lblvBytes.TabIndex = 14;
+            this.lblvBytes.Text = "0";
+            // 
+            // lblRemaining
+            // 
+            this.lblRemaining.AutoSize = true;
+            this.lblRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRemaining.Location = new System.Drawing.Point(9, 150);
+            this.lblRemaining.Name = "lblRemaining";
+            this.lblRemaining.Size = new System.Drawing.Size(129, 16);
+            this.lblRemaining.TabIndex = 13;
+            this.lblRemaining.Text = "Remaining Bytes:";
             // 
             // lblType
             // 
@@ -570,31 +534,94 @@
             this.lblConnection.Text = "SQL Connection:";
             this.lblConnection.Visible = false;
             // 
-            // lblRemaining
+            // lblNameError1
             // 
-            this.lblRemaining.AutoSize = true;
-            this.lblRemaining.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRemaining.Location = new System.Drawing.Point(9, 150);
-            this.lblRemaining.Name = "lblRemaining";
-            this.lblRemaining.Size = new System.Drawing.Size(129, 16);
-            this.lblRemaining.TabIndex = 13;
-            this.lblRemaining.Text = "Remaining Bytes:";
+            this.lblNameError1.AutoSize = true;
+            this.lblNameError1.ForeColor = System.Drawing.Color.Red;
+            this.lblNameError1.Location = new System.Drawing.Point(117, 158);
+            this.lblNameError1.Name = "lblNameError1";
+            this.lblNameError1.Size = new System.Drawing.Size(92, 13);
+            this.lblNameError1.TabIndex = 34;
+            this.lblNameError1.Text = "Must not be blank";
+            this.lblNameError1.Visible = false;
             // 
-            // lblvBytes
+            // lblIdError3
             // 
-            this.lblvBytes.AutoSize = true;
-            this.lblvBytes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblvBytes.Location = new System.Drawing.Point(144, 150);
-            this.lblvBytes.Name = "lblvBytes";
-            this.lblvBytes.Size = new System.Drawing.Size(16, 16);
-            this.lblvBytes.TabIndex = 14;
-            this.lblvBytes.Text = "0";
+            this.lblIdError3.AutoSize = true;
+            this.lblIdError3.ForeColor = System.Drawing.Color.Red;
+            this.lblIdError3.Location = new System.Drawing.Point(114, 46);
+            this.lblIdError3.Name = "lblIdError3";
+            this.lblIdError3.Size = new System.Drawing.Size(84, 13);
+            this.lblIdError3.TabIndex = 35;
+            this.lblIdError3.Text = "ID already exists";
+            this.lblIdError3.Visible = false;
+            // 
+            // lblNameError2
+            // 
+            this.lblNameError2.AutoSize = true;
+            this.lblNameError2.ForeColor = System.Drawing.Color.Red;
+            this.lblNameError2.Location = new System.Drawing.Point(117, 158);
+            this.lblNameError2.Name = "lblNameError2";
+            this.lblNameError2.Size = new System.Drawing.Size(145, 13);
+            this.lblNameError2.TabIndex = 36;
+            this.lblNameError2.Text = "Message name already exists";
+            this.lblNameError2.Visible = false;
+            // 
+            // lblIdError2
+            // 
+            this.lblIdError2.AutoSize = true;
+            this.lblIdError2.ForeColor = System.Drawing.Color.Red;
+            this.lblIdError2.Location = new System.Drawing.Point(114, 46);
+            this.lblIdError2.Name = "lblIdError2";
+            this.lblIdError2.Size = new System.Drawing.Size(99, 13);
+            this.lblIdError2.TabIndex = 37;
+            this.lblIdError2.Text = "Must be 8000-FFFF";
+            this.lblIdError2.Visible = false;
+            // 
+            // lblCompanyError1
+            // 
+            this.lblCompanyError1.AutoSize = true;
+            this.lblCompanyError1.ForeColor = System.Drawing.Color.Red;
+            this.lblCompanyError1.Location = new System.Drawing.Point(33, 255);
+            this.lblCompanyError1.Name = "lblCompanyError1";
+            this.lblCompanyError1.Size = new System.Drawing.Size(182, 13);
+            this.lblCompanyError1.TabIndex = 38;
+            this.lblCompanyError1.Text = "Please select a database connection";
+            this.lblCompanyError1.Visible = false;
+            // 
+            // lblCompanyError2
+            // 
+            this.lblCompanyError2.AutoSize = true;
+            this.lblCompanyError2.ForeColor = System.Drawing.Color.Red;
+            this.lblCompanyError2.Location = new System.Drawing.Point(64, 255);
+            this.lblCompanyError2.Name = "lblCompanyError2";
+            this.lblCompanyError2.Size = new System.Drawing.Size(128, 13);
+            this.lblCompanyError2.TabIndex = 39;
+            this.lblCompanyError2.Text = "Company Message Failed";
+            this.lblCompanyError2.Visible = false;
+            // 
+            // lblCustomError
+            // 
+            this.lblCustomError.AutoSize = true;
+            this.lblCustomError.ForeColor = System.Drawing.Color.Red;
+            this.lblCustomError.Location = new System.Drawing.Point(175, 152);
+            this.lblCustomError.Name = "lblCustomError";
+            this.lblCustomError.Size = new System.Drawing.Size(128, 13);
+            this.lblCustomError.TabIndex = 40;
+            this.lblCustomError.Text = "Custom Format is too long";
+            this.lblCustomError.Visible = false;
             // 
             // AddMessageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 283);
+            this.Controls.Add(this.lblCompanyError2);
+            this.Controls.Add(this.lblCompanyError1);
+            this.Controls.Add(this.lblIdError2);
+            this.Controls.Add(this.lblNameError2);
+            this.Controls.Add(this.lblIdError3);
+            this.Controls.Add(this.lblNameError1);
             this.Controls.Add(this.lblConnection);
             this.Controls.Add(this.cmbConnections);
             this.Controls.Add(this.pnlCustomFormat);
@@ -607,19 +634,12 @@
             this.Controls.Add(this.lblFormat);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.lblName);
-            this.Controls.Add(this.lblHex5);
+            this.Controls.Add(this.lblLengthError);
             this.Controls.Add(this.txtLength);
             this.Controls.Add(this.lblLength);
-            this.Controls.Add(this.lblHex4);
-            this.Controls.Add(this.lblHex3);
-            this.Controls.Add(this.txtID2);
-            this.Controls.Add(this.txtID1);
+            this.Controls.Add(this.lblIdError1);
+            this.Controls.Add(this.txtID);
             this.Controls.Add(this.lblID);
-            this.Controls.Add(this.lblHex2);
-            this.Controls.Add(this.lblHex1);
-            this.Controls.Add(this.txtVersion2);
-            this.Controls.Add(this.txtVersion1);
-            this.Controls.Add(this.lblVersion);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AddMessageForm";
@@ -638,17 +658,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lblVersion;
-        private System.Windows.Forms.TextBox txtVersion1;
-        private System.Windows.Forms.TextBox txtVersion2;
-        private System.Windows.Forms.Label lblHex1;
-        private System.Windows.Forms.Label lblHex2;
-        private System.Windows.Forms.Label lblHex4;
-        private System.Windows.Forms.Label lblHex3;
-        private System.Windows.Forms.TextBox txtID2;
-        private System.Windows.Forms.TextBox txtID1;
+        private System.Windows.Forms.Label lblIdError1;
+        private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.Label lblID;
-        private System.Windows.Forms.Label lblHex5;
+        private System.Windows.Forms.Label lblLengthError;
         private System.Windows.Forms.TextBox txtLength;
         private System.Windows.Forms.Label lblLength;
         private System.Windows.Forms.TextBox txtName;
@@ -686,6 +699,13 @@
         private System.Windows.Forms.Label lblConnection;
         private System.Windows.Forms.Label lblvBytes;
         private System.Windows.Forms.Label lblRemaining;
+        private System.Windows.Forms.Label lblNameError1;
+        private System.Windows.Forms.Label lblIdError3;
+        private System.Windows.Forms.Label lblNameError2;
+        private System.Windows.Forms.Label lblIdError2;
+        private System.Windows.Forms.Label lblCompanyError1;
+        private System.Windows.Forms.Label lblCompanyError2;
+        private System.Windows.Forms.Label lblCustomError;
 
 
     }

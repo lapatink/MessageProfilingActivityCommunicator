@@ -13,7 +13,7 @@ namespace MPacApplication
 
      public partial class MainForm : Form
      {
-          public static short SOFTWARE_VERSION = 0x0100;
+          public static ushort SOFTWARE_VERSION = 0x0100;
 
           private List<MessageFormat> localMessages = new List<MessageFormat>();
           private List<MessageFormat> companyMessages = new List<MessageFormat>();
