@@ -426,16 +426,16 @@ namespace MPacApplication
 
               if (localMessages.Remove(messageFormat))
                   flag = true;
-              if (IsAdministrator)
-                  if (companyMessages.Remove(messageFormat))
-                      flag = true;
 
               if (flag)
               {
                   lstMessageSummary.Items.Remove(messageFormat);
                   totalNumberOfMessages--;
               }
-
+              else
+              {
+                  MessageBox.Show("Company messages cannot be removed.");
+              }
               return flag;
           }
           public bool RemoveMessageFormat(int index)
