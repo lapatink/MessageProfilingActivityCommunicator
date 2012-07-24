@@ -39,7 +39,7 @@ namespace MPacApplication
                cmbComPortName.SelectedIndex = GetIndexOfValue(cmbComPortName.Items, currentlySelectedPortName);
           }
 
-          public void SetComboBoxes(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
+          public void SetComboBoxes(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits, Handshake handshake, bool rtsEnable, bool dtrEnable)
           {
                try
                {
@@ -71,6 +71,42 @@ namespace MPacApplication
                     default:
                          cmbStopBits.SelectedIndex = GetIndexOfValue(cmbStopBits.Items, "1");
                          break;
+               }
+               switch (handshake)
+               {
+                    case Handshake.None:
+                         cmbHandshake.SelectedIndex = GetIndexOfValue(cmbHandshake.Items, "None");
+                         break;
+                    case Handshake.RequestToSend:
+                         cmbHandshake.SelectedIndex = GetIndexOfValue(cmbHandshake.Items, "RequestToSend");
+                         break;
+                    case Handshake.XOnXOff:
+                         cmbHandshake.SelectedIndex = GetIndexOfValue(cmbHandshake.Items, "XOnXOff");
+                         break;
+                    case Handshake.RequestToSendXOnXOff:
+                         cmbHandshake.SelectedIndex = GetIndexOfValue(cmbHandshake.Items, "Both");
+                         break;
+                    default:
+                         cmbHandshake.SelectedIndex = GetIndexOfValue(cmbHandshake.Items, "None");
+                         break;
+               }
+
+               if (rtsEnable)
+               {
+                    cmbRequestToSend.SelectedIndex = GetIndexOfValue(cmbRequestToSend.Items, "Enable");
+               }
+               else
+               {
+                    cmbRequestToSend.SelectedIndex = GetIndexOfValue(cmbRequestToSend.Items, "Disable");
+               }
+
+               if (dtrEnable)
+               {
+                    cmbDataTerminalReady.SelectedIndex = GetIndexOfValue(cmbDataTerminalReady.Items, "Enable");
+               }
+               else
+               {
+                    cmbDataTerminalReady.SelectedIndex = GetIndexOfValue(cmbDataTerminalReady.Items, "Disable");
                }
           }
 
@@ -118,6 +154,9 @@ namespace MPacApplication
                Parity selectedParity;
                int selectedDataBits;
                StopBits selectedStopBits;
+               Handshake selectedHandshake;
+               bool selectedRtsEnable;
+               bool selectedDtrEnable;
 
                try
                {
@@ -134,7 +173,7 @@ namespace MPacApplication
                     MessageBox.Show("Invalid Baud Rate. Reverting to default: " + MainForm.DEFAULT_BAUD_RATE.ToString());
                     selectedBaudRate = MainForm.DEFAULT_BAUD_RATE;
                }
-               else if (selectedBaudRate < 1)
+               else if (selectedBaudRate < 1 || selectedBaudRate > MainForm.MAX_BAUD_RATE)
                {
                     MessageBox.Show("Invalid Baud Rate. Reverting to default: " + MainForm.DEFAULT_BAUD_RATE.ToString());
                     selectedBaudRate = MainForm.DEFAULT_BAUD_RATE;
@@ -180,7 +219,42 @@ namespace MPacApplication
                     selectedStopBits = StopBits.None;
                }
 
-               this.parentForm.OpenComPort(selectedPortName, selectedBaudRate, selectedParity, selectedDataBits, selectedStopBits);
+               if (cmbHandshake.Text.Trim().Equals("RequestToSend"))
+               {
+                    selectedHandshake = Handshake.RequestToSend;
+               }
+               else if (cmbHandshake.Text.Trim().Equals("XOnXOff"))
+               {
+                    selectedHandshake = Handshake.XOnXOff;
+               }
+               else if (cmbHandshake.Text.Trim().Equals("Both"))
+               {
+                    selectedHandshake = Handshake.RequestToSendXOnXOff;
+               }
+               else
+               {
+                    selectedHandshake = Handshake.None;
+               }
+
+               if (cmbDataTerminalReady.Text.Trim().Equals("Enable"))
+               {
+                    selectedDtrEnable = true;
+               }
+               else
+               {
+                    selectedDtrEnable = false;
+               }
+
+               if (cmbRequestToSend.Text.Trim().Equals("Enable"))
+               {
+                    selectedRtsEnable = true;
+               }
+               else
+               {
+                    selectedRtsEnable = false;
+               }
+
+               this.parentForm.OpenComPort(selectedPortName, selectedBaudRate, selectedParity, selectedDataBits, selectedStopBits, selectedHandshake, selectedRtsEnable, selectedDtrEnable);
                this.Visible = false;
           }
 

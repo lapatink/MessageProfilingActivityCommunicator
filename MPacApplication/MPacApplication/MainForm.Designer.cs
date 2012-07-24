@@ -68,6 +68,12 @@
                this.btnRefresh = new System.Windows.Forms.Button();
                this.btnRemove = new System.Windows.Forms.Button();
                this.cmbViews = new System.Windows.Forms.ComboBox();
+               this.lblvHandshake = new System.Windows.Forms.Label();
+               this.lblHandshake = new System.Windows.Forms.Label();
+               this.lblvRTSEnable = new System.Windows.Forms.Label();
+               this.lblRTSEnable = new System.Windows.Forms.Label();
+               this.lblvDTREnable = new System.Windows.Forms.Label();
+               this.lblDTREnable = new System.Windows.Forms.Label();
                this.menuStrip1.SuspendLayout();
                this.SuspendLayout();
                // 
@@ -76,7 +82,7 @@
                this.lblCurrentTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
                this.lblCurrentTime.AutoSize = true;
                this.lblCurrentTime.Font = new System.Drawing.Font("Quartz MS", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.lblCurrentTime.Location = new System.Drawing.Point(534, 24);
+               this.lblCurrentTime.Location = new System.Drawing.Point(661, 24);
                this.lblCurrentTime.Name = "lblCurrentTime";
                this.lblCurrentTime.Size = new System.Drawing.Size(308, 25);
                this.lblCurrentTime.TabIndex = 0;
@@ -110,7 +116,7 @@
                // lblParity
                // 
                this.lblParity.AutoSize = true;
-               this.lblParity.Location = new System.Drawing.Point(174, 53);
+               this.lblParity.Location = new System.Drawing.Point(303, 27);
                this.lblParity.Name = "lblParity";
                this.lblParity.Size = new System.Drawing.Size(36, 13);
                this.lblParity.TabIndex = 5;
@@ -119,7 +125,7 @@
                // lblStopBits
                // 
                this.lblStopBits.AutoSize = true;
-               this.lblStopBits.Location = new System.Drawing.Point(174, 79);
+               this.lblStopBits.Location = new System.Drawing.Point(303, 53);
                this.lblStopBits.Name = "lblStopBits";
                this.lblStopBits.Size = new System.Drawing.Size(52, 13);
                this.lblStopBits.TabIndex = 6;
@@ -128,7 +134,7 @@
                // lblDataBits
                // 
                this.lblDataBits.AutoSize = true;
-               this.lblDataBits.Location = new System.Drawing.Point(174, 66);
+               this.lblDataBits.Location = new System.Drawing.Point(303, 40);
                this.lblDataBits.Name = "lblDataBits";
                this.lblDataBits.Size = new System.Drawing.Size(53, 13);
                this.lblDataBits.TabIndex = 7;
@@ -155,7 +161,7 @@
                // lblvParity
                // 
                this.lblvParity.AutoSize = true;
-               this.lblvParity.Location = new System.Drawing.Point(240, 53);
+               this.lblvParity.Location = new System.Drawing.Point(362, 27);
                this.lblvParity.Name = "lblvParity";
                this.lblvParity.Size = new System.Drawing.Size(43, 13);
                this.lblvParity.TabIndex = 10;
@@ -164,7 +170,7 @@
                // lblvStopBits
                // 
                this.lblvStopBits.AutoSize = true;
-               this.lblvStopBits.Location = new System.Drawing.Point(240, 79);
+               this.lblvStopBits.Location = new System.Drawing.Point(362, 53);
                this.lblvStopBits.Name = "lblvStopBits";
                this.lblvStopBits.Size = new System.Drawing.Size(43, 13);
                this.lblvStopBits.TabIndex = 11;
@@ -173,7 +179,7 @@
                // lblvDataBits
                // 
                this.lblvDataBits.AutoSize = true;
-               this.lblvDataBits.Location = new System.Drawing.Point(240, 66);
+               this.lblvDataBits.Location = new System.Drawing.Point(362, 40);
                this.lblvDataBits.Name = "lblvDataBits";
                this.lblvDataBits.Size = new System.Drawing.Size(43, 13);
                this.lblvDataBits.TabIndex = 12;
@@ -199,7 +205,7 @@
                this.lstDisplayWindow.ItemHeight = 18;
                this.lstDisplayWindow.Location = new System.Drawing.Point(12, 218);
                this.lstDisplayWindow.Name = "lstDisplayWindow";
-               this.lstDisplayWindow.Size = new System.Drawing.Size(428, 76);
+               this.lstDisplayWindow.Size = new System.Drawing.Size(555, 76);
                this.lstDisplayWindow.TabIndex = 14;
                // 
                // tmrCheckForData
@@ -212,7 +218,7 @@
                // 
                this.btnAddMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
                this.btnAddMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.btnAddMessage.Location = new System.Drawing.Point(284, 25);
+               this.btnAddMessage.Location = new System.Drawing.Point(411, 25);
                this.btnAddMessage.Name = "btnAddMessage";
                this.btnAddMessage.Size = new System.Drawing.Size(75, 68);
                this.btnAddMessage.TabIndex = 15;
@@ -224,7 +230,7 @@
                // 
                this.btnAddCompanyMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
                this.btnAddCompanyMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.btnAddCompanyMessage.Location = new System.Drawing.Point(365, 24);
+               this.btnAddCompanyMessage.Location = new System.Drawing.Point(492, 24);
                this.btnAddCompanyMessage.Name = "btnAddCompanyMessage";
                this.btnAddCompanyMessage.Size = new System.Drawing.Size(75, 68);
                this.btnAddCompanyMessage.TabIndex = 16;
@@ -238,7 +244,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
                this.txtMessageOne.Location = new System.Drawing.Point(95, 110);
                this.txtMessageOne.Name = "txtMessageOne";
-               this.txtMessageOne.Size = new System.Drawing.Size(665, 20);
+               this.txtMessageOne.Size = new System.Drawing.Size(792, 20);
                this.txtMessageOne.TabIndex = 17;
                // 
                // txtMessageTwo
@@ -247,7 +253,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
                this.txtMessageTwo.Location = new System.Drawing.Point(95, 137);
                this.txtMessageTwo.Name = "txtMessageTwo";
-               this.txtMessageTwo.Size = new System.Drawing.Size(665, 20);
+               this.txtMessageTwo.Size = new System.Drawing.Size(792, 20);
                this.txtMessageTwo.TabIndex = 18;
                // 
                // txtMessageThree
@@ -256,13 +262,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
                this.txtMessageThree.Location = new System.Drawing.Point(95, 164);
                this.txtMessageThree.Name = "txtMessageThree";
-               this.txtMessageThree.Size = new System.Drawing.Size(665, 20);
+               this.txtMessageThree.Size = new System.Drawing.Size(792, 20);
                this.txtMessageThree.TabIndex = 19;
                // 
                // btnSendMessageOne
                // 
                this.btnSendMessageOne.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-               this.btnSendMessageOne.Location = new System.Drawing.Point(766, 107);
+               this.btnSendMessageOne.Location = new System.Drawing.Point(893, 107);
                this.btnSendMessageOne.Name = "btnSendMessageOne";
                this.btnSendMessageOne.Size = new System.Drawing.Size(75, 23);
                this.btnSendMessageOne.TabIndex = 20;
@@ -273,7 +279,7 @@
                // btnSendMessageTwo
                // 
                this.btnSendMessageTwo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-               this.btnSendMessageTwo.Location = new System.Drawing.Point(767, 134);
+               this.btnSendMessageTwo.Location = new System.Drawing.Point(894, 134);
                this.btnSendMessageTwo.Name = "btnSendMessageTwo";
                this.btnSendMessageTwo.Size = new System.Drawing.Size(75, 23);
                this.btnSendMessageTwo.TabIndex = 21;
@@ -284,7 +290,7 @@
                // btnSendMessageThree
                // 
                this.btnSendMessageThree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-               this.btnSendMessageThree.Location = new System.Drawing.Point(767, 163);
+               this.btnSendMessageThree.Location = new System.Drawing.Point(894, 163);
                this.btnSendMessageThree.Name = "btnSendMessageThree";
                this.btnSendMessageThree.Size = new System.Drawing.Size(75, 23);
                this.btnSendMessageThree.TabIndex = 22;
@@ -298,7 +304,7 @@
             this.File});
                this.menuStrip1.Location = new System.Drawing.Point(0, 0);
                this.menuStrip1.Name = "menuStrip1";
-               this.menuStrip1.Size = new System.Drawing.Size(854, 24);
+               this.menuStrip1.Size = new System.Drawing.Size(981, 24);
                this.menuStrip1.TabIndex = 23;
                this.menuStrip1.Text = "menuStrip1";
                // 
@@ -368,7 +374,7 @@
                this.lstStatusDisplay.HorizontalScrollbar = true;
                this.lstStatusDisplay.Location = new System.Drawing.Point(233, 303);
                this.lstStatusDisplay.Name = "lstStatusDisplay";
-               this.lstStatusDisplay.Size = new System.Drawing.Size(207, 147);
+               this.lstStatusDisplay.Size = new System.Drawing.Size(334, 147);
                this.lstStatusDisplay.TabIndex = 26;
                // 
                // label1
@@ -406,7 +412,7 @@
                this.lstMessageSummary.FormattingEnabled = true;
                this.lstMessageSummary.HorizontalScrollbar = true;
                this.lstMessageSummary.ItemHeight = 18;
-               this.lstMessageSummary.Location = new System.Drawing.Point(446, 218);
+               this.lstMessageSummary.Location = new System.Drawing.Point(573, 218);
                this.lstMessageSummary.Name = "lstMessageSummary";
                this.lstMessageSummary.Size = new System.Drawing.Size(396, 238);
                this.lstMessageSummary.TabIndex = 30;
@@ -415,7 +421,7 @@
                // 
                this.btnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
                this.btnRefresh.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-               this.btnRefresh.Location = new System.Drawing.Point(446, 25);
+               this.btnRefresh.Location = new System.Drawing.Point(573, 25);
                this.btnRefresh.Name = "btnRefresh";
                this.btnRefresh.Size = new System.Drawing.Size(75, 68);
                this.btnRefresh.TabIndex = 31;
@@ -426,7 +432,7 @@
                // btnRemove
                // 
                this.btnRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-               this.btnRemove.Location = new System.Drawing.Point(766, 192);
+               this.btnRemove.Location = new System.Drawing.Point(893, 192);
                this.btnRemove.Name = "btnRemove";
                this.btnRemove.Size = new System.Drawing.Size(75, 23);
                this.btnRemove.TabIndex = 32;
@@ -445,11 +451,71 @@
                this.cmbViews.Size = new System.Drawing.Size(121, 21);
                this.cmbViews.TabIndex = 31;
                // 
+               // lblvHandshake
+               // 
+               this.lblvHandshake.AutoSize = true;
+               this.lblvHandshake.Location = new System.Drawing.Point(240, 79);
+               this.lblvHandshake.Name = "lblvHandshake";
+               this.lblvHandshake.Size = new System.Drawing.Size(43, 13);
+               this.lblvHandshake.TabIndex = 34;
+               this.lblvHandshake.Text = "000000";
+               // 
+               // lblHandshake
+               // 
+               this.lblHandshake.AutoSize = true;
+               this.lblHandshake.Location = new System.Drawing.Point(174, 79);
+               this.lblHandshake.Name = "lblHandshake";
+               this.lblHandshake.Size = new System.Drawing.Size(65, 13);
+               this.lblHandshake.TabIndex = 33;
+               this.lblHandshake.Text = "Handshake:";
+               // 
+               // lblvRTSEnable
+               // 
+               this.lblvRTSEnable.AutoSize = true;
+               this.lblvRTSEnable.Location = new System.Drawing.Point(240, 53);
+               this.lblvRTSEnable.Name = "lblvRTSEnable";
+               this.lblvRTSEnable.Size = new System.Drawing.Size(43, 13);
+               this.lblvRTSEnable.TabIndex = 36;
+               this.lblvRTSEnable.Text = "000000";
+               // 
+               // lblRTSEnable
+               // 
+               this.lblRTSEnable.AutoSize = true;
+               this.lblRTSEnable.Location = new System.Drawing.Point(174, 53);
+               this.lblRTSEnable.Name = "lblRTSEnable";
+               this.lblRTSEnable.Size = new System.Drawing.Size(32, 13);
+               this.lblRTSEnable.TabIndex = 35;
+               this.lblRTSEnable.Text = "RTS:";
+               // 
+               // lblvDTREnable
+               // 
+               this.lblvDTREnable.AutoSize = true;
+               this.lblvDTREnable.Location = new System.Drawing.Point(240, 66);
+               this.lblvDTREnable.Name = "lblvDTREnable";
+               this.lblvDTREnable.Size = new System.Drawing.Size(43, 13);
+               this.lblvDTREnable.TabIndex = 38;
+               this.lblvDTREnable.Text = "000000";
+               // 
+               // lblDTREnable
+               // 
+               this.lblDTREnable.AutoSize = true;
+               this.lblDTREnable.Location = new System.Drawing.Point(174, 66);
+               this.lblDTREnable.Name = "lblDTREnable";
+               this.lblDTREnable.Size = new System.Drawing.Size(33, 13);
+               this.lblDTREnable.TabIndex = 37;
+               this.lblDTREnable.Text = "DTR:";
+               // 
                // MainForm
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-               this.ClientSize = new System.Drawing.Size(854, 462);
+               this.ClientSize = new System.Drawing.Size(981, 462);
+               this.Controls.Add(this.lblvDTREnable);
+               this.Controls.Add(this.lblDTREnable);
+               this.Controls.Add(this.lblvRTSEnable);
+               this.Controls.Add(this.lblRTSEnable);
+               this.Controls.Add(this.lblvHandshake);
+               this.Controls.Add(this.lblHandshake);
                this.Controls.Add(this.btnRemove);
                this.Controls.Add(this.btnRefresh);
                this.Controls.Add(this.cmbViews);
@@ -483,7 +549,7 @@
                this.Controls.Add(this.lblCurrentTime);
                this.Controls.Add(this.menuStrip1);
                this.MainMenuStrip = this.menuStrip1;
-               this.MinimumSize = new System.Drawing.Size(870, 500);
+               this.MinimumSize = new System.Drawing.Size(985, 500);
                this.Name = "MainForm";
                this.Text = "Message-Profiling Activity Communicator";
                this.menuStrip1.ResumeLayout(false);
@@ -536,6 +602,12 @@
           private System.Windows.Forms.Button btnRemove;
 
           private System.Windows.Forms.ComboBox cmbViews;
+          private System.Windows.Forms.Label lblvHandshake;
+          private System.Windows.Forms.Label lblHandshake;
+          private System.Windows.Forms.Label lblvRTSEnable;
+          private System.Windows.Forms.Label lblRTSEnable;
+          private System.Windows.Forms.Label lblvDTREnable;
+          private System.Windows.Forms.Label lblDTREnable;
 
      }
 }

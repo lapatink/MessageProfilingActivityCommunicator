@@ -16,12 +16,16 @@ namespace MPacApplication
           public static short SOFTWARE_VERSION = 0x0100;
 
           private List<MessageFormat> localMessages = new List<MessageFormat>();
-          private List<MessageFormat> companyMessages = new List<MessageFormat>(); 
+          private List<MessageFormat> companyMessages = new List<MessageFormat>();
 
+          public const int MAX_BAUD_RATE = 1000000;
           public const int DEFAULT_BAUD_RATE = 9600;
           public const Parity DEFAULT_PARITY = Parity.None;
           public const int DEFAULT_DATA_BITS = 8;
           public const StopBits DEFAULT_STOP_BITS = StopBits.One;
+          public const Handshake DEFAULT_HANDSHAKE = Handshake.None;
+          public const bool DEFAULT_RTS = false;
+          public const bool DEFAULT_DTR = false;
 
           private ComPortConfigForm comPortConfigForm;
           private AddMessageForm AddMessageForm;
@@ -88,6 +92,30 @@ namespace MPacApplication
                     return stopBits;
                }
           }
+          private Handshake handshake;
+          public Handshake Handshake
+          {
+               get
+               {
+                    return handshake;
+               }
+          }
+          private bool dtrEnable;
+          public bool DtrEnable
+          {
+               get
+               {
+                    return dtrEnable;
+               }
+          }
+          private bool rtsEnable;
+          public bool RtsEnable
+          {
+               get
+               {
+                    return rtsEnable;
+               }
+          }
 
           public MainForm()
           {
@@ -117,7 +145,7 @@ namespace MPacApplication
                }
                availablePortNames.Sort();
 
-               OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS);
+               OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS, DEFAULT_HANDSHAKE, DEFAULT_RTS, DEFAULT_DTR);
 
                PrintStatusMessage("Remaining List");
                foreach (String name in availablePortNames)
@@ -167,7 +195,7 @@ namespace MPacApplication
                */
           }
 
-          private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
+          private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits, Handshake handshake, bool rtsEnable, bool dtrEnable)
           {
                PrintStatusMessage("Set Serial Port Config " + comPortName + " " + baudRate + " " + parity + " " + dataBits + " " + stopBits);
 
@@ -178,14 +206,17 @@ namespace MPacApplication
                this.parity = parity;
                this.dataBits = dataBits;
                this.stopBits = stopBits;
+               this.handshake = handshake;
+               this.rtsEnable = rtsEnable;
+               this.dtrEnable = dtrEnable;
 
                if (listeningPort == null)
                {
                     PrintStatusMessage("Create new SerialPort " + this.comPortName + " " + this.baudRate + " " + this.parity + " " + this.dataBits + " " + this.stopBits);
                     listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
-                    listeningPort.Handshake = Handshake.RequestToSendXOnXOff;
-                    listeningPort.RtsEnable = true;
-                    listeningPort.DtrEnable = true;
+                    listeningPort.Handshake = this.handshake;
+                    listeningPort.RtsEnable = this.rtsEnable;
+                    listeningPort.DtrEnable = this.dtrEnable;
                }
                else
                {
@@ -194,9 +225,9 @@ namespace MPacApplication
                     listeningPort.Parity = this.parity;
                     listeningPort.DataBits = this.dataBits;
                     listeningPort.StopBits = this.stopBits;
-                    listeningPort.Handshake = Handshake.RequestToSendXOnXOff;
-                    listeningPort.RtsEnable = true;
-                    listeningPort.DtrEnable = true;
+                    listeningPort.Handshake = this.handshake;
+                    listeningPort.RtsEnable = this.rtsEnable;
+                    listeningPort.DtrEnable = this.dtrEnable;
                }
 
                lblvPortName.Text = this.comPortName;
@@ -204,6 +235,9 @@ namespace MPacApplication
                lblvParity.Text = this.parity.ToString();
                lblvDataBits.Text = this.dataBits.ToString();
                lblvStopBits.Text = this.stopBits.ToString();
+               lblvHandshake.Text = this.handshake.ToString();
+               lblvRTSEnable.Text = this.rtsEnable.ToString();
+               lblvDTREnable.Text = this.dtrEnable.ToString();
 
                switch (stopBits)
                {
@@ -225,9 +259,9 @@ namespace MPacApplication
                }
           }
 
-          public void OpenComPort(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits)
+          public void OpenComPort(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits, Handshake handshake, bool rtsEnable, bool dtrEnable)
           {
-               SetSerialPortConfig(comPortName, baudRate, parity, dataBits, stopBits);
+               SetSerialPortConfig(comPortName, baudRate, parity, dataBits, stopBits, handshake, rtsEnable, dtrEnable);
                OpenComPort();
           }
 
@@ -246,7 +280,7 @@ namespace MPacApplication
                     availablePortNames.Remove(this.comPortName);
                     if(initialized)
                          MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availablePortNames.ElementAt<String>(0));
-                    OpenComPort(availablePortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits);
+                    OpenComPort(availablePortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
                }
 
                comPortClosed = false;
@@ -429,7 +463,7 @@ namespace MPacApplication
                }
                finally
                {
-                    comPortConfigForm.SetComboBoxes(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
+                    comPortConfigForm.SetComboBoxes(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
                }
           }
 
