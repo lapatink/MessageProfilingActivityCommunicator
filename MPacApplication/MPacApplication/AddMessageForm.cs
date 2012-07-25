@@ -95,7 +95,6 @@ namespace MPacApplication
                     {
                         lblIdError1.Visible = false;
                         lblIdError2.Visible = false;
-                        ID = ushort.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);
                     }
                 }
                 catch
@@ -154,30 +153,27 @@ namespace MPacApplication
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            txtID.Focus();
-            byte[] versionBytes = BitConverter.GetBytes(MainForm.SOFTWARE_VERSION);
-            byte[] IdBytes = BitConverter.GetBytes(ID);
+            lblNameError2.Visible = false;
+            lblIdError3.Visible = false;
             error = false;
             txtName_LostFocus(sender, e);
             txtID_LostFocus(sender, e);
-            
+            ID = ushort.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);
+            byte[] versionBytes = BitConverter.GetBytes(MainForm.SOFTWARE_VERSION);
+            byte[] IdBytes = BitConverter.GetBytes(ID);
 
             for (int i = 0; i < parentForm.GetMessagesCount(msgType); i++)
             {
-                if (IdBytes[0] == parentForm.GetMessageHighByte(i, msgType) && IdBytes[1] == parentForm.GetMessageLowByte(i, msgType))
+                if ((IdBytes[1] == parentForm.GetMessageHighByte(i, msgType)) && (IdBytes[0] == parentForm.GetMessageLowByte(i, msgType)))
                 {
                     lblIdError3.Visible = true;
                     error = true;
                 }
-                else
-                    lblIdError3.Visible = false;
-			 if (txtName.Text == parentForm.GetMessageName(i, msgType))
+                if (txtName.Text == parentForm.GetMessageName(i, msgType))
                 {
                     lblNameError2.Visible = true;
                     error = true;
                 }
-             else
-                 lblNameError2.Visible = false;
             }
             if (error == true)
                 return;
