@@ -68,26 +68,18 @@ namespace MPacApplication
                     if (n < 0 || n > 65535)
                     {
                         if (msgType == MessageType.Company)
-                        {
-                            txtID.Text = "8000";
                             lblIdError2.Visible = true;
-                        }
                         else
-                        {
-                            txtID.Text = "0000";
                             lblIdError1.Visible = true;
-                        }
                         error = true;
                     }
                     else if (msgType == MessageType.Company && n <= 32767)
                     {
-                        txtID.Text = "8000";
                         lblIdError2.Visible = true;
                         error = true;
                     }
                     else if (msgType == MessageType.Local && n > 32767)
                     {
-                        txtID.Text = "0000";
                         lblIdError1.Visible = true;
                         error = true;
                     }
@@ -120,16 +112,16 @@ namespace MPacApplication
                     bytes = n;
                     if (n < 0 || n > 255)
                     {
-                        txtLength.Text = "00";
                         lblLengthError.Visible = true;
+                        error = true;
                     }
                     else
                         lblLengthError.Visible = false;
                 }
                 catch
                 {
-                    txtLength.Text = "00";
                     lblLengthError.Visible = true;
+                    error = true;
                 }
         }
         private void txtName_LostFocus(object sender, EventArgs e)
@@ -158,6 +150,9 @@ namespace MPacApplication
             error = false;
             txtName_LostFocus(sender, e);
             txtID_LostFocus(sender, e);
+            txtLength_LostFocus(sender, e);
+            if (error == true)
+                return;
             ID = ushort.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);
             byte[] versionBytes = BitConverter.GetBytes(MainForm.SOFTWARE_VERSION);
             byte[] IdBytes = BitConverter.GetBytes(ID);
