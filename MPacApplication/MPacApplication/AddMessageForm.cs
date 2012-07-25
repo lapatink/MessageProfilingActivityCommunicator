@@ -154,31 +154,33 @@ namespace MPacApplication
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            txtID.Focus();
             byte[] versionBytes = BitConverter.GetBytes(MainForm.SOFTWARE_VERSION);
             byte[] IdBytes = BitConverter.GetBytes(ID);
             error = false;
-            txtID_LostFocus(sender, e);
             txtName_LostFocus(sender, e);
-            if (error == true)
-                return;
+            txtID_LostFocus(sender, e);
+            
 
             for (int i = 0; i < parentForm.GetMessagesCount(msgType); i++)
             {
                 if (IdBytes[0] == parentForm.GetMessageHighByte(i, msgType) && IdBytes[1] == parentForm.GetMessageLowByte(i, msgType))
                 {
                     lblIdError3.Visible = true;
-                    return;
+                    error = true;
                 }
                 else
                     lblIdError3.Visible = false;
 			 if (txtName.Text == parentForm.GetMessageName(i, msgType))
                 {
                     lblNameError2.Visible = true;
-                    return;
+                    error = true;
                 }
              else
                  lblNameError2.Visible = false;
             }
+            if (error == true)
+                return;
 
             if (cmbFormatType.SelectedIndex == 0)
             {
@@ -239,8 +241,8 @@ namespace MPacApplication
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
             reset();
+            this.Visible = false;
         }
 
         private void reset()
@@ -258,6 +260,16 @@ namespace MPacApplication
             cmbUniformFormat.SelectedIndex = 1;
             cmbUniformGroup.SelectedIndex = 0;
             cmbFormatType.SelectedIndex = 0;
+
+            lblIdError1.Visible = false;
+            lblIdError2.Visible = false;
+            lblIdError3.Visible = false;
+            lblNameError1.Visible = false;
+            lblNameError2.Visible = false;
+            lblLengthError.Visible = false;
+            lblCompanyError1.Visible = false;
+            lblCompanyError2.Visible = false;
+            lblCustomError.Visible = false;
 
             pnlCustomFormat.Location = new Point(15, 128);
             pnlExternalProgram.Location = new Point(15, 128);
