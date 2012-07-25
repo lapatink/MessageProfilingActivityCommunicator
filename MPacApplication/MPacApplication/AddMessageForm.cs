@@ -241,8 +241,8 @@ namespace MPacApplication
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            this.Visible = false;
             reset();
+            this.Visible = false;
         }
 
         private void reset()
