@@ -33,8 +33,11 @@ namespace MPacApplication
             }
             finally
             {
-                writer.Close();
-                writer.Dispose();
+                if (writer != null)
+                {
+                    writer.Close();
+                    writer.Dispose();
+                }
             }
             return true;
 
