@@ -96,7 +96,6 @@ namespace MPacApplication
                         lblIdError1.Visible = false;
                         lblIdError2.Visible = false;
                         ID = ushort.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);
-                            //Byte.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);
                     }
                 }
                 catch
@@ -260,9 +259,9 @@ namespace MPacApplication
             cmbUniformGroup.SelectedIndex = 0;
             cmbFormatType.SelectedIndex = 0;
 
-            pnlCustomFormat.Location = new Point(271, 110);
-            pnlExternalProgram.Location = new Point(271, 110);
-            pnlUniformGroup.Location = new Point(271, 110);
+            pnlCustomFormat.Location = new Point(209, 39);
+            pnlExternalProgram.Location = new Point(209, 39);
+            pnlUniformGroup.Location = new Point(209, 39);
 
             bytes = 0;
             bytes_used = 0;
@@ -488,7 +487,5 @@ namespace MPacApplication
         {
             UpdateControls();
         }
-
-
     }
 }
