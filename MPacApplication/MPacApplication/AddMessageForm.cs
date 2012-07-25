@@ -259,9 +259,9 @@ namespace MPacApplication
             cmbUniformGroup.SelectedIndex = 0;
             cmbFormatType.SelectedIndex = 0;
 
-            pnlCustomFormat.Location = new Point(209, 39);
-            pnlExternalProgram.Location = new Point(209, 39);
-            pnlUniformGroup.Location = new Point(209, 39);
+            pnlCustomFormat.Location = new Point(15, 128);
+            pnlExternalProgram.Location = new Point(15, 128);
+            pnlUniformGroup.Location = new Point(15, 128);
 
             bytes = 0;
             bytes_used = 0;

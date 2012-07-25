@@ -169,7 +169,7 @@
                // 
                this.lblFormat.AutoSize = true;
                this.lblFormat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-               this.lblFormat.Location = new System.Drawing.Point(206, 9);
+               this.lblFormat.Location = new System.Drawing.Point(12, 98);
                this.lblFormat.Name = "lblFormat";
                this.lblFormat.Size = new System.Drawing.Size(39, 13);
                this.lblFormat.TabIndex = 17;
@@ -177,7 +177,7 @@
                // 
                // btnCancel
                // 
-               this.btnCancel.Location = new System.Drawing.Point(295, 218);
+               this.btnCancel.Location = new System.Drawing.Point(209, 311);
                this.btnCancel.Name = "btnCancel";
                this.btnCancel.Size = new System.Drawing.Size(75, 23);
                this.btnCancel.TabIndex = 20;
@@ -187,7 +187,7 @@
                // 
                // btnOK
                // 
-               this.btnOK.Location = new System.Drawing.Point(214, 218);
+               this.btnOK.Location = new System.Drawing.Point(128, 311);
                this.btnOK.Name = "btnOK";
                this.btnOK.Size = new System.Drawing.Size(75, 23);
                this.btnOK.TabIndex = 19;
@@ -203,7 +203,7 @@
             "Uniform Grouping",
             "Custom Format",
             "External Program"});
-               this.cmbFormatType.Location = new System.Drawing.Point(251, 6);
+               this.cmbFormatType.Location = new System.Drawing.Point(57, 95);
                this.cmbFormatType.Name = "cmbFormatType";
                this.cmbFormatType.Size = new System.Drawing.Size(213, 21);
                this.cmbFormatType.TabIndex = 21;
@@ -332,7 +332,7 @@
                this.pnlCustomFormat.Controls.Add(this.cmbCount);
                this.pnlCustomFormat.Controls.Add(this.cmbGroup);
                this.pnlCustomFormat.Controls.Add(this.lstFormats);
-               this.pnlCustomFormat.Location = new System.Drawing.Point(209, 39);
+               this.pnlCustomFormat.Location = new System.Drawing.Point(15, 128);
                this.pnlCustomFormat.Name = "pnlCustomFormat";
                this.pnlCustomFormat.Size = new System.Drawing.Size(404, 173);
                this.pnlCustomFormat.TabIndex = 31;
@@ -501,16 +501,16 @@
                // 
                this.cmbConnections.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
                this.cmbConnections.FormattingEnabled = true;
-               this.cmbConnections.Location = new System.Drawing.Point(15, 112);
+               this.cmbConnections.Location = new System.Drawing.Point(209, 28);
                this.cmbConnections.Name = "cmbConnections";
-               this.cmbConnections.Size = new System.Drawing.Size(185, 21);
+               this.cmbConnections.Size = new System.Drawing.Size(210, 21);
                this.cmbConnections.TabIndex = 32;
                this.cmbConnections.Visible = false;
                // 
                // lblConnection
                // 
                this.lblConnection.AutoSize = true;
-               this.lblConnection.Location = new System.Drawing.Point(12, 93);
+               this.lblConnection.Location = new System.Drawing.Point(206, 9);
                this.lblConnection.Name = "lblConnection";
                this.lblConnection.Size = new System.Drawing.Size(88, 13);
                this.lblConnection.TabIndex = 33;
@@ -565,7 +565,7 @@
                // 
                this.lblCompanyError1.AutoSize = true;
                this.lblCompanyError1.ForeColor = System.Drawing.Color.Red;
-               this.lblCompanyError1.Location = new System.Drawing.Point(197, 247);
+               this.lblCompanyError1.Location = new System.Drawing.Point(111, 340);
                this.lblCompanyError1.Name = "lblCompanyError1";
                this.lblCompanyError1.Size = new System.Drawing.Size(182, 13);
                this.lblCompanyError1.TabIndex = 38;
@@ -576,7 +576,7 @@
                // 
                this.lblCompanyError2.AutoSize = true;
                this.lblCompanyError2.ForeColor = System.Drawing.Color.Red;
-               this.lblCompanyError2.Location = new System.Drawing.Point(228, 247);
+               this.lblCompanyError2.Location = new System.Drawing.Point(142, 340);
                this.lblCompanyError2.Name = "lblCompanyError2";
                this.lblCompanyError2.Size = new System.Drawing.Size(128, 13);
                this.lblCompanyError2.TabIndex = 39;
@@ -587,7 +587,7 @@
                // 
                this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
                this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-               this.ClientSize = new System.Drawing.Size(620, 267);
+               this.ClientSize = new System.Drawing.Size(436, 365);
                this.Controls.Add(this.lblCompanyError2);
                this.Controls.Add(this.lblCompanyError1);
                this.Controls.Add(this.lblIdError2);
