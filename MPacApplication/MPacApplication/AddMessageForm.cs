@@ -255,7 +255,6 @@ namespace MPacApplication
             txtFormat.Text = "";
             cmbGroup.SelectedIndex = 0;
             cmbCount.SelectedIndex = 0;
-            cmbType.SelectedIndex = 0;
             cmbFormat.SelectedIndex = 2;
             cmbUniformFormat.SelectedIndex = 1;
             cmbUniformGroup.SelectedIndex = 0;
@@ -298,12 +297,11 @@ namespace MPacApplication
 
         }
 
-        private void UpdateControls(bool typefield = false)
+        private void UpdateControls()
         {
             bytes = 0;
             int group = 0;
             int count = 0;
-            int type = 0;
 
             try { bytes = int.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber); }
             catch { }
@@ -314,59 +312,9 @@ namespace MPacApplication
             try { count = int.Parse(cmbCount.Text); }
             catch { }
 
-            type = FormatParser.sizeOf(cmbType.Text);
-
-            int size = 0;
-
-            string old_type = "";
-            if (cmbType.SelectedIndex > -1)
-                old_type = (string)cmbType.Items[cmbType.SelectedIndex];
-
-            if (cmbFormat.Text == "decimal" && !typefield)
-            {
-                cmbType.Items.Clear();
-                cmbType.Items.Add("byte");
-                cmbType.Items.Add("ushort");
-                cmbType.Items.Add("short");
-                cmbType.Items.Add("uint");
-                cmbType.Items.Add("int");
-                cmbType.Items.Add("ulong");
-                cmbType.Items.Add("long");
-
-            }
-            else if (!typefield)
-            {
-                cmbType.Items.Clear();
-                cmbType.Items.Add("byte");
-                cmbType.Items.Add("short");
-                cmbType.Items.Add("int");
-                cmbType.Items.Add("long");
-            }
-
-            if (old_type.Length > 0)
-            {
-                if (old_type[0] == 'u')
-                    old_type = old_type.Substring(1);
-                if (!typefield)
-                    cmbType.Text = old_type;
-            }
+               int size = group * count;
 
 
-            if (group > 1)
-            {
-                if (!typefield)
-                {
-                    cmbType.Text = "byte";
-                    cmbType.Enabled = false;
-                }
-
-                size = group * count;
-            }
-            else
-            {
-                cmbType.Enabled = true;
-                size = type * count;
-            }
 
             if (size > (bytes - bytes_used))
                 btnAdd.Enabled = false;
@@ -415,7 +363,6 @@ namespace MPacApplication
             FormatLine f = new FormatLine();
 
             f.count = cmbCount.Text;
-            f.type = cmbType.Text;
             f.group = cmbGroup.Text;
             f.display = cmbFormat.Text;
 
@@ -467,7 +414,6 @@ namespace MPacApplication
         {
             public string group = "";
             public string count = "";
-            public string type = "";
             public string display = "";
 
             public override string ToString()
@@ -484,26 +430,17 @@ namespace MPacApplication
                     catch { }
                 }
 
-                return "Display " + count + ((g > 1) ? " group" + (plural ? "s" : "") + " of " + group : "") + " " + type +
+                return "Display " + count + ((g > 1) ? " group" + (plural ? "s" : "") + " of " + group : "") + " byte" +
                     (plural ? "s" : "") + " as " + (plural ? "" : "a ") + display +
                     " value" + (plural ? "s" : "") + ".";
             }
             public string ToFormatString()
             {
-                int g = int.Parse(group);
-                if (g > 1)
-                {
-                    return "g " + group + " " + count + " " + Format.getTokenString(display) + " " + Format.getTokenString(type) + " ";
-                }
-                else
-                {
-                    return count + " " + Format.getTokenString(display) + " " + Format.getTokenString(type) + " ";
-                }
+                    return group + " " + count + " " + Format.getTokenString(display) + " ";
             }
             public int getSize()
             {
 
-                int t = FormatParser.sizeOf(type);
                 int g = 0;
                 int c = 0;
 
@@ -512,15 +449,7 @@ namespace MPacApplication
                 try { g = int.Parse(group); }
                 catch { }
 
-                if (g < 2)
-                {
-                    return t * c;
-                }
-                else
-                {
-                    return g * c * t;
-                }
-
+                return g * c;
             }
         }
         #endregion
@@ -558,11 +487,6 @@ namespace MPacApplication
         private void cmbFormat_TextChanged(object sender, EventArgs e)
         {
             UpdateControls();
-        }
-
-        private void cmbType_TextChanged(object sender, EventArgs e)
-        {
-            UpdateControls(true);
         }
 
 

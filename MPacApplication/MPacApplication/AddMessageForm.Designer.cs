@@ -52,9 +52,9 @@
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.txtExternalFile = new System.Windows.Forms.TextBox();
             this.pnlCustomFormat = new System.Windows.Forms.Panel();
+            this.lblCustomError = new System.Windows.Forms.Label();
             this.lblvBytes = new System.Windows.Forms.Label();
             this.lblRemaining = new System.Windows.Forms.Label();
-            this.lblType = new System.Windows.Forms.Label();
             this.lblFormat2 = new System.Windows.Forms.Label();
             this.lblCount = new System.Windows.Forms.Label();
             this.lblGroup = new System.Windows.Forms.Label();
@@ -62,7 +62,6 @@
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.btnMoveUp = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.cmbType = new System.Windows.Forms.ComboBox();
             this.cmbFormat = new System.Windows.Forms.ComboBox();
             this.cmbCount = new System.Windows.Forms.ComboBox();
             this.cmbGroup = new System.Windows.Forms.ComboBox();
@@ -75,7 +74,6 @@
             this.lblIdError2 = new System.Windows.Forms.Label();
             this.lblCompanyError1 = new System.Windows.Forms.Label();
             this.lblCompanyError2 = new System.Windows.Forms.Label();
-            this.lblCustomError = new System.Windows.Forms.Label();
             this.pnlUniformGroup.SuspendLayout();
             this.pnlExternalProgram.SuspendLayout();
             this.pnlCustomFormat.SuspendLayout();
@@ -114,7 +112,7 @@
             // 
             this.lblLengthError.AutoSize = true;
             this.lblLengthError.ForeColor = System.Drawing.Color.Red;
-            this.lblLengthError.Location = new System.Drawing.Point(117, 101);
+            this.lblLengthError.Location = new System.Drawing.Point(117, 98);
             this.lblLengthError.Name = "lblLengthError";
             this.lblLengthError.Size = new System.Drawing.Size(75, 13);
             this.lblLengthError.TabIndex = 13;
@@ -123,7 +121,7 @@
             // 
             // txtLength
             // 
-            this.txtLength.Location = new System.Drawing.Point(117, 78);
+            this.txtLength.Location = new System.Drawing.Point(117, 75);
             this.txtLength.Name = "txtLength";
             this.txtLength.Size = new System.Drawing.Size(83, 20);
             this.txtLength.TabIndex = 11;
@@ -134,7 +132,7 @@
             // 
             this.lblLength.AutoSize = true;
             this.lblLength.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLength.Location = new System.Drawing.Point(12, 78);
+            this.lblLength.Location = new System.Drawing.Point(12, 75);
             this.lblLength.Name = "lblLength";
             this.lblLength.Size = new System.Drawing.Size(59, 20);
             this.lblLength.TabIndex = 10;
@@ -323,7 +321,6 @@
             this.pnlCustomFormat.Controls.Add(this.lblCustomError);
             this.pnlCustomFormat.Controls.Add(this.lblvBytes);
             this.pnlCustomFormat.Controls.Add(this.lblRemaining);
-            this.pnlCustomFormat.Controls.Add(this.lblType);
             this.pnlCustomFormat.Controls.Add(this.lblFormat2);
             this.pnlCustomFormat.Controls.Add(this.lblCount);
             this.pnlCustomFormat.Controls.Add(this.lblGroup);
@@ -331,7 +328,6 @@
             this.pnlCustomFormat.Controls.Add(this.btnMoveDown);
             this.pnlCustomFormat.Controls.Add(this.btnMoveUp);
             this.pnlCustomFormat.Controls.Add(this.btnAdd);
-            this.pnlCustomFormat.Controls.Add(this.cmbType);
             this.pnlCustomFormat.Controls.Add(this.cmbFormat);
             this.pnlCustomFormat.Controls.Add(this.cmbCount);
             this.pnlCustomFormat.Controls.Add(this.cmbGroup);
@@ -341,6 +337,17 @@
             this.pnlCustomFormat.Size = new System.Drawing.Size(404, 173);
             this.pnlCustomFormat.TabIndex = 31;
             this.pnlCustomFormat.Visible = false;
+            // 
+            // lblCustomError
+            // 
+            this.lblCustomError.AutoSize = true;
+            this.lblCustomError.ForeColor = System.Drawing.Color.Red;
+            this.lblCustomError.Location = new System.Drawing.Point(175, 152);
+            this.lblCustomError.Name = "lblCustomError";
+            this.lblCustomError.Size = new System.Drawing.Size(128, 13);
+            this.lblCustomError.TabIndex = 40;
+            this.lblCustomError.Text = "Custom Format is too long";
+            this.lblCustomError.Visible = false;
             // 
             // lblvBytes
             // 
@@ -362,19 +369,10 @@
             this.lblRemaining.TabIndex = 13;
             this.lblRemaining.Text = "Remaining Bytes:";
             // 
-            // lblType
-            // 
-            this.lblType.AutoSize = true;
-            this.lblType.Location = new System.Drawing.Point(243, 11);
-            this.lblType.Name = "lblType";
-            this.lblType.Size = new System.Drawing.Size(34, 13);
-            this.lblType.TabIndex = 12;
-            this.lblType.Text = "Type:";
-            // 
             // lblFormat2
             // 
             this.lblFormat2.AutoSize = true;
-            this.lblFormat2.Location = new System.Drawing.Point(165, 11);
+            this.lblFormat2.Location = new System.Drawing.Point(163, 10);
             this.lblFormat2.Name = "lblFormat2";
             this.lblFormat2.Size = new System.Drawing.Size(42, 13);
             this.lblFormat2.TabIndex = 11;
@@ -383,20 +381,20 @@
             // lblCount
             // 
             this.lblCount.AutoSize = true;
-            this.lblCount.Location = new System.Drawing.Point(93, 11);
+            this.lblCount.Location = new System.Drawing.Point(87, 10);
             this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(38, 13);
+            this.lblCount.Size = new System.Drawing.Size(64, 13);
             this.lblCount.TabIndex = 10;
-            this.lblCount.Text = "Count:";
+            this.lblCount.Text = "# of groups:";
             // 
             // lblGroup
             // 
             this.lblGroup.AutoSize = true;
             this.lblGroup.Location = new System.Drawing.Point(9, 11);
             this.lblGroup.Name = "lblGroup";
-            this.lblGroup.Size = new System.Drawing.Size(39, 13);
+            this.lblGroup.Size = new System.Drawing.Size(53, 13);
             this.lblGroup.TabIndex = 9;
-            this.lblGroup.Text = "Group:";
+            this.lblGroup.Text = "Group by:";
             // 
             // btnRemove
             // 
@@ -430,28 +428,13 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(325, 27);
+            this.btnAdd.Location = new System.Drawing.Point(244, 26);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 5;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // cmbType
-            // 
-            this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Items.AddRange(new object[] {
-            "byte",
-            "short",
-            "int",
-            "long"});
-            this.cmbType.Location = new System.Drawing.Point(246, 27);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(71, 21);
-            this.cmbType.TabIndex = 4;
-            this.cmbType.TextChanged += new System.EventHandler(this.cmbType_TextChanged);
             // 
             // cmbFormat
             // 
@@ -461,7 +444,7 @@
             "binary",
             "decimal",
             "hex"});
-            this.cmbFormat.Location = new System.Drawing.Point(168, 27);
+            this.cmbFormat.Location = new System.Drawing.Point(166, 27);
             this.cmbFormat.Name = "cmbFormat";
             this.cmbFormat.Size = new System.Drawing.Size(72, 21);
             this.cmbFormat.TabIndex = 3;
@@ -481,7 +464,7 @@
             "8",
             "16",
             "32"});
-            this.cmbCount.Location = new System.Drawing.Point(90, 27);
+            this.cmbCount.Location = new System.Drawing.Point(88, 27);
             this.cmbCount.Name = "cmbCount";
             this.cmbCount.Size = new System.Drawing.Size(72, 21);
             this.cmbCount.TabIndex = 2;
@@ -600,22 +583,11 @@
             this.lblCompanyError2.Text = "Company Message Failed";
             this.lblCompanyError2.Visible = false;
             // 
-            // lblCustomError
-            // 
-            this.lblCustomError.AutoSize = true;
-            this.lblCustomError.ForeColor = System.Drawing.Color.Red;
-            this.lblCustomError.Location = new System.Drawing.Point(175, 152);
-            this.lblCustomError.Name = "lblCustomError";
-            this.lblCustomError.Size = new System.Drawing.Size(128, 13);
-            this.lblCustomError.TabIndex = 40;
-            this.lblCustomError.Text = "Custom Format is too long";
-            this.lblCustomError.Visible = false;
-            // 
             // AddMessageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(680, 283);
+            this.ClientSize = new System.Drawing.Size(679, 284);
             this.Controls.Add(this.lblCompanyError2);
             this.Controls.Add(this.lblCompanyError1);
             this.Controls.Add(this.lblIdError2);
@@ -682,7 +654,6 @@
         private System.Windows.Forms.Button btnOpenFile;
         private System.Windows.Forms.TextBox txtExternalFile;
         private System.Windows.Forms.Panel pnlCustomFormat;
-        private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.Label lblFormat2;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.Label lblGroup;
@@ -690,7 +661,6 @@
         private System.Windows.Forms.Button btnMoveDown;
         private System.Windows.Forms.Button btnMoveUp;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.ComboBox cmbType;
         private System.Windows.Forms.ComboBox cmbFormat;
         private System.Windows.Forms.ComboBox cmbCount;
         private System.Windows.Forms.ComboBox cmbGroup;
