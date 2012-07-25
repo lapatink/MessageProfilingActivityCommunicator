@@ -182,9 +182,9 @@ namespace MPacApplication
 
             if (cmbFormatType.SelectedIndex == 0)
             {
-                txtFormat.Text += "g * " + cmbUniformGroup.Text + " " + Format.getTokenString(cmbUniformFormat.Text);
+                txtFormat.Text += "* " + cmbUniformGroup.Text + " " + Format.getTokenString(cmbUniformFormat.Text);
 
-                if (txtFormat.Text == "g * 1 h")
+                if (txtFormat.Text == "* 1 h")
                     txtFormat.Text = "%"; //slight optimization, the parser will skip some extra work
             }
             else if (cmbFormatType.SelectedIndex == 1)
