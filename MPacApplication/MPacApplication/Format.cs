@@ -103,6 +103,20 @@ namespace MPacApplication
             }
         }
 
+        public static string AsDecimal(byte[] data)
+        {
+            byte[] copy = { 0, 0, 0, 0, 0, 0, 0, 0 };
+            int len = data.Length-1;
+            for (int i = 7; i > 0; i--)
+            {
+                copy[i] = data[len];
+                len--;
+                if (len < 0)
+                    break;
+            }
+            Array.Reverse(copy);
+            return BitConverter.ToInt64(copy, 0).ToString();
+        }
     }
 }
 

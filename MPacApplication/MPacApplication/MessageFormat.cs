@@ -92,8 +92,7 @@ namespace MPacApplication
         public string ToCSVString()
         {
 
-            return id.ToString() + "," +
-                version_major.ToString() + "," +
+            return version_major.ToString() + "," +
                 version_minor.ToString() + "," +
                 name.ToString() + "," +
                 id_high.ToString() + "," +

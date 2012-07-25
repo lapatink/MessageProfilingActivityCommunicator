@@ -181,9 +181,9 @@ namespace MPacApplication
               PrintStatusMessage("End SQL Import. " + companyMessages.Count + " custom messages loaded.");
 
               /*
-               * Format testing. form is the format string, b is the random data array.
-               * Prints raw data and formatted data to console.
-              string form = "g * 2 h";
+              //Format testing. form is the format string, b is the random data array.
+              //Prints raw data and formatted data to console.
+              string form = "* 2 h";
               byte[] b = new byte[13];
               (new Random()).NextBytes(b);
 
@@ -192,7 +192,10 @@ namespace MPacApplication
                   s += a.ToString() + " ";
               Console.WriteLine(s);
               Console.WriteLine(FormatParser.Parse(form, b));
-               */
+              */
+             
+              //byte[] b = {0,0,0,0,1};
+              //Console.WriteLine(Format.AsDecimal(b)); 
           }
 
           private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits, Handshake handshake, bool rtsEnable, bool dtrEnable)
@@ -426,16 +429,17 @@ namespace MPacApplication
 
               if (localMessages.Remove(messageFormat))
                   flag = true;
+              else if (IsAdministrator)
+                  if (companyMessages.Remove(messageFormat))
+                      flag = true;
 
               if (flag)
               {
                   lstMessageSummary.Items.Remove(messageFormat);
                   totalNumberOfMessages--;
               }
-              else
-              {
-                  MessageBox.Show("Company messages cannot be removed.");
-              }
+
+
               return flag;
           }
           public bool RemoveMessageFormat(int index)
@@ -573,6 +577,12 @@ namespace MPacApplication
               fileDialog.Filter = "CSV Files|*.csv|All Files|*.*";
               fileDialog.InitialDirectory = "%USERPROFILE%";
 
+              if (localMessages.Count > 0)
+              {
+                  MessageBox.Show("Please remove all local messages before importing.");
+                  return;
+              }
+
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
                   List<MessageFormat> messages = new List<MessageFormat>();
@@ -633,6 +643,14 @@ namespace MPacApplication
               if (index < 0)
                   return;
 
+
+              MessageFormat mf = (MessageFormat)lstMessageSummary.Items[index];
+
+              if (mf.id_high >= 0x80)
+              {
+                  MessageBox.Show("You cannot remove company messages.");
+                  return;
+              }
               RemoveMessageFormat(index);
               
           }

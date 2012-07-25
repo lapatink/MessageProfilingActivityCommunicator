@@ -27,7 +27,10 @@ namespace MPacApplication
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    messages.Add(new MessageFormat(line));
+                    MessageFormat mf = new MessageFormat("-1" + line);
+                    if (mf.id_high < 0x80)
+                        continue;
+                    messages.Add(mf);
                 }
             }
             catch (Exception e)
