@@ -34,11 +34,7 @@ namespace MPacApplication
 
             for (int i = 0; i < tokens.Length; i++)
             {
-                if (tokens[i] == "g")
-                {
-                    output += group(tokens[++i], tokens[++i], tokens[++i]);
-                }
-                else if (tokens[i] == "call")
+                if (tokens[i] == "call")
                 {
                     //format the argument string
                     string args = FormatParser.Parse("%", data).Replace(delim, " ");
@@ -60,7 +56,7 @@ namespace MPacApplication
                 }
                 else if (tokens[i] != "" && tokens[i] != "%")
                 {
-                    output += set(tokens[i], tokens[++i], tokens[++i]);
+                    output += group(tokens[i], tokens[++i], tokens[++i]);
                 }
             }
 
@@ -103,6 +99,17 @@ namespace MPacApplication
                         output += Format.AsHex(data[i]);
                     else if (type == "b")
                         output += Format.AsBinary(data[i]);
+                    else if (type == "d")
+                    {
+                        byte[] dec = new byte[groupsize];
+                        for (int j = 0; j < groupsize; j++)
+                        {
+                            dec[j] = data[i + j];
+                        }
+                        i += groupsize - 1;
+                        output += Format.AsDecimal(dec) + delim;
+                        continue;
+                    }
 
                     if (space % groupsize == 0)
                         output += delim;
@@ -123,7 +130,7 @@ namespace MPacApplication
                     size = size - (size % groupsize);
                 }
 
-                for (int i = index; i < size; i++)
+                for (int i = index; i < index+size; i++)
                 {
                     space++;
 
@@ -131,6 +138,17 @@ namespace MPacApplication
                         output += Format.AsHex(data[i]);
                     else if (type == "b")
                         output += Format.AsBinary(data[i]);
+                    else if (type == "d")
+                    {
+                        byte[] dec = new byte[groupsize];
+                        for (int j = 0; j < groupsize; j++)
+                        {
+                            dec[j] = data[i + j];
+                        }
+                        i += groupsize - 1;
+                        output += Format.AsDecimal(dec) + delim;
+                        continue;
+                    }
 
                     if (space % groupsize == 0)
                         output += delim;
