@@ -654,5 +654,24 @@ namespace MPacApplication
               RemoveMessageFormat(index);
               
           }
+
+          private void btnSave_Click(object sender, EventArgs e)
+          {
+              SaveFileDialog fileDialog = new SaveFileDialog();
+              string textOut = "";
+              fileDialog.Filter = "TXT Files|*.txt|All Files|*.*";
+              fileDialog.InitialDirectory = "%USERPROFILE%";
+
+
+              
+              if (fileDialog.ShowDialog() == DialogResult.OK)
+              {
+                  foreach (string listItems in lstDisplayWindow.Items)
+                  {
+                      textOut = textOut + listItems + Environment.NewLine;
+                  }
+                  System.IO.File.WriteAllText(fileDialog.FileName, textOut);
+              }
+          }
      }
 }
