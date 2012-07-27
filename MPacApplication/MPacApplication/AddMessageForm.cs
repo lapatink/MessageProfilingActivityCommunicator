@@ -17,6 +17,8 @@ namespace MPacApplication
         private MessageType msgType;
         private bool error;
         private ushort ID;
+        private const ushort CONTROLX = 15;
+        private const ushort CONTROLY = 128; 
 
         private int _bytes = 0;
         private int _bytes_used = 0;
@@ -175,7 +177,11 @@ namespace MPacApplication
 
             if (cmbFormatType.SelectedIndex == 0)
             {
-                txtFormat.Text += "* " + cmbUniformGroup.Text + " " + Format.getTokenString(cmbUniformFormat.Text);
+                txtFormat.Text = "* " + cmbUniformGroup.Text + " " + Format.getTokenString(cmbUniformFormat.Text);
+                if (cmbUniformFormat.Text == "decimal")
+                    if (cmbUniformSigned.Text == "unsigned")
+                        txtFormat.Text = "* " + cmbUniformGroup.Text + " " + Format.getTokenString("unsigned");
+                
 
                 if (txtFormat.Text == "* 1 h")
                     txtFormat.Text = "%"; //slight optimization, the parser will skip some extra work
@@ -248,9 +254,16 @@ namespace MPacApplication
             cmbGroup.SelectedIndex = 0;
             cmbCount.SelectedIndex = 0;
             cmbFormat.SelectedIndex = 2;
-            cmbUniformFormat.SelectedIndex = 1;
+            cmbSigned.SelectedIndex = 0;
+            cmbUniformSigned.SelectedIndex = 0;
+            cmbUniformFormat.SelectedIndex = 2;
             cmbUniformGroup.SelectedIndex = 0;
             cmbFormatType.SelectedIndex = 0;
+
+            cmbUniformSigned.Hide();
+            lblUniformSigned.Hide();
+            cmbSigned.Hide();
+            lblUniformSigned.Hide();
 
             lblIdError1.Visible = false;
             lblIdError2.Visible = false;
@@ -262,9 +275,10 @@ namespace MPacApplication
             lblCompanyError2.Visible = false;
             lblCustomError.Visible = false;
 
-            pnlCustomFormat.Location = new Point(15, 128);
-            pnlExternalProgram.Location = new Point(15, 128);
-            pnlUniformGroup.Location = new Point(15, 128);
+            Point controlPoint = new Point(CONTROLX, CONTROLY);
+            pnlCustomFormat.Location = controlPoint;
+            pnlExternalProgram.Location = controlPoint;
+            pnlUniformGroup.Location = controlPoint;
 
             bytes = 0;
             bytes_used = 0;
@@ -316,7 +330,17 @@ namespace MPacApplication
 
                int size = group * count;
 
+               if (cmbFormat.Text == "decimal")
+               {
+                   cmbSigned.Show();
+                   lblSigned.Show();
+               }
+               else
+               {
+                   cmbSigned.Hide();
+                   lblSigned.Hide();
 
+               }
 
             if (size > (bytes - bytes_used))
                 btnAdd.Enabled = false;
@@ -364,9 +388,14 @@ namespace MPacApplication
         {
             FormatLine f = new FormatLine();
 
+
+            f.display = cmbFormat.Text;
+            if (cmbFormat.Text == "decimal")
+                if (cmbSigned.Text == "unsigned")
+                    f.display = "unsigned";
+
             f.count = cmbCount.Text;
             f.group = cmbGroup.Text;
-            f.display = cmbFormat.Text;
 
             bytes_used += f.getSize();
             UpdateControls();
@@ -489,6 +518,20 @@ namespace MPacApplication
         private void cmbFormat_TextChanged(object sender, EventArgs e)
         {
             UpdateControls();
+        }
+
+        private void cmbUniformFormat_TextChanged(object sender, EventArgs e)
+        {
+            if (cmbUniformFormat.Text == "decimal")
+            {
+                cmbUniformSigned.Show();
+                lblUniformSigned.Show();
+            }
+            else
+            {
+                cmbUniformSigned.Hide();
+                lblUniformSigned.Hide();
+            }
         }
     }
 }
