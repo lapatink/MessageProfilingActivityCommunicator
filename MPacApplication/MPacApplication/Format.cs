@@ -98,12 +98,15 @@ namespace MPacApplication
                 case "dec":
                 case "decimal":
                     return "d";
+                case "unsigned":
+                case "u":
+                    return "u";
                 default:
                     return "";
             }
         }
 
-        public static string AsDecimal(byte[] data)
+        public static string AsUnsignedDecimal(byte[] data)
         {
             byte[] copy = { 0, 0, 0, 0, 0, 0, 0, 0 };
             int len = data.Length-1;
@@ -115,6 +118,30 @@ namespace MPacApplication
                     break;
             }
             Array.Reverse(copy);
+            return BitConverter.ToUInt64(copy, 0).ToString();
+        }
+
+        public static string AsDecimal(byte[] data)
+        {
+
+            
+            byte[] copy = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+            int len = data.Length - 1;
+            if (data[len] <= 127)
+            {
+                for (int i = 0; i < 8; i++)
+                    copy[i] = 0;
+            }
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (len >= 0)
+                    copy[i] = data[i];
+                else
+                    break;
+                len--;
+                
+            }
             return BitConverter.ToInt64(copy, 0).ToString();
         }
     }
