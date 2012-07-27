@@ -99,7 +99,7 @@ namespace MPacApplication
                         output += Format.AsHex(data[i]);
                     else if (type == "b")
                         output += Format.AsBinary(data[i]);
-                    else if (type == "d")
+                    else if (type == "d" || type == "u")
                     {
                         byte[] dec = new byte[groupsize];
                         for (int j = 0; j < groupsize; j++)
@@ -107,7 +107,10 @@ namespace MPacApplication
                             dec[j] = data[i + j];
                         }
                         i += groupsize - 1;
-                        output += Format.AsDecimal(dec) + delim;
+                        if (type == "d")
+                            output += Format.AsDecimal(dec) + delim;
+                        else if (type == "u")
+                            output += Format.AsUnsignedDecimal(dec) + delim;
                         continue;
                     }
 
@@ -138,7 +141,7 @@ namespace MPacApplication
                         output += Format.AsHex(data[i]);
                     else if (type == "b")
                         output += Format.AsBinary(data[i]);
-                    else if (type == "d")
+                    else if (type == "d" || type == "u")
                     {
                         byte[] dec = new byte[groupsize];
                         for (int j = 0; j < groupsize; j++)
@@ -146,7 +149,10 @@ namespace MPacApplication
                             dec[j] = data[i + j];
                         }
                         i += groupsize - 1;
-                        output += Format.AsDecimal(dec) + delim;
+                        if (type == "d")
+                            output += Format.AsDecimal(dec) + delim;
+                        else if (type == "u")
+                            output += Format.AsUnsignedDecimal(dec) + delim;
                         continue;
                     }
 
