@@ -42,6 +42,8 @@
             this.btnOK = new System.Windows.Forms.Button();
             this.cmbFormatType = new System.Windows.Forms.ComboBox();
             this.pnlUniformGroup = new System.Windows.Forms.Panel();
+            this.lblUniformSigned = new System.Windows.Forms.Label();
+            this.cmbUniformSigned = new System.Windows.Forms.ComboBox();
             this.lblUniformGroup2 = new System.Windows.Forms.Label();
             this.cmbUniformFormat = new System.Windows.Forms.ComboBox();
             this.lblUniformFormat = new System.Windows.Forms.Label();
@@ -52,6 +54,8 @@
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.txtExternalFile = new System.Windows.Forms.TextBox();
             this.pnlCustomFormat = new System.Windows.Forms.Panel();
+            this.lblSigned = new System.Windows.Forms.Label();
+            this.cmbSigned = new System.Windows.Forms.ComboBox();
             this.lblCustomError = new System.Windows.Forms.Label();
             this.lblvBytes = new System.Windows.Forms.Label();
             this.lblRemaining = new System.Windows.Forms.Label();
@@ -74,10 +78,6 @@
             this.lblIdError2 = new System.Windows.Forms.Label();
             this.lblCompanyError1 = new System.Windows.Forms.Label();
             this.lblCompanyError2 = new System.Windows.Forms.Label();
-            this.cmbSigned = new System.Windows.Forms.ComboBox();
-            this.lblSigned = new System.Windows.Forms.Label();
-            this.cmbUniformSigned = new System.Windows.Forms.ComboBox();
-            this.lblUniformSigned = new System.Windows.Forms.Label();
             this.pnlUniformGroup.SuspendLayout();
             this.pnlExternalProgram.SuspendLayout();
             this.pnlCustomFormat.SuspendLayout();
@@ -228,6 +228,27 @@
             this.pnlUniformGroup.TabIndex = 22;
             this.pnlUniformGroup.Visible = false;
             // 
+            // lblUniformSigned
+            // 
+            this.lblUniformSigned.AutoSize = true;
+            this.lblUniformSigned.Location = new System.Drawing.Point(46, 87);
+            this.lblUniformSigned.Name = "lblUniformSigned";
+            this.lblUniformSigned.Size = new System.Drawing.Size(43, 13);
+            this.lblUniformSigned.TabIndex = 9;
+            this.lblUniformSigned.Text = "Signed:";
+            // 
+            // cmbUniformSigned
+            // 
+            this.cmbUniformSigned.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbUniformSigned.FormattingEnabled = true;
+            this.cmbUniformSigned.Items.AddRange(new object[] {
+            "signed",
+            "unsigned"});
+            this.cmbUniformSigned.Location = new System.Drawing.Point(98, 84);
+            this.cmbUniformSigned.Name = "cmbUniformSigned";
+            this.cmbUniformSigned.Size = new System.Drawing.Size(82, 21);
+            this.cmbUniformSigned.TabIndex = 8;
+            // 
             // lblUniformGroup2
             // 
             this.lblUniformGroup2.AutoSize = true;
@@ -347,6 +368,27 @@
             this.pnlCustomFormat.Size = new System.Drawing.Size(404, 173);
             this.pnlCustomFormat.TabIndex = 31;
             this.pnlCustomFormat.Visible = false;
+            // 
+            // lblSigned
+            // 
+            this.lblSigned.AutoSize = true;
+            this.lblSigned.Location = new System.Drawing.Point(244, 11);
+            this.lblSigned.Name = "lblSigned";
+            this.lblSigned.Size = new System.Drawing.Size(43, 13);
+            this.lblSigned.TabIndex = 40;
+            this.lblSigned.Text = "Signed:";
+            // 
+            // cmbSigned
+            // 
+            this.cmbSigned.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSigned.FormattingEnabled = true;
+            this.cmbSigned.Items.AddRange(new object[] {
+            "signed",
+            "unsigned"});
+            this.cmbSigned.Location = new System.Drawing.Point(244, 27);
+            this.cmbSigned.Name = "cmbSigned";
+            this.cmbSigned.Size = new System.Drawing.Size(73, 21);
+            this.cmbSigned.TabIndex = 41;
             // 
             // lblCustomError
             // 
@@ -593,53 +635,11 @@
             this.lblCompanyError2.Text = "Company Message Failed";
             this.lblCompanyError2.Visible = false;
             // 
-            // cmbSigned
-            // 
-            this.cmbSigned.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbSigned.FormattingEnabled = true;
-            this.cmbSigned.Items.AddRange(new object[] {
-            "signed",
-            "unsigned"});
-            this.cmbSigned.Location = new System.Drawing.Point(244, 27);
-            this.cmbSigned.Name = "cmbSigned";
-            this.cmbSigned.Size = new System.Drawing.Size(73, 21);
-            this.cmbSigned.TabIndex = 41;
-            // 
-            // lblSigned
-            // 
-            this.lblSigned.AutoSize = true;
-            this.lblSigned.Location = new System.Drawing.Point(244, 11);
-            this.lblSigned.Name = "lblSigned";
-            this.lblSigned.Size = new System.Drawing.Size(43, 13);
-            this.lblSigned.TabIndex = 40;
-            this.lblSigned.Text = "Signed:";
-            // 
-            // cmbUniformSigned
-            // 
-            this.cmbUniformSigned.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbUniformSigned.FormattingEnabled = true;
-            this.cmbUniformSigned.Items.AddRange(new object[] {
-            "signed",
-            "unsigned"});
-            this.cmbUniformSigned.Location = new System.Drawing.Point(98, 84);
-            this.cmbUniformSigned.Name = "cmbUniformSigned";
-            this.cmbUniformSigned.Size = new System.Drawing.Size(82, 21);
-            this.cmbUniformSigned.TabIndex = 8;
-            // 
-            // lblUniformSigned
-            // 
-            this.lblUniformSigned.AutoSize = true;
-            this.lblUniformSigned.Location = new System.Drawing.Point(46, 87);
-            this.lblUniformSigned.Name = "lblUniformSigned";
-            this.lblUniformSigned.Size = new System.Drawing.Size(43, 13);
-            this.lblUniformSigned.TabIndex = 9;
-            this.lblUniformSigned.Text = "Signed:";
-            // 
             // AddMessageForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 362);
+            this.ClientSize = new System.Drawing.Size(433, 364);
             this.Controls.Add(this.lblCompanyError2);
             this.Controls.Add(this.lblCompanyError1);
             this.Controls.Add(this.lblIdError2);

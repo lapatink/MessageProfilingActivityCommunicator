@@ -16,6 +16,7 @@ namespace MPacApplication
         private MainForm parentForm;
         private MessageType msgType;
         private bool error;
+        private int editIndex = -1;
         private ushort ID;
         private const ushort CONTROLX = 15;
         private const ushort CONTROLY = 128; 
@@ -32,6 +33,7 @@ namespace MPacApplication
                 lblvBytes.Text = (_bytes - _bytes_used).ToString();
             }
         }
+
         private int bytes_used
         {
             get { return _bytes_used; }
@@ -49,6 +51,7 @@ namespace MPacApplication
                parentForm = sourceForm;
                reset();
           }
+
         public AddMessageForm(MainForm sourceForm, MessageType type)
         {
             InitializeComponent();
@@ -61,6 +64,22 @@ namespace MPacApplication
                 this.Text = "Add Local Message";
 
             reset();
+        }
+
+        public AddMessageForm(MainForm sourceForm, MessageType type, int index)
+        {
+            InitializeComponent();
+            parentForm = sourceForm;
+            msgType = type;
+
+            if (type == MessageType.Company)
+                this.Text = "Add Company Message";
+            else
+                this.Text = "Add Local Message";
+
+            reset();
+
+            Edit(index);
         }
         private void txtID_LostFocus(object sender, EventArgs e)
         {
@@ -106,6 +125,7 @@ namespace MPacApplication
                     error = true;
                 }
         }
+
         private void txtLength_LostFocus(object sender, EventArgs e)
         {
                 try
@@ -126,6 +146,7 @@ namespace MPacApplication
                     error = true;
                 }
         }
+
         private void txtName_LostFocus(object sender, EventArgs e)
         {
                 try
@@ -161,6 +182,9 @@ namespace MPacApplication
 
             for (int i = 0; i < parentForm.GetMessagesCount(msgType); i++)
             {
+                if (i == editIndex)
+                    continue;
+
                 if ((IdBytes[1] == parentForm.GetMessageHighByte(i, msgType)) && (IdBytes[0] == parentForm.GetMessageLowByte(i, msgType)))
                 {
                     lblIdError3.Visible = true;
@@ -231,6 +255,8 @@ namespace MPacApplication
                 else
                     lblCompanyError2.Visible = false;
             }
+            if (editIndex > -1)
+                parentForm.RemoveMessageFormat(editIndex);
             parentForm.AddMessageFormat(message, msgType);
             this.Visible = false;
             reset();
@@ -310,7 +336,7 @@ namespace MPacApplication
                 cmbConnections.Show();
             }
 
-
+            editIndex = -1;
         }
 
         private void UpdateControls()
@@ -323,10 +349,10 @@ namespace MPacApplication
             catch { }
 
             try { group = int.Parse(cmbGroup.Text); }
-            catch { }
+            catch { cmbGroup.Text = "1"; group = 1; }
 
             try { count = int.Parse(cmbCount.Text); }
-            catch { }
+            catch { cmbCount.Text = "1"; count = 1; }
 
                int size = group * count;
 
@@ -347,6 +373,77 @@ namespace MPacApplication
             else
                 btnAdd.Enabled = true;
 
+
+        }
+
+        private void Edit(int index)
+        {
+            editIndex = index;
+            MessageFormat m = null;
+
+            if (index < 0)
+                return;
+            m = parentForm.GetMessageFormat(index);
+
+            txtLength.Text = m.length.ToString("X");
+            txtName.Text = m.name;
+            byte[] id = { m.id_high, m.id_low };
+            try { txtID.Text = ushort.Parse(Format.AsUnsignedDecimal(id)).ToString("X"); }
+            catch { }
+            if (m.format == "%" || m.format == "")
+                return;
+            
+            string[] tokens = m.format.Split(' ');
+
+            if (tokens.Length < 2)
+                return;
+
+            if (tokens[0] == "call")
+            {
+                cmbFormatType.SelectedIndex = 2;
+                txtExternalFile.Text = tokens[1];
+            }
+            else if (tokens[1] == "*")
+            {
+                cmbFormatType.SelectedIndex = 0;
+                try { int.Parse(tokens[0]); cmbUniformGroup.Text = tokens[0]; }
+                catch { }
+                switch (tokens[2])
+                {
+                    case "b":
+                        cmbUniformFormat.Text = "binary";
+                        break;
+                    case "h":
+                        cmbUniformFormat.Text = "hex";
+                        break;
+                    case "d":
+                        cmbUniformFormat.Text = "decimal";
+                        cmbUniformSigned.Text = "signed";
+                        break;
+                    case "u":
+                        cmbUniformFormat.Text = "decimal";
+                        cmbUniformSigned.Text = "unsigned";
+                        break;
+                }
+            }
+            else
+            {
+                cmbFormatType.SelectedIndex = 1;
+
+                string formatline = "";
+                for (int i = 0; i < tokens.Length; i++)
+                {
+                    formatline += tokens[i] + " ";
+                    if (i % 3 == 2)
+                    {
+                        formatline = formatline.Trim();
+                        FormatLine f = new FormatLine(formatline);
+                        bytes_used += f.getSize();
+                        lstFormats.Items.Add(f);
+                        formatline = "";
+                    }
+                }
+            }
 
         }
 
@@ -403,7 +500,6 @@ namespace MPacApplication
             lstFormats.Items.Add(f);
         }
 
-
         private void btnMoveUp_Click(object sender, EventArgs e)
         {
             if (lstFormats.SelectedIndex >= 1 && lstFormats.SelectedIndex < lstFormats.Items.Count)
@@ -447,23 +543,51 @@ namespace MPacApplication
             public string count = "";
             public string display = "";
 
+            public FormatLine()
+            { }
+            public FormatLine(string tokens)
+            {
+                string[] token = tokens.Split(' ');
+                group = token[0];
+                count = token[1];
+                switch (token[2])
+                {
+                    case "b":
+                        display = "binary";
+                        break;
+                    case "h":
+                        display = "hex";
+                        break;
+                    case "d":
+                        display = "decimal";
+                        break;
+                    case "u":
+                        display = "unsigned";
+                        break;
+                }
+
+            }
             public override string ToString()
             {
 
-                bool plural = false;
+                bool plural1 = false;
+                bool plural2 = false;
                 int g = 0;
-                g = int.Parse(group);
+                try { g = int.Parse(group); }
+                catch { }
+                if (g > 1)
+                    plural2 = true;
                 if (count == "*")
-                    plural = true;
+                    plural1 = true;
                 else
                 {
-                    try { if (int.Parse(count) > 1) plural = true; }
+                    try { if (int.Parse(count) > 1) plural1 = true; }
                     catch { }
                 }
 
-                return "Display " + count + ((g > 1) ? " group" + (plural ? "s" : "") + " of " + group : "") + " byte" +
-                    (plural ? "s" : "") + " as " + (plural ? "" : "a ") + display +
-                    " value" + (plural ? "s" : "") + ".";
+                return "Display " + count + (plural2 ? " group" + (plural1 ? "s" : "") + " of " + group : "") + " byte" +
+                    (plural2 || plural1 ? "s" : "") + " as " + (plural1 ? "" : (display[0] == 'u' ? "an " :"a ")) + display +
+                    " value" + (plural1 ? "s" : "") + ".";
             }
             public string ToFormatString()
             {
