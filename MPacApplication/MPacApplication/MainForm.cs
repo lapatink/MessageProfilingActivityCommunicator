@@ -337,7 +337,13 @@ namespace MPacApplication
                else
                     return localMessages[index].name;
           }
-
+          public MessageFormat GetMessageFormat(int index)
+          {
+              if (index < 0 || index >= lstMessageSummary.Items.Count)
+                  return null;
+              else
+                  return (MessageFormat)lstMessageSummary.Items[index];
+          }
           private MessageFormat GetMessageFormat(byte highByte, byte lowByte)
           {
                foreach (MessageFormat mf in localMessages)
@@ -511,6 +517,9 @@ namespace MPacApplication
 
           private void btnAddMessage_Click(object sender, EventArgs e)
           {
+              if (AddCompanyForm != null)
+                  if (AddCompanyForm.Visible)
+                      return;
                try
                {
                     AddMessageForm.Show();
@@ -524,6 +533,9 @@ namespace MPacApplication
 
           private void btnAddCompanyMessage_Click(object sender, EventArgs e)
           {
+              if (AddMessageForm != null)
+                  if (AddMessageForm.Visible)
+                      return;
                try
                {
                    AddCompanyForm.Show();
@@ -638,6 +650,13 @@ namespace MPacApplication
 
           private void btnRemove_Click(object sender, EventArgs e)
           {
+              if (AddMessageForm != null)
+                  if (AddMessageForm.Visible)
+                      return;
+              if (AddCompanyForm != null)
+                  if (AddCompanyForm.Visible)
+                      return;
+
               int index = lstMessageSummary.SelectedIndex;
 
               if (index < 0)
@@ -672,6 +691,32 @@ namespace MPacApplication
                   }
                   System.IO.File.WriteAllText(fileDialog.FileName, textOut);
               }
+          }
+
+          private void btnEdit_Click(object sender, EventArgs e)
+          {
+              if (AddMessageForm != null)
+                  if (AddMessageForm.Visible)
+                      return;
+              if (AddCompanyForm != null)
+                  if (AddCompanyForm.Visible)
+                      return;
+
+              int index = lstMessageSummary.SelectedIndex;
+
+              if (index < 0)
+                  return;
+
+              MessageFormat mf = (MessageFormat)lstMessageSummary.Items[index];
+
+
+              if (companyMessages.Contains(mf))
+                  return;
+
+              AddMessageForm = new AddMessageForm(this, MessageType.Local, index);
+              AddMessageForm.Show();
+
+              
           }
      }
 }
