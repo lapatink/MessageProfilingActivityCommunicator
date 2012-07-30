@@ -46,9 +46,11 @@ namespace MPacApplication
         /// <returns>Returns an array of connection strings with the table name concatenated at the end.</returns>
         public string[] Read()
         {
-            XmlReader reader = XmlReader.Create(filename);
+            XmlReader reader = null;
+            try { reader = XmlReader.Create(filename); }
+            catch { }
             bool flag = true;
-
+            if (reader != null)
             while (reader.Read() && flag)
             {
                 if (!reader.IsStartElement())
