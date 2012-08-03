@@ -761,5 +761,10 @@ namespace MPacApplication
 
               
           }
+
+          private void btnClear_Click(object sender, EventArgs e)
+          {
+              lstDisplayWindow.Items.Clear();
+          }
      }
 }
