@@ -36,13 +36,13 @@ namespace MPacApplication
                     }
                }
 
-               if (cmbComPortName.Items.Contains(comPortName))
+               if (comPortName == null || !cmbComPortName.Items.Contains(comPortName))
                {
-                    cmbComPortName.SelectedIndex = GetIndexOfValue(cmbComPortName.Items, comPortName);
+                    cmbComPortName.SelectedIndex = 0;
                }
                else
                {
-                    cmbComPortName.SelectedIndex = 0;
+                    cmbComPortName.SelectedIndex = GetIndexOfValue(cmbComPortName.Items, comPortName);
                }
           }
 

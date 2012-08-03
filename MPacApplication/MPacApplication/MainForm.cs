@@ -123,18 +123,32 @@ namespace MPacApplication
 
                PrintStatusMessage("Start Initialization");
                initialized = false;
+               this.comPortName = "--";
+               this.baudRate = DEFAULT_BAUD_RATE;
+               this.parity = DEFAULT_PARITY;
+               this.dataBits = DEFAULT_DATA_BITS;
+               this.stopBits = DEFAULT_STOP_BITS;
+               this.handshake = DEFAULT_HANDSHAKE;
+               this.rtsEnable = DEFAULT_RTS;
+               this.dtrEnable = DEFAULT_DTR;
+
+               lblvPortName.Text = this.comPortName;
+               lblvBaudRate.Text = this.baudRate.ToString();
+               lblvParity.Text = this.parity.ToString();
+               lblvDataBits.Text = this.dataBits.ToString();
+               lblvStopBits.Text = this.stopBits.ToString();
+               lblvHandshake.Text = this.handshake.ToString();
+               lblvRTSEnable.Text = this.rtsEnable.ToString();
+               lblvDTREnable.Text = this.dtrEnable.ToString();
+
+               btnOpenAndClose.BackColor = Color.Red;
+               btnOpenAndClose.Text = "Closed";
+               comPortClosed = true;
 
                availableComPortNames = FindAvailableComPorts();
 
-               try
-               {
+               if(availableComPortNames.Count > 0)
                     OpenComPort(availableComPortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS, DEFAULT_HANDSHAKE, DEFAULT_RTS, DEFAULT_DTR);
-               }
-               catch (Exception)
-               {
-                    MessageBox.Show("No Com Ports Available, Closing Application");
-                    Application.Exit();
-               }
 
                PrintStatusMessage("Remaining List");
                foreach (String name in availableComPortNames)
@@ -293,9 +307,17 @@ namespace MPacApplication
                     PrintStatusMessage("Unable to open serial port " + this.comPortName);
                     PrintStatusMessage("Removing " + this.comPortName + " from available port list");
                     availableComPortNames.Remove(this.comPortName);
-                    if(initialized)
-                         MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availableComPortNames.ElementAt<String>(0));
-                    OpenComPort(availableComPortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
+                    try
+                    {
+                         if (initialized)
+                              MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availableComPortNames.ElementAt<String>(0));
+                         OpenComPort(availableComPortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
+                    }
+                    catch (Exception)
+                    {
+                         MessageBox.Show("Unable to open com port and no other com ports available, closing application");
+                         Application.Exit();
+                    }
                }
 
                comPortClosed = false;
@@ -471,6 +493,9 @@ namespace MPacApplication
 
           private void btnConfigureComPort_Click(object sender, EventArgs e)
           {
+               if (comPortConfigForm != null && comPortConfigForm.Visible)
+                    return;
+
                CloseComPort();
                availableComPortNames = FindAvailableComPorts();
 
