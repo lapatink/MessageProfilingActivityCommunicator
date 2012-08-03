@@ -34,14 +34,9 @@ namespace MPacApplication
           private SerialPort listeningPort;
           private bool comPortClosed;
 
-          private List<String> availablePortNames;
+          private List<String> availableComPortNames;
 
           private DataProcessor dataProcessor;
-          private int numberOfStatusEntries;
-          private int numberOfEntries;
-          private int numberOfLinesOfBytesEntries;
-          private int totalNumberOfMessages;
-
           private bool initialized;
 
           private bool isAdministrator = false;
@@ -123,32 +118,26 @@ namespace MPacApplication
 
                comPortConfigForm = null;
                dataProcessor = new DataProcessor(this);
-               numberOfStatusEntries = 0;
-               numberOfEntries = 0;
-               numberOfLinesOfBytesEntries = 0;
-               totalNumberOfMessages = 0;
                lstMessageSummary.Sorted = true;
                cmbViews.SelectedIndex = 0;
 
                PrintStatusMessage("Start Initialization");
                initialized = false;
 
-               availablePortNames = new List<String>();
-               String[] portNames = SerialPort.GetPortNames();
-               foreach (String name in portNames)
-               {
-                    if (name.StartsWith("COM"))
-                    {
-                         PrintStatusMessage("Add Com Port " + name);
-                         availablePortNames.Add(name);
-                    }
-               }
-               availablePortNames.Sort();
+               availableComPortNames = FindAvailableComPorts();
 
-               OpenComPort(availablePortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS, DEFAULT_HANDSHAKE, DEFAULT_RTS, DEFAULT_DTR);
+               try
+               {
+                    OpenComPort(availableComPortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS, DEFAULT_HANDSHAKE, DEFAULT_RTS, DEFAULT_DTR);
+               }
+               catch (Exception)
+               {
+                    MessageBox.Show("No Com Ports Available, Closing Application");
+                    Application.Exit();
+               }
 
                PrintStatusMessage("Remaining List");
-               foreach (String name in availablePortNames)
+               foreach (String name in availableComPortNames)
                {
                     PrintStatusMessage(name);
                }
@@ -179,86 +168,109 @@ namespace MPacApplication
                    AddMessageFormat(m, MessageType.Company);
 
               PrintStatusMessage("End SQL Import. " + companyMessages.Count + " custom messages loaded.");
+          }
 
-              /*
-              //Format testing. form is the format string, b is the random data array.
-              //Prints raw data and formatted data to console.
-              string form = "* 2 h";
-              byte[] b = new byte[13];
-              (new Random()).NextBytes(b);
+          private List<String> FindAvailableComPorts()
+          {
+               String[] allComPorts = SerialPort.GetPortNames();
+               List<String>  availableComPorts = new List<String>();
+               foreach (String name in allComPorts)
+               {
+                    if (name.StartsWith("COM") && OpenComPortCheck(name))
+                    {
+                         PrintStatusMessage("Add Com Port " + name);
+                         availableComPorts.Add(name);
+                    }
+               }
+               availableComPorts.Sort();
 
-              string s = "";
-              foreach (byte a in b)
-                  s += a.ToString() + " ";
-              Console.WriteLine(s);
-              Console.WriteLine(FormatParser.Parse(form, b));
-              */
-             
-              //byte[] b = {0,0,0,0,1};
-              //Console.WriteLine(Format.AsDecimal(b)); 
+               return availableComPorts;
+          }
+          private bool OpenComPortCheck(String comPortName)
+          {
+               SerialPort testingPort = new SerialPort(comPortName);
+               try
+               {
+                    testingPort.Open();
+                    testingPort.Close();
+               }
+               catch (Exception)
+               {
+                    return false;
+               }
+
+               return true;
           }
 
           private void SetSerialPortConfig(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits, Handshake handshake, bool rtsEnable, bool dtrEnable)
           {
-               PrintStatusMessage("Set Serial Port Config " + comPortName + " " + baudRate + " " + parity + " " + dataBits + " " + stopBits);
-
-               CloseComPort();
-
-               this.comPortName = comPortName;
-               this.baudRate = baudRate;
-               this.parity = parity;
-               this.dataBits = dataBits;
-               this.stopBits = stopBits;
-               this.handshake = handshake;
-               this.rtsEnable = rtsEnable;
-               this.dtrEnable = dtrEnable;
-
-               if (listeningPort == null)
+               try
                {
-                    PrintStatusMessage("Create new SerialPort " + this.comPortName + " " + this.baudRate + " " + this.parity + " " + this.dataBits + " " + this.stopBits);
-                    listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
-                    listeningPort.Handshake = this.handshake;
-                    listeningPort.RtsEnable = this.rtsEnable;
-                    listeningPort.DtrEnable = this.dtrEnable;
+                    PrintStatusMessage("Set Serial Port Config " + comPortName + " " + baudRate + " " + parity + " " + dataBits + " " + stopBits);
+
+                    CloseComPort();
+
+                    this.comPortName = comPortName;
+                    this.baudRate = baudRate;
+                    this.parity = parity;
+                    this.dataBits = dataBits;
+                    this.stopBits = stopBits;
+                    this.handshake = handshake;
+                    this.rtsEnable = rtsEnable;
+                    this.dtrEnable = dtrEnable;
+
+                    if (listeningPort == null)
+                    {
+                         PrintStatusMessage("Create new SerialPort " + this.comPortName + " " + this.baudRate + " " + this.parity + " " + this.dataBits + " " + this.stopBits);
+                         listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
+                         listeningPort.Handshake = this.handshake;
+                         listeningPort.RtsEnable = this.rtsEnable;
+                         listeningPort.DtrEnable = this.dtrEnable;
+                    }
+                    else
+                    {
+                         listeningPort.PortName = this.comPortName;
+                         listeningPort.BaudRate = this.baudRate;
+                         listeningPort.Parity = this.parity;
+                         listeningPort.DataBits = this.dataBits;
+                         listeningPort.StopBits = this.stopBits;
+                         listeningPort.Handshake = this.handshake;
+                         listeningPort.RtsEnable = this.rtsEnable;
+                         listeningPort.DtrEnable = this.dtrEnable;
+                    }
+
+                    lblvPortName.Text = this.comPortName;
+                    lblvBaudRate.Text = this.baudRate.ToString();
+                    lblvParity.Text = this.parity.ToString();
+                    lblvDataBits.Text = this.dataBits.ToString();
+                    lblvStopBits.Text = this.stopBits.ToString();
+                    lblvHandshake.Text = this.handshake.ToString();
+                    lblvRTSEnable.Text = this.rtsEnable.ToString();
+                    lblvDTREnable.Text = this.dtrEnable.ToString();
+
+                    switch (stopBits)
+                    {
+                         case StopBits.One:
+                              lblvStopBits.Text = "1";
+                              break;
+                         case StopBits.OnePointFive:
+                              lblvStopBits.Text = "1.5";
+                              break;
+                         case StopBits.Two:
+                              lblvStopBits.Text = "2";
+                              break;
+                         case StopBits.None:
+                              lblvStopBits.Text = "None";
+                              break;
+                         default:
+                              lblvStopBits.Text = "None";
+                              break;
+                    }
                }
-               else
+               catch (Exception ex)
                {
-                    listeningPort.PortName = this.comPortName;
-                    listeningPort.BaudRate = this.baudRate;
-                    listeningPort.Parity = this.parity;
-                    listeningPort.DataBits = this.dataBits;
-                    listeningPort.StopBits = this.stopBits;
-                    listeningPort.Handshake = this.handshake;
-                    listeningPort.RtsEnable = this.rtsEnable;
-                    listeningPort.DtrEnable = this.dtrEnable;
-               }
-
-               lblvPortName.Text = this.comPortName;
-               lblvBaudRate.Text = this.baudRate.ToString();
-               lblvParity.Text = this.parity.ToString();
-               lblvDataBits.Text = this.dataBits.ToString();
-               lblvStopBits.Text = this.stopBits.ToString();
-               lblvHandshake.Text = this.handshake.ToString();
-               lblvRTSEnable.Text = this.rtsEnable.ToString();
-               lblvDTREnable.Text = this.dtrEnable.ToString();
-
-               switch (stopBits)
-               {
-                    case StopBits.One:
-                         lblvStopBits.Text = "1";
-                         break;
-                    case StopBits.OnePointFive:
-                         lblvStopBits.Text = "1.5";
-                         break;
-                    case StopBits.Two:
-                         lblvStopBits.Text = "2";
-                         break;
-                    case StopBits.None:
-                         lblvStopBits.Text = "None";
-                         break;
-                    default:
-                         lblvStopBits.Text = "None";
-                         break;
+                    ex.ToString();
+                    Application.Exit();
                }
           }
 
@@ -280,10 +292,10 @@ namespace MPacApplication
                {
                     PrintStatusMessage("Unable to open serial port " + this.comPortName);
                     PrintStatusMessage("Removing " + this.comPortName + " from available port list");
-                    availablePortNames.Remove(this.comPortName);
+                    availableComPortNames.Remove(this.comPortName);
                     if(initialized)
-                         MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availablePortNames.ElementAt<String>(0));
-                    OpenComPort(availablePortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
+                         MessageBox.Show(this.comPortName + " does not seem to be a valid port, selecting port " + availableComPortNames.ElementAt<String>(0));
+                    OpenComPort(availableComPortNames.ElementAt<String>(0), this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
                }
 
                comPortClosed = false;
@@ -295,8 +307,15 @@ namespace MPacApplication
           {
                if (listeningPort != null && listeningPort.IsOpen)
                {
-                    PrintStatusMessage("Closing serial port");
-                    listeningPort.Close();
+                    try
+                    {
+                         listeningPort.Close();
+                         PrintStatusMessage("Closed serial port");
+                    }
+                    catch (Exception)
+                    {
+                         //do nothing
+                    }
                     tmrCheckForData.Enabled = false;
                }
 
@@ -394,26 +413,19 @@ namespace MPacApplication
                }
 
                lstDisplayWindow.Items.Add(message);
-               lstDisplayWindow.SelectedIndex = numberOfEntries++;
-          }
-
-          public void RecordTrash(byte[] trashBytes)
-          {
-               //TODO - this may be used to record all bytes not in messages
+               lstDisplayWindow.SelectedIndex = lstDisplayWindow.Items.Count-1;
           }
 
           public void PrintComPortMessage(String message)
           {
                lstComPortDisplay.Items.Add(message);
-               lstComPortDisplay.SelectedIndex = numberOfLinesOfBytesEntries;
-               numberOfLinesOfBytesEntries++;
+               lstComPortDisplay.SelectedIndex = lstComPortDisplay.Items.Count-1;
           }
 
           public void PrintStatusMessage(String message)
           {
                lstStatusDisplay.Items.Add(message);
-               lstStatusDisplay.SelectedIndex = numberOfStatusEntries;
-               numberOfStatusEntries++;
+               lstStatusDisplay.SelectedIndex = lstStatusDisplay.Items.Count-1;
           }
 
           public void AddMessageFormat(MessageFormat messageFormat, MessageType type)
@@ -424,9 +436,8 @@ namespace MPacApplication
                     localMessages.Add(messageFormat);
 
                lstMessageSummary.Items.Add(messageFormat);
-               lstMessageSummary.SelectedIndex = totalNumberOfMessages;
+               lstMessageSummary.SelectedIndex = lstMessageSummary.Items.Count-1;
                cmbViews.Items.Add(messageFormat.name);
-               totalNumberOfMessages++;
           }
 
           public bool RemoveMessageFormat(MessageFormat messageFormat)
@@ -442,7 +453,6 @@ namespace MPacApplication
               if (flag)
               {
                   lstMessageSummary.Items.Remove(messageFormat);
-                  totalNumberOfMessages--;
               }
 
 
@@ -462,44 +472,52 @@ namespace MPacApplication
           private void btnConfigureComPort_Click(object sender, EventArgs e)
           {
                CloseComPort();
+               availableComPortNames = FindAvailableComPorts();
+
                try
                {
+                    comPortConfigForm.SetComboBoxes(this.availableComPortNames, this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
                     comPortConfigForm.Show();
                }
                catch (Exception)
                {
                     comPortConfigForm = new ComPortConfigForm(this);
+                    comPortConfigForm.SetComboBoxes(this.availableComPortNames, this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
                     comPortConfigForm.Show();
-               }
-               finally
-               {
-                    comPortConfigForm.SetComboBoxes(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
                }
           }
 
           private void tmrCheckForData_Tick(object sender, EventArgs e)
           {
-               if (listeningPort == null || !listeningPort.IsOpen)
-                    return;
-
-               int numberOfBytes = listeningPort.BytesToRead;
-
-               if (listeningPort.BytesToRead <= 0 || dataProcessor.IsBusy())
-                    return;
-
-               byte[] buffer = new byte[numberOfBytes];
-               String byteString = "";
-
-               numberOfBytes = listeningPort.Read(buffer, 0, numberOfBytes);
-
-               if (numberOfBytes > 0)
+               try
                {
-                    PrintStatusMessage("Milliseconds:" + dataProcessor.ProcessData(buffer) + "\n");
-                    foreach (byte b in buffer)
+                    if (listeningPort == null || !listeningPort.IsOpen)
+                         return;
+
+                    int numberOfBytes = listeningPort.BytesToRead;
+
+                    if (listeningPort.BytesToRead <= 0 || dataProcessor.IsBusy())
+                         return;
+
+                    byte[] buffer = new byte[numberOfBytes];
+                    String byteString = "";
+
+                    numberOfBytes = listeningPort.Read(buffer, 0, numberOfBytes);
+
+                    if (numberOfBytes > 0)
                     {
-                         byteString += Convert.ToString(b, 16).PadLeft(2, '0').ToUpper() + " ";
+                         PrintStatusMessage("Milliseconds:" + dataProcessor.ProcessData(buffer) + "\n");
+                         foreach (byte b in buffer)
+                         {
+                              byteString += Convert.ToString(b, 16).PadLeft(2, '0').ToUpper() + " ";
+                         }
+                         PrintComPortMessage(byteString);
                     }
-                    PrintComPortMessage(byteString);
+               }
+               catch (Exception ex)
+               {
+                    MessageBox.Show(ex.ToString());
+                    Application.Exit();
                }
           }
 

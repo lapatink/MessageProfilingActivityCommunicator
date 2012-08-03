@@ -13,44 +13,42 @@ namespace MPacApplication
      public partial class ComPortConfigForm : Form
      {
           private MainForm parentForm;
-          private String[] portNames;
 
           public ComPortConfigForm(MainForm sourceForm)
           {
                InitializeComponent();
                parentForm = sourceForm;
-               if (sourceForm.ComPortName == null)
-                    PopulatePortNameList("");
-               else
-                    PopulatePortNameList(sourceForm.ComPortName);
           }
 
-          private void PopulatePortNameList(String currentlySelectedPortName)
+          private void PopulatePortNameList(List<String> newList, String comPortName)
           {
-               portNames = SerialPort.GetPortNames();
-               Array.Sort(portNames);
                cmbComPortName.Items.Clear();
-               foreach (String name in portNames)
+
+               if (newList == null || newList.Count == 0)
                {
-                    if (name.StartsWith("COM"))
-                         cmbComPortName.Items.Add(name);
+                    this.cmbComPortName.Items.Add(String.Empty);
+               }
+               else
+               {
+                    foreach (String name in newList)
+                    {
+                         this.cmbComPortName.Items.Add(name);
+                    }
                }
 
-               cmbComPortName.SelectedIndex = GetIndexOfValue(cmbComPortName.Items, currentlySelectedPortName);
+               if (cmbComPortName.Items.Contains(comPortName))
+               {
+                    cmbComPortName.SelectedIndex = GetIndexOfValue(cmbComPortName.Items, comPortName);
+               }
+               else
+               {
+                    cmbComPortName.SelectedIndex = 0;
+               }
           }
 
-          public void SetComboBoxes(String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits, Handshake handshake, bool rtsEnable, bool dtrEnable)
+          public void SetComboBoxes(List<String> newList, String comPortName, int baudRate, Parity parity, int dataBits, StopBits stopBits, Handshake handshake, bool rtsEnable, bool dtrEnable)
           {
-               try
-               {
-                    cmbComPortName.Text = GetValidPortName(cmbComPortName.Text);
-               }
-               catch (Exception ex)
-               {
-                    MessageBox.Show(ex.ToString());
-                    cmbComPortName.Text = "NONE";
-               }
-
+               PopulatePortNameList(newList, comPortName);
                cmbBaudRate.Text = baudRate.ToString();
                cmbParity.SelectedIndex = GetIndexOfValue(cmbParity.Items, parity.ToString());
                cmbDataBits.SelectedIndex = GetIndexOfValue(cmbDataBits.Items, dataBits.ToString());
@@ -128,18 +126,16 @@ namespace MPacApplication
 
           public String GetValidPortName(String desiredPortName)
           {
-               String[] portNames = SerialPort.GetPortNames();
-
-               if (!portNames.Contains<String>(desiredPortName))
+               if (!this.cmbComPortName.Items.Contains(desiredPortName))
                {
-                    foreach (String name in portNames)
+                    foreach (String name in this.cmbComPortName.Items)
                     {
                          if (name.StartsWith("COM"))
                          {
                               return name;
                          }
                     }
-                    throw new Exception("No COM ports available");
+                    return String.Empty;
                }
                else
                {
@@ -158,15 +154,7 @@ namespace MPacApplication
                bool selectedRtsEnable;
                bool selectedDtrEnable;
 
-               try
-               {
-                    selectedPortName = GetValidPortName(cmbComPortName.Text);
-               }
-               catch (Exception ex)
-               {
-                    MessageBox.Show(ex.ToString());
-                    selectedPortName = "NONE";
-               }
+               selectedPortName = GetValidPortName(cmbComPortName.Text);
 
                if (!Int32.TryParse(cmbBaudRate.Text, out selectedBaudRate))
                {
