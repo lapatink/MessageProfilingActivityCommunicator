@@ -591,7 +591,7 @@ namespace MPacApplication
             }
             public string ToFormatString()
             {
-                    return group + " " + count + " " + Format.getTokenString(display) + " ";
+                    return count + " " + group + " " + Format.getTokenString(display) + " ";
             }
             public int getSize()
             {
