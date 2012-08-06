@@ -49,7 +49,6 @@ namespace MPacApplication
           {
                InitializeComponent();
                parentForm = sourceForm;
-               reset();
           }
 
         public AddMessageForm(MainForm sourceForm, MessageType type)
@@ -62,8 +61,6 @@ namespace MPacApplication
                 this.Text = "Add Company Message";
             else
                 this.Text = "Add Local Message";
-
-            reset();
         }
 
         public AddMessageForm(MainForm sourceForm, MessageType type, int index)
@@ -76,9 +73,6 @@ namespace MPacApplication
                 this.Text = "Add Company Message";
             else
                 this.Text = "Add Local Message";
-
-            reset();
-
             Edit(index);
         }
         private void txtID_LostFocus(object sender, EventArgs e)
@@ -259,12 +253,10 @@ namespace MPacApplication
                 parentForm.RemoveMessageFormat(editIndex);
             parentForm.AddMessageFormat(message, msgType);
             this.Visible = false;
-            reset();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            reset();
             this.Visible = false;
         }
 
@@ -656,6 +648,12 @@ namespace MPacApplication
                 cmbUniformSigned.Hide();
                 lblUniformSigned.Hide();
             }
+        }
+
+        private void AddMessageForm_activated(object sender, EventArgs e)
+        {
+            reset();
+            txtName.Focus();
         }
     }
 }
