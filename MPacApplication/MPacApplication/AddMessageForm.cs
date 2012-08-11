@@ -49,7 +49,6 @@ namespace MPacApplication
           {
                InitializeComponent();
                parentForm = sourceForm;
-               reset();
           }
 
         public AddMessageForm(MainForm sourceForm, MessageType type)
@@ -62,8 +61,6 @@ namespace MPacApplication
                 this.Text = "Add Company Message";
             else
                 this.Text = "Add Local Message";
-
-            reset();
         }
 
         public AddMessageForm(MainForm sourceForm, MessageType type, int index)
@@ -76,9 +73,6 @@ namespace MPacApplication
                 this.Text = "Add Company Message";
             else
                 this.Text = "Add Local Message";
-
-            reset();
-
             Edit(index);
         }
         private void txtID_LostFocus(object sender, EventArgs e)
@@ -259,12 +253,10 @@ namespace MPacApplication
                 parentForm.RemoveMessageFormat(editIndex);
             parentForm.AddMessageFormat(message, msgType);
             this.Visible = false;
-            reset();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            reset();
             this.Visible = false;
         }
 
@@ -320,6 +312,8 @@ namespace MPacApplication
             cmbConnections.Hide();
             lblConnection.Hide();
 
+            UpdateControls();
+
             if (parentForm.IsAdministrator && msgType == MessageType.Company)
             {
                 Configuration config = new Configuration();
@@ -347,6 +341,40 @@ namespace MPacApplication
 
             try { bytes = int.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber); }
             catch { }
+
+            if (bytes == 0)
+            {
+                pnlCustomFormat.Hide();
+                pnlExternalProgram.Hide();
+                pnlUniformGroup.Hide();
+                cmbFormatType.Hide();
+                lblFormat.Hide();
+            }
+            else
+            {
+                cmbFormatType.Show();
+                lblFormat.Show();
+
+                if (cmbFormatType.SelectedIndex == 0)
+                {
+                    pnlUniformGroup.Show();
+                    pnlExternalProgram.Hide();
+                    pnlCustomFormat.Hide();
+
+                }
+                else if (cmbFormatType.SelectedIndex == 1)
+                {
+                    pnlCustomFormat.Show();
+                    pnlExternalProgram.Hide();
+                    pnlUniformGroup.Hide();
+                }
+                else if (cmbFormatType.SelectedIndex == 2)
+                {
+                    pnlExternalProgram.Show();
+                    pnlCustomFormat.Hide();
+                    pnlUniformGroup.Hide();
+                }
+            }
 
             try { group = int.Parse(cmbGroup.Text); }
             catch { cmbGroup.Text = "1"; group = 1; }
@@ -656,6 +684,12 @@ namespace MPacApplication
                 cmbUniformSigned.Hide();
                 lblUniformSigned.Hide();
             }
+        }
+
+        private void AddMessageForm_activated(object sender, EventArgs e)
+        {
+            reset();
+            txtName.Focus();
         }
     }
 }

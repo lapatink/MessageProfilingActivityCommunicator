@@ -669,6 +669,7 @@
             this.Name = "AddMessageForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddMessageForm";
+            this.Activated += new System.EventHandler(this.AddMessageForm_activated);
             this.pnlUniformGroup.ResumeLayout(false);
             this.pnlUniformGroup.PerformLayout();
             this.pnlExternalProgram.ResumeLayout(false);
