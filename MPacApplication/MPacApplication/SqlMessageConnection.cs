@@ -40,6 +40,28 @@ namespace MPacApplication
         }
 
         /// <summary>
+        /// Returns true if the sql connection is valid and accessible.
+        /// </summary>
+        /// <returns></returns>
+        public bool isConnected()
+        {
+            bool flag = true;
+            try
+            {
+                conn.Open();
+            }
+            catch
+            {
+                flag = false;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return flag;
+        }
+
+        /// <summary>
         /// Reads the message table into a list of objects.
         /// </summary>
         /// <returns>Returns a list of Message objects.</returns>
