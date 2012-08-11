@@ -167,16 +167,27 @@ namespace MPacApplication
               PrintStatusMessage("Configuration read complete. Found " + connections.Length + " connection(s).");
 
               if (!config.IsAdministrator)
-                  btnAddCompanyMessage.Hide();
+                  btnAddCompanyMessage.Enabled = false;
               else
                   isAdministrator = true;
 
                PrintStatusMessage("End Configuration");
                PrintStatusMessage("Start SQL Import");
 
+               string errors = "";
                List<MessageFormat> messages = new List<MessageFormat>();
                foreach (string connection in connections)
-                   messages.AddRange(new SqlMessageConnection(connection).GetMessageList());
+               {
+                   SqlMessageConnection sql = new SqlMessageConnection(connection);
+
+                   if (sql.isConnected())
+                       messages.AddRange(sql.GetMessageList());
+                   else
+                       errors += connection + '\n';   
+               }
+
+               if (errors != "")
+                   MessageBox.Show("The following SQL connections could not be opened:\n\n" + errors);
 
                foreach (MessageFormat m in messages)
                    AddMessageFormat(m, MessageType.Company);
@@ -641,15 +652,30 @@ namespace MPacApplication
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
                   List<MessageFormat> messages = new List<MessageFormat>();
-                  messages.AddRange(localMessages);
-
-                  foreach (MessageFormat m in messages)
-                      RemoveMessageFormat(m);
+                  string errors = "";
 
                   messages = new List<MessageFormat>();
                   messages = Import.ToMessages(fileDialog.FileName);
+
+                  List<string> companyNames = new List<string>();
+                  List<ushort> ids = new List<ushort>();
+
+
+                  foreach (MessageFormat m in companyMessages)
+                      companyNames.Add(m.name);
+
                   foreach (MessageFormat m in messages)
-                      AddMessageFormat(m, MessageType.Local);
+                      if (!companyNames.Contains(m.name) && !ids.Contains((ushort)(m.id_high << 8 | m.id_low)))
+                      {
+                          AddMessageFormat(m, MessageType.Local);
+                          companyNames.Add(m.name); //prevent name conflicts within the file
+                          ids.Add((ushort)(m.id_high << 8 | m.id_low)); //prevent id conflicts within the file
+                      }
+                      else
+                          errors += m.ToString() + '\n';
+
+                  if (errors != "")
+                      MessageBox.Show("The following messages were not imported because they have conflicting names or ids with existing messages.\n\n" + errors);
               }
           }
 
@@ -674,7 +700,13 @@ namespace MPacApplication
 
               string[] connections = config.Read();
 
+              string error = "";
+
               List<MessageFormat> messages = new List<MessageFormat>();
+              List<string> localNames = new List<string>();
+
+              foreach (MessageFormat m in localMessages)
+                  localNames.Add(m.name);
 
               messages.AddRange(companyMessages);
 
@@ -686,8 +718,19 @@ namespace MPacApplication
               foreach (string connection in connections)
                   messages.AddRange(new SqlMessageConnection(connection).GetMessageList());
               foreach (MessageFormat m in messages)
-                  AddMessageFormat(m, MessageType.Company);
+                  if (!localNames.Contains(m.name))
+                      AddMessageFormat(m, MessageType.Company);
+                  else
+                  {
+                      MessageFormat dupe = localMessages.Find(d => d.name == m.name);
+                      error += dupe.ToString() + '\n';
+                      RemoveMessageFormat(dupe);
+                  }
 
+              if (error != "")
+                  MessageBox.Show("The following local messages were removed because they share a name with a company message:\n\n" + error);
+
+              
               btnRefresh.Enabled = true;
           }
 
