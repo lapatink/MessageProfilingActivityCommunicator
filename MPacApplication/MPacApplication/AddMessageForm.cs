@@ -75,7 +75,7 @@ namespace MPacApplication
                 this.Text = "Add Local Message";
             Edit(index);
         }
-        private void txtID_LostFocus(object sender, EventArgs e)
+        private void txtID_check(object sender, EventArgs e)
         {
                 try
                 {
@@ -120,7 +120,7 @@ namespace MPacApplication
                 }
         }
 
-        private void txtLength_LostFocus(object sender, EventArgs e)
+        private void txtLength_check(object sender, EventArgs e)
         {
                 try
                 {
@@ -141,7 +141,7 @@ namespace MPacApplication
                 }
         }
 
-        private void txtName_LostFocus(object sender, EventArgs e)
+        private void txtName_check(object sender, EventArgs e)
         {
                 try
                 {
@@ -165,9 +165,9 @@ namespace MPacApplication
             lblNameError2.Visible = false;
             lblIdError3.Visible = false;
             error = false;
-            txtName_LostFocus(sender, e);
-            txtID_LostFocus(sender, e);
-            txtLength_LostFocus(sender, e);
+            txtName_check(sender, e);
+            txtID_check(sender, e);
+            txtLength_check(sender, e);
             if (error == true)
                 return;
             ID = ushort.Parse(txtID.Text, System.Globalization.NumberStyles.HexNumber);

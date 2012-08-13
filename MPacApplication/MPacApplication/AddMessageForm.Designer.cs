@@ -100,7 +100,6 @@
             this.txtID.Name = "txtID";
             this.txtID.Size = new System.Drawing.Size(47, 20);
             this.txtID.TabIndex = 6;
-            this.txtID.LostFocus += new System.EventHandler(this.txtID_LostFocus);
             // 
             // lblID
             // 
@@ -130,7 +129,6 @@
             this.txtLength.Size = new System.Drawing.Size(32, 20);
             this.txtLength.TabIndex = 11;
             this.txtLength.TextChanged += new System.EventHandler(this.txtLength_TextChanged);
-            this.txtLength.LostFocus += new System.EventHandler(this.txtLength_LostFocus);
             // 
             // lblLength
             // 
@@ -148,7 +146,6 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(130, 20);
             this.txtName.TabIndex = 16;
-            this.txtName.LostFocus += new System.EventHandler(this.txtName_LostFocus);
             // 
             // lblName
             // 
