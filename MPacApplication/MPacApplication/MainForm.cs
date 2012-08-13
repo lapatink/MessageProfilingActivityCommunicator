@@ -38,6 +38,9 @@ namespace MPacApplication
 
           private DataProcessor dataProcessor;
           private bool initialized;
+          private bool listBoxOneSelected;
+
+          private List<String> RecordedMessages;
 
           private bool isAdministrator = false;
           public bool IsAdministrator
@@ -116,10 +119,13 @@ namespace MPacApplication
           {
                InitializeComponent();
 
+               lstDisplayWindowTwo.Visible = false;
+               listBoxOneSelected = true;
                comPortConfigForm = null;
                dataProcessor = new DataProcessor(this);
                lstMessageSummary.Sorted = true;
                cmbViews.SelectedIndex = 0;
+               RecordedMessages = new List<String>();
 
                PrintStatusMessage("Start Initialization");
                initialized = false;
@@ -445,8 +451,41 @@ namespace MPacApplication
                     }
                }
 
-               lstDisplayWindow.Items.Add(message);
-               lstDisplayWindow.SelectedIndex = lstDisplayWindow.Items.Count-1;
+               RecordedMessages.Add(message);
+
+               if (cmbViews.SelectedItem.ToString().Equals("All") || message.Contains(GetMessageIdFromMessageName(cmbViews.SelectedItem.ToString()).ToString()))
+               {
+                    if (listBoxOneSelected)
+                    {
+                         lstDisplayWindowOne.Items.Add(message);
+                         lstDisplayWindowOne.SelectedIndex = lstDisplayWindowOne.Items.Count - 1;
+                    }
+                    else
+                    {
+                         lstDisplayWindowTwo.Items.Add(message);
+                         lstDisplayWindowTwo.SelectedIndex = lstDisplayWindowOne.Items.Count - 1;
+                    }
+               }
+          }
+
+          private int GetMessageIdFromMessageName(String messageName)
+          {
+               foreach (MessageFormat format in localMessages)
+               {
+                    if (format.name.Equals(messageName))
+                    {
+                         return ((format.id_high << 8) | (format.id_low));
+                    }
+               }
+               foreach (MessageFormat format in companyMessages)
+               {
+                    if (format.name.Equals(messageName))
+                    {
+                         return ((format.id_high << 8) | (format.id_low));
+                    }
+               }
+
+               return -1;
           }
 
           public void PrintComPortMessage(String message)
@@ -475,25 +514,35 @@ namespace MPacApplication
 
           public bool RemoveMessageFormat(MessageFormat messageFormat)
           {
-              bool flag = false;
+               bool flag = false;
 
-              if (localMessages.Remove(messageFormat))
-                  flag = true;
-              else if (IsAdministrator)
-                  if (companyMessages.Remove(messageFormat))
-                      flag = true;
+               if (cmbViews.SelectedItem.ToString().Equals(messageFormat.name))
+               {
+                    cmbViews.SelectedIndex = 0;
+               }
 
-              if (flag)
-              {
-                  lstMessageSummary.Items.Remove(messageFormat);
-              }
+               if (localMessages.Remove(messageFormat))
+               {
+                    flag = true;
+               }
+               else if (IsAdministrator)
+               {
+                    if (companyMessages.Remove(messageFormat))
+                         flag = true;
+               }
+
+               if (flag)
+               {
+                    lstMessageSummary.Items.Remove(messageFormat);
+                    cmbViews.Items.Remove(messageFormat.name);
+               }
 
 
-              return flag;
+               return flag;
           }
           public bool RemoveMessageFormat(int index)
           {
-              return RemoveMessageFormat((MessageFormat)lstMessageSummary.Items[index]);
+               return RemoveMessageFormat((MessageFormat)lstMessageSummary.Items[index]);
           }
 
           private void tmrClockRefresh_Tick(object sender, EventArgs e)
@@ -554,6 +603,123 @@ namespace MPacApplication
                {
                     MessageBox.Show(ex.ToString());
                     Application.Exit();
+               }
+          }
+
+          /*private void ChangeView(String messageName)
+          {
+               int selectedID = GetMessageIdFromMessageName(cmbViews.SelectedItem.ToString());
+               if (listBoxOneSelected)
+               {
+                    lstDisplayWindowTwo.Items.Clear();
+
+                    if (selectedID == -1)//"All" was selected
+                    {
+                         foreach (String str in RecordedMessages)
+                         {
+                              lstDisplayWindowTwo.Items.Add(str);
+                         }
+                    }
+                    else
+                    {
+                         foreach (String str in RecordedMessages)
+                         {
+                              if (str.Contains(selectedID.ToString()))
+                                   lstDisplayWindowTwo.Items.Add(str);
+                         }
+                    }
+                    if (lstDisplayWindowTwo.Items.Count > 0)
+                         lstDisplayWindowTwo.SelectedIndex = lstDisplayWindowTwo.Items.Count - 1;
+
+                    lstDisplayWindowTwo.Visible = true;
+                    lstDisplayWindowOne.Visible = false;
+                    listBoxOneSelected = false;
+               }
+               else
+               {
+                    lstDisplayWindowOne.Items.Clear();
+
+                    if (selectedID == -1)//"All" was selected
+                    {
+                         foreach (String str in RecordedMessages)
+                         {
+                              lstDisplayWindowOne.Items.Add(str);
+                         }
+                    }
+                    else
+                    {
+                         foreach (String str in RecordedMessages)
+                         {
+                              if (str.Contains(selectedID.ToString()))
+                                   lstDisplayWindowOne.Items.Add(str);
+                         }
+                    }
+                    if (lstDisplayWindowOne.Items.Count > 0)
+                         lstDisplayWindowOne.SelectedIndex = lstDisplayWindowOne.Items.Count - 1;
+
+                    lstDisplayWindowOne.Visible = true;
+                    lstDisplayWindowTwo.Visible = false;
+                    listBoxOneSelected = true;
+               }
+          }*/
+
+          private void cmbViews_SelectedIndexChanged(object sender, EventArgs e)
+          {
+               if (!initialized)
+                    return;
+
+               int selectedID = GetMessageIdFromMessageName(cmbViews.SelectedItem.ToString());
+               if (listBoxOneSelected)
+               {
+                    lstDisplayWindowTwo.Items.Clear();
+
+                    if (selectedID == -1)//"All" was selected
+                    {
+                         foreach (String str in RecordedMessages)
+                         {
+                              lstDisplayWindowTwo.Items.Add(str);
+                         }
+                    }
+                    else
+                    {
+                         foreach (String str in RecordedMessages)
+                         {
+                              if (str.Contains(selectedID.ToString()))
+                                   lstDisplayWindowTwo.Items.Add(str);
+                         }
+                    }
+                    if (lstDisplayWindowTwo.Items.Count > 0)
+                         lstDisplayWindowTwo.SelectedIndex = lstDisplayWindowTwo.Items.Count - 1;
+
+                    lstDisplayWindowTwo.Visible = true;
+                    lstDisplayWindowOne.Visible = false;
+                    listBoxOneSelected = false;
+               }
+               else
+               {
+                    lstDisplayWindowOne.Items.Clear();
+
+                    if (selectedID == -1)//"All" was selected
+                    {
+                         foreach (String str in RecordedMessages)
+                         {
+                              lstDisplayWindowOne.Items.Add(str);
+                         }
+                    }
+                    else
+                    {
+                         foreach (String str in RecordedMessages)
+                         {
+                              if (str.Contains(selectedID.ToString()))
+                                   lstDisplayWindowOne.Items.Add(str);
+                         }
+                    }
+                    if (lstDisplayWindowOne.Items.Count > 0)
+                         lstDisplayWindowOne.SelectedIndex = lstDisplayWindowOne.Items.Count - 1;
+
+                    lstDisplayWindowOne.Visible = true;
+                    lstDisplayWindowTwo.Visible = false;
+                    listBoxOneSelected = true;
                }
           }
 
@@ -730,7 +896,6 @@ namespace MPacApplication
               if (error != "")
                   MessageBox.Show("The following local messages were removed because they share a name with a company message:\n\n" + error);
 
-              
               btnRefresh.Enabled = true;
           }
 
@@ -757,7 +922,6 @@ namespace MPacApplication
                   return;
               }
               RemoveMessageFormat(index);
-              
           }
           private void btnEdit_Click(object sender, EventArgs e)
           {
@@ -775,19 +939,16 @@ namespace MPacApplication
 
               MessageFormat mf = (MessageFormat)lstMessageSummary.Items[index];
 
-
               if (companyMessages.Contains(mf))
                   return;
 
               AddMessageForm = new AddMessageForm(this, MessageType.Local, index);
               AddMessageForm.Show();
-
-              
           }
 
           private void btnClear_Click(object sender, EventArgs e)
           {
-              lstDisplayWindow.Items.Clear();
+              lstDisplayWindowOne.Items.Clear();
           }
 
           private void saveLogToolStripMenuItem_Click(object sender, EventArgs e)
@@ -797,11 +958,9 @@ namespace MPacApplication
               fileDialog.Filter = "TXT Files|*.txt|All Files|*.*";
               fileDialog.InitialDirectory = "%USERPROFILE%";
 
-
-
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
-                  foreach (string listItems in lstDisplayWindow.Items)
+                  foreach (string listItems in lstDisplayWindowOne.Items)
                   {
                       textOut = textOut + listItems + Environment.NewLine;
                   }
