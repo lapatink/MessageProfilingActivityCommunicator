@@ -124,6 +124,7 @@ namespace MPacApplication
                comPortConfigForm = null;
                dataProcessor = new DataProcessor(this);
                lstMessageSummary.Sorted = true;
+               cmbViews.Sorted = true;
                cmbViews.SelectedIndex = 0;
                RecordedMessages = new List<String>();
 
@@ -510,6 +511,9 @@ namespace MPacApplication
                lstMessageSummary.Items.Add(messageFormat);
                lstMessageSummary.SelectedIndex = lstMessageSummary.Items.Count-1;
                cmbViews.Items.Add(messageFormat.name);
+               bool allSelected;
+               cmbViews.Items.Remove("All");
+               cmbViews.Items.Insert(0,"All");
           }
 
           public bool RemoveMessageFormat(MessageFormat messageFormat)
