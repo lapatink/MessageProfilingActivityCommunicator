@@ -456,8 +456,6 @@
                // 
                this.cmbViews.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
                this.cmbViews.FormattingEnabled = true;
-               this.cmbViews.Items.AddRange(new object[] {
-            "All"});
                this.cmbViews.Location = new System.Drawing.Point(12, 192);
                this.cmbViews.Name = "cmbViews";
                this.cmbViews.Size = new System.Drawing.Size(121, 21);

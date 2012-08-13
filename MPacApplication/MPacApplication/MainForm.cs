@@ -26,6 +26,7 @@ namespace MPacApplication
           public const Handshake DEFAULT_HANDSHAKE = Handshake.None;
           public const bool DEFAULT_RTS = false;
           public const bool DEFAULT_DTR = false;
+          private const String ALL_MESSAGES = " All";
 
           private ComPortConfigForm comPortConfigForm;
           private AddMessageForm AddMessageForm;
@@ -124,6 +125,7 @@ namespace MPacApplication
                comPortConfigForm = null;
                dataProcessor = new DataProcessor(this);
                lstMessageSummary.Sorted = true;
+               cmbViews.Items.Add(ALL_MESSAGES);
                cmbViews.Sorted = true;
                cmbViews.SelectedIndex = 0;
                RecordedMessages = new List<String>();
@@ -162,9 +164,7 @@ namespace MPacApplication
                {
                     PrintStatusMessage(name);
                }
-
-               initialized = true;
-
+               
                PrintStatusMessage("End Initialization");
 
                PrintStatusMessage("Start Configuration");
@@ -200,6 +200,8 @@ namespace MPacApplication
                    AddMessageFormat(m, MessageType.Company);
 
               PrintStatusMessage("End SQL Import. " + companyMessages.Count + " custom messages loaded.");
+
+              initialized = true;
           }
 
           private List<String> FindAvailableComPorts()
@@ -454,7 +456,7 @@ namespace MPacApplication
 
                RecordedMessages.Add(message);
 
-               if (cmbViews.SelectedItem.ToString().Equals("All") || message.Contains(GetMessageIdFromMessageName(cmbViews.SelectedItem.ToString()).ToString()))
+               if (cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES) || message.Contains(GetMessageIdFromMessageName(cmbViews.SelectedItem.ToString()).ToString()))
                {
                     if (listBoxOneSelected)
                     {
@@ -511,9 +513,11 @@ namespace MPacApplication
                lstMessageSummary.Items.Add(messageFormat);
                lstMessageSummary.SelectedIndex = lstMessageSummary.Items.Count-1;
                cmbViews.Items.Add(messageFormat.name);
-               bool allSelected;
-               cmbViews.Items.Remove("All");
-               cmbViews.Items.Insert(0,"All");
+               //bool allSelected = cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES);
+               //cmbViews.Items.Remove(ALL_MESSAGES);
+               //cmbViews.Items.Insert(0,ALL_MESSAGES);
+               //if (allSelected)
+               //     cmbViews.SelectedItem = ALL_MESSAGES;
           }
 
           public bool RemoveMessageFormat(MessageFormat messageFormat)
@@ -522,7 +526,7 @@ namespace MPacApplication
 
                if (cmbViews.SelectedItem.ToString().Equals(messageFormat.name))
                {
-                    cmbViews.SelectedIndex = 0;
+                    cmbViews.SelectedItem = ALL_MESSAGES;
                }
 
                if (localMessages.Remove(messageFormat))
@@ -610,63 +614,6 @@ namespace MPacApplication
                }
           }
 
-          /*private void ChangeView(String messageName)
-          {
-               int selectedID = GetMessageIdFromMessageName(cmbViews.SelectedItem.ToString());
-               if (listBoxOneSelected)
-               {
-                    lstDisplayWindowTwo.Items.Clear();
-
-                    if (selectedID == -1)//"All" was selected
-                    {
-                         foreach (String str in RecordedMessages)
-                         {
-                              lstDisplayWindowTwo.Items.Add(str);
-                         }
-                    }
-                    else
-                    {
-                         foreach (String str in RecordedMessages)
-                         {
-                              if (str.Contains(selectedID.ToString()))
-                                   lstDisplayWindowTwo.Items.Add(str);
-                         }
-                    }
-                    if (lstDisplayWindowTwo.Items.Count > 0)
-                         lstDisplayWindowTwo.SelectedIndex = lstDisplayWindowTwo.Items.Count - 1;
-
-                    lstDisplayWindowTwo.Visible = true;
-                    lstDisplayWindowOne.Visible = false;
-                    listBoxOneSelected = false;
-               }
-               else
-               {
-                    lstDisplayWindowOne.Items.Clear();
-
-                    if (selectedID == -1)//"All" was selected
-                    {
-                         foreach (String str in RecordedMessages)
-                         {
-                              lstDisplayWindowOne.Items.Add(str);
-                         }
-                    }
-                    else
-                    {
-                         foreach (String str in RecordedMessages)
-                         {
-                              if (str.Contains(selectedID.ToString()))
-                                   lstDisplayWindowOne.Items.Add(str);
-                         }
-                    }
-                    if (lstDisplayWindowOne.Items.Count > 0)
-                         lstDisplayWindowOne.SelectedIndex = lstDisplayWindowOne.Items.Count - 1;
-
-                    lstDisplayWindowOne.Visible = true;
-                    lstDisplayWindowTwo.Visible = false;
-                    listBoxOneSelected = true;
-               }
-          }*/
-
           private void cmbViews_SelectedIndexChanged(object sender, EventArgs e)
           {
                if (!initialized)
@@ -677,7 +624,7 @@ namespace MPacApplication
                {
                     lstDisplayWindowTwo.Items.Clear();
 
-                    if (selectedID == -1)//"All" was selected
+                    if (selectedID == -1)//ALL_MESSAGES was selected
                     {
                          foreach (String str in RecordedMessages)
                          {
@@ -703,7 +650,7 @@ namespace MPacApplication
                {
                     lstDisplayWindowOne.Items.Clear();
 
-                    if (selectedID == -1)//"All" was selected
+                    if (selectedID == -1)//ALL_MESSAGES was selected
                     {
                          foreach (String str in RecordedMessages)
                          {
