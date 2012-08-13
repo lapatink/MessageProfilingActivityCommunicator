@@ -184,7 +184,7 @@ namespace MPacApplication
                     lblIdError3.Visible = true;
                     error = true;
                 }
-                if (txtName.Text == parentForm.GetMessageName(i, msgType))
+                if (txtName.Text.Trim() == parentForm.GetMessageName(i, msgType))
                 {
                     lblNameError2.Visible = true;
                     error = true;
@@ -227,7 +227,7 @@ namespace MPacApplication
                 IdBytes[1],
                 IdBytes[0],
                 Byte.Parse(txtLength.Text, System.Globalization.NumberStyles.HexNumber),
-                txtName.Text,
+                txtName.Text.Trim(),
                 txtFormat.Text);
 
             if (msgType == MessageType.Company)
