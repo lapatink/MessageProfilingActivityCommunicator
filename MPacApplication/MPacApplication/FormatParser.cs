@@ -40,17 +40,20 @@ namespace MPacApplication
                     string args = FormatParser.Parse("%", data).Replace(delim, " ");
 
                     string filename = format.Substring(5, format.Length - 5);
+                    try
+                    {
+                        Process p = new Process();
+                        p.StartInfo.FileName = filename;
+                        p.StartInfo.Arguments = args;
+                        p.StartInfo.UseShellExecute = false;
+                        p.StartInfo.RedirectStandardOutput = true;
+                        p.StartInfo.CreateNoWindow = true;
+                        p.Start();
 
-                    Process p = new Process();
-                    p.StartInfo.FileName = filename;
-                    p.StartInfo.Arguments = args;
-                    p.StartInfo.UseShellExecute = false;
-                    p.StartInfo.RedirectStandardOutput = true;
-                    p.StartInfo.CreateNoWindow = true;
-                    p.Start();
-
-                    output = p.StandardOutput.ReadToEnd();
-                    p.WaitForExit();
+                        output = p.StandardOutput.ReadToEnd();
+                        p.WaitForExit();
+                    }
+                    catch { }
 
                     return output;
                 }
