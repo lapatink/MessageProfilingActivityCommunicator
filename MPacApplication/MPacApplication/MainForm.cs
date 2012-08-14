@@ -192,7 +192,13 @@ namespace MPacApplication
                    if (sql.isConnected())
                        messages.AddRange(sql.GetMessageList());
                    else
-                       errors += connection + '\n';   
+                   {
+                       try
+                       {
+                           errors += connection.Split(';')[0] + ';' + connection.Split(';')[1] + ';' + connection.Split(';')[2] + ";Table=" + connection.Split(';')[4] + '\n';
+                       }
+                       catch { }
+                   }
                }
 
                if (errors != "")
