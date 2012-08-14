@@ -899,6 +899,7 @@ namespace MPacApplication
           private void btnClear_Click(object sender, EventArgs e)
           {
               lstDisplayWindowOne.Items.Clear();
+              lstDisplayWindowTwo.Items.Clear();    
           }
 
           private void saveLogToolStripMenuItem_Click(object sender, EventArgs e)
@@ -908,9 +909,15 @@ namespace MPacApplication
               fileDialog.Filter = "TXT Files|*.txt|All Files|*.*";
               fileDialog.InitialDirectory = "%USERPROFILE%";
 
+              ListBox current = null;
+              if (listBoxOneSelected)
+                  current = lstDisplayWindowOne;
+              else
+                  current = lstDisplayWindowTwo;
+
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
-                  foreach (string listItems in lstDisplayWindowOne.Items)
+                  foreach (string listItems in current.Items)
                   {
                       textOut = textOut + listItems + Environment.NewLine;
                   }
