@@ -29,8 +29,8 @@ namespace MPacApplication
           private const String ALL_MESSAGES = " All";
 
           private ComPortConfigForm comPortConfigForm;
-          private AddMessageForm AddMessageForm;
-          private AddMessageForm AddCompanyForm;
+          private AddMessageForm addLocalMessageForm;
+          private AddMessageForm addCompanyMessageForm;
 
           private SerialPort listeningPort;
           private bool comPortClosed;
@@ -42,7 +42,7 @@ namespace MPacApplication
           private bool listBoxOneSelected;
           private bool stopReceiving;
 
-          private List<String> RecordedMessages;
+          private List<String> recordedMessages;
 
           private bool isAdministrator = false;
           public bool IsAdministrator
@@ -129,7 +129,7 @@ namespace MPacApplication
                cmbViews.Items.Add(ALL_MESSAGES);
                cmbViews.Sorted = true;
                cmbViews.SelectedIndex = 0;
-               RecordedMessages = new List<String>();
+               recordedMessages = new List<String>();
 
                PrintStatusMessage("Start Initialization");
                initialized = false;
@@ -456,7 +456,7 @@ namespace MPacApplication
                     }
                }
 
-               RecordedMessages.Add(message);
+               recordedMessages.Add(message);
 
                if (cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES) || message.Contains(cmbViews.SelectedItem.ToString()))
                {
@@ -552,13 +552,13 @@ namespace MPacApplication
                try
                {
                     comPortConfigForm.SetComboBoxes(this.availableComPortNames, this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
-                    comPortConfigForm.Show();
+                    comPortConfigForm.ShowDialog();
                }
                catch (Exception)
                {
                     comPortConfigForm = new ComPortConfigForm(this);
                     comPortConfigForm.SetComboBoxes(this.availableComPortNames, this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits, this.handshake, this.rtsEnable, this.dtrEnable);
-                    comPortConfigForm.Show();
+                    comPortConfigForm.ShowDialog();
                }
           }
 
@@ -609,14 +609,14 @@ namespace MPacApplication
 
                     if (cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES))//ALL_MESSAGES was selected
                     {
-                         foreach (String str in RecordedMessages)
+                         foreach (String str in recordedMessages)
                          {
                               lstDisplayWindowTwo.Items.Add(str);
                          }
                     }
                     else
                     {
-                         foreach (String str in RecordedMessages)
+                         foreach (String str in recordedMessages)
                          {
                               if (str.Contains(cmbViews.SelectedItem.ToString()))
                                    lstDisplayWindowTwo.Items.Add(str);
@@ -635,14 +635,14 @@ namespace MPacApplication
 
                     if (cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES))//ALL_MESSAGES was selected
                     {
-                         foreach (String str in RecordedMessages)
+                         foreach (String str in recordedMessages)
                          {
                               lstDisplayWindowOne.Items.Add(str);
                          }
                     }
                     else
                     {
-                         foreach (String str in RecordedMessages)
+                         foreach (String str in recordedMessages)
                          {
                               if (str.Contains(cmbViews.SelectedItem.ToString()))
                                    lstDisplayWindowOne.Items.Add(str);
@@ -673,33 +673,27 @@ namespace MPacApplication
 
           private void btnAddMessage_Click(object sender, EventArgs e)
           {
-              if (AddCompanyForm != null)
-                  if (AddCompanyForm.Visible)
-                      return;
                try
                {
-                    AddMessageForm.Show();
+                    addLocalMessageForm.ShowDialog();
                }
                catch (Exception)
                {
-                    AddMessageForm = new AddMessageForm(this, MessageType.Local);
-                    AddMessageForm.Show();
+                    addLocalMessageForm = new AddMessageForm(this, MessageType.Local);
+                    addLocalMessageForm.ShowDialog();
                }
           }
 
           private void btnAddCompanyMessage_Click(object sender, EventArgs e)
           {
-              if (AddMessageForm != null)
-                  if (AddMessageForm.Visible)
-                      return;
                try
                {
-                   AddCompanyForm.Show();
+                    addCompanyMessageForm.ShowDialog();
                }
                catch (Exception)
                {
-                    AddCompanyForm = new AddMessageForm(this, MessageType.Company);
-                    AddCompanyForm.Show();
+                    addCompanyMessageForm = new AddMessageForm(this, MessageType.Company);
+                    addCompanyMessageForm.ShowDialog();
                }
           }
 
@@ -836,13 +830,6 @@ namespace MPacApplication
 
           private void btnRemove_Click(object sender, EventArgs e)
           {
-              if (AddMessageForm != null)
-                  if (AddMessageForm.Visible)
-                      return;
-              if (AddCompanyForm != null)
-                  if (AddCompanyForm.Visible)
-                      return;
-
               int index = lstMessageSummary.SelectedIndex;
 
               if (index < 0)
@@ -860,13 +847,6 @@ namespace MPacApplication
           }
           private void btnEdit_Click(object sender, EventArgs e)
           {
-              if (AddMessageForm != null)
-                  if (AddMessageForm.Visible)
-                      return;
-              if (AddCompanyForm != null)
-                  if (AddCompanyForm.Visible)
-                      return;
-
               int index = lstMessageSummary.SelectedIndex;
 
               if (index < 0)
@@ -877,13 +857,13 @@ namespace MPacApplication
               if (companyMessages.Contains(mf))
                   return;
 
-              AddMessageForm = new AddMessageForm(this, MessageType.Local, index);
-              AddMessageForm.Show();
+              addLocalMessageForm = new AddMessageForm(this, MessageType.Local, index);
+              addLocalMessageForm.ShowDialog();
           }
 
           private void btnClear_Click(object sender, EventArgs e)
           {
-              RecordedMessages.Clear();
+              recordedMessages.Clear();
               if (listBoxOneSelected)
                 lstDisplayWindowOne.Items.Clear();
               else
@@ -899,7 +879,7 @@ namespace MPacApplication
 
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
-                  foreach (string listItems in RecordedMessages)
+                  foreach (string listItems in recordedMessages)
                   {
                       textOut = textOut + listItems + Environment.NewLine;
                   }

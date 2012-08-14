@@ -55,6 +55,7 @@ namespace MPacApplication
         {
             InitializeComponent();
             parentForm = sourceForm;
+
             msgType = type;
 
             if (type == MessageType.Company)
