@@ -16,41 +16,41 @@ namespace MPacApplication
         private string _name = "";
         private string _format = "";
 
-        public int id
+        public int Id
         {
             get { return _id; }
         }
-        public byte version_major
+        public byte VersionMajor
         {
             get { return _version_major; }
             set { _version_major = value; }
         }
-        public byte version_minor
+        public byte VersionMinor
         {
             get { return _version_minor; }
             set { _version_minor = value; }
         }
-        public byte id_high
+        public byte IdHigh
         {
             get { return _id_high; }
             set { _id_high = value; }
         }
-        public byte id_low
+        public byte IdLow
         {
             get { return _id_low; }
             set { _id_low = value; }
         }
-        public byte length
+        public byte Length
         {
             get { return _length; }
             set { _length = value; }
         }
-        public string name
+        public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
-        public string format
+        public string FormatString
         {
             get { return _format; }
             set { _format = value; }
@@ -62,13 +62,13 @@ namespace MPacApplication
 
         public MessageFormat(byte version_major, byte version_minor, byte id_high, byte id_low, byte length, string name, string format)
         {
-            this.version_major = version_major;
-            this.version_minor = version_minor;
-            this.id_high = id_high;
-            this.id_low = id_low;
-            this.length = length;
-            this.name = name;
-            this.format = format;
+            this.VersionMajor = version_major;
+            this.VersionMinor = version_minor;
+            this.IdHigh = id_high;
+            this.IdLow = id_low;
+            this.Length = length;
+            this.Name = name;
+            this.FormatString = format;
         }
 
         public MessageFormat(string csvString)
@@ -79,10 +79,10 @@ namespace MPacApplication
         public override string ToString()
         {
             return 
-                "0x" + Format.AsHex(id_high) + Format.AsHex(id_low) +
-                "     " + name.ToString() + 
-                " - Length: " + length.ToString() +
-                " - Format: " + format.ToString();
+                "0x" + Format.AsHex(IdHigh) + Format.AsHex(IdLow) +
+                "     " + Name.ToString() + 
+                " - Length: " + Length.ToString() +
+                " - Format: " + FormatString.ToString();
         }
 
         /// <summary>
@@ -92,13 +92,13 @@ namespace MPacApplication
         public string ToCSVString()
         {
 
-            return version_major.ToString() + "," +
-                version_minor.ToString() + "," +
-                name.ToString() + "," +
-                id_high.ToString() + "," +
-                id_low.ToString() + "," +
-                length.ToString() + "," +
-                format.ToString();
+            return VersionMajor.ToString() + "," +
+                VersionMinor.ToString() + "," +
+                Name.ToString() + "," +
+                IdHigh.ToString() + "," +
+                IdLow.ToString() + "," +
+                Length.ToString() + "," +
+                FormatString.ToString();
         }
 
         /// <summary>
@@ -113,19 +113,19 @@ namespace MPacApplication
 
             try { _id = int.Parse(values[0]); }
             catch { flag = false; }
-            try { version_major = byte.Parse(values[1]); }
+            try { VersionMajor = byte.Parse(values[1]); }
             catch { flag = false; }
-            try { version_minor = byte.Parse(values[2]); }
+            try { VersionMinor = byte.Parse(values[2]); }
             catch { flag = false; }
-            try { name = values[3]; }
+            try { Name = values[3]; }
             catch { flag = false; }
-            try { id_high = byte.Parse(values[4]); }
+            try { IdHigh = byte.Parse(values[4]); }
             catch { flag = false; }
-            try { id_low = byte.Parse(values[5]); }
+            try { IdLow = byte.Parse(values[5]); }
             catch { flag = false; }
-            try { length = byte.Parse(values[6]); }
+            try { Length = byte.Parse(values[6]); }
             catch { flag = false; }
-            try { format = values[7]; }
+            try { FormatString = values[7]; }
             catch { flag = false; }
 
             return flag;
