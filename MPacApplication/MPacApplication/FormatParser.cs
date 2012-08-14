@@ -56,7 +56,8 @@ namespace MPacApplication
                 }
                 else if (tokens[i] != "" && tokens[i] != "%")
                 {
-                    output += group(tokens[i], tokens[++i], tokens[++i]);
+                    try { output += group(tokens[i], tokens[++i], tokens[++i]); }
+                    catch { } //fail silently if format string is wrong for some reason
                 }
             }
 

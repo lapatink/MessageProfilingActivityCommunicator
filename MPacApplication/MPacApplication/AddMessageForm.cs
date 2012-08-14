@@ -432,10 +432,10 @@ namespace MPacApplication
                 cmbFormatType.SelectedIndex = 2;
                 txtExternalFile.Text = tokens[1];
             }
-            else if (tokens[1] == "*")
+            else if (tokens[0] == "*")
             {
                 cmbFormatType.SelectedIndex = 0;
-                try { int.Parse(tokens[0]); cmbUniformGroup.Text = tokens[0]; }
+                try { int.Parse(tokens[1]); cmbUniformGroup.Text = tokens[1]; }
                 catch { }
                 switch (tokens[2])
                 {
@@ -578,8 +578,8 @@ namespace MPacApplication
             public FormatLine(string tokens)
             {
                 string[] token = tokens.Split(' ');
-                group = token[0];
-                count = token[1];
+                group = token[1];
+                count = token[0];
                 switch (token[2])
                 {
                     case "b":

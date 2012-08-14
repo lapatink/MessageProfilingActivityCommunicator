@@ -883,7 +883,11 @@ namespace MPacApplication
 
           private void btnClear_Click(object sender, EventArgs e)
           {
-              lstDisplayWindowOne.Items.Clear();
+              RecordedMessages.Clear();
+              if (listBoxOneSelected)
+                lstDisplayWindowOne.Items.Clear();
+              else
+                lstDisplayWindowTwo.Items.Clear();    
           }
 
           private void saveLogToolStripMenuItem_Click(object sender, EventArgs e)
@@ -895,7 +899,7 @@ namespace MPacApplication
 
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
-                  foreach (string listItems in lstDisplayWindowOne.Items)
+                  foreach (string listItems in RecordedMessages)
                   {
                       textOut = textOut + listItems + Environment.NewLine;
                   }
