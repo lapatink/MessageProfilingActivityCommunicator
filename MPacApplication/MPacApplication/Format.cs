@@ -35,7 +35,6 @@ namespace MPacApplication
         {
             return value.ToString("X").PadLeft(16, '0');
         }
-
         public static string AsBinary(byte value)
         {
             return Convert.ToString(value, 2).PadLeft(8, '0');

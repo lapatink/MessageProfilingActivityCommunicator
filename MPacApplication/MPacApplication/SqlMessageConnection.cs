@@ -23,7 +23,7 @@ namespace MPacApplication
         {
             this.connection = connection;
             conn = new SqlConnection(this.connection);
-            this.table = table.Split(' ')[0].Trim(); //TODO: parameterize this
+            this.table = table.Split(' ')[0].Trim();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace MPacApplication
             this.connection = connection.Substring(0, connection.LastIndexOf(';') + 1);
             conn = new SqlConnection(this.connection);
             this.table = connection.Substring(connection.LastIndexOf(';') + 1);
-            this.table = this.table.Split(' ')[0].Trim(); //TODO: parameterize this
+            this.table = this.table.Split(' ')[0].Trim();
 
         }
 

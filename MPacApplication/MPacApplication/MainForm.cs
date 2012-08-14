@@ -750,7 +750,6 @@ namespace MPacApplication
 
           private void exitToolStripMenuItem_Click(object sender, EventArgs e)
           {
-              //TODO: Do we need anything else here? Ask if they want to save maybe?
               Close();
           }
 

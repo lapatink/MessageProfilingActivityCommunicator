@@ -75,7 +75,6 @@ namespace MPacApplication
                 this.Text = "Add Company Message";
             else
                 this.Text = "Add Local Message";
-            //Edit(index);
         }
         private void txtID_check(object sender, EventArgs e)
         {
