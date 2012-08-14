@@ -884,8 +884,10 @@ namespace MPacApplication
           private void btnClear_Click(object sender, EventArgs e)
           {
               RecordedMessages.Clear();
-              lstDisplayWindowOne.Items.Clear();
-              lstDisplayWindowTwo.Items.Clear();    
+              if (listBoxOneSelected)
+                lstDisplayWindowOne.Items.Clear();
+              else
+                lstDisplayWindowTwo.Items.Clear();    
           }
 
           private void saveLogToolStripMenuItem_Click(object sender, EventArgs e)
