@@ -883,6 +883,7 @@ namespace MPacApplication
 
           private void btnClear_Click(object sender, EventArgs e)
           {
+              RecordedMessages.Clear();
               lstDisplayWindowOne.Items.Clear();
               lstDisplayWindowTwo.Items.Clear();    
           }
@@ -894,15 +895,9 @@ namespace MPacApplication
               fileDialog.Filter = "TXT Files|*.txt|All Files|*.*";
               fileDialog.InitialDirectory = "%USERPROFILE%";
 
-              ListBox current = null;
-              if (listBoxOneSelected)
-                  current = lstDisplayWindowOne;
-              else
-                  current = lstDisplayWindowTwo;
-
               if (fileDialog.ShowDialog() == DialogResult.OK)
               {
-                  foreach (string listItems in current.Items)
+                  foreach (string listItems in RecordedMessages)
                   {
                       textOut = textOut + listItems + Environment.NewLine;
                   }
