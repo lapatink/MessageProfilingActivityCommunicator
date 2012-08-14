@@ -23,7 +23,7 @@ namespace MPacApplication
         {
             this.connection = connection;
             conn = new SqlConnection(this.connection);
-            this.table = table.Split(' ')[0].Trim(); //TODO: parameterize this
+            this.table = table.Split(' ')[0].Trim();
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace MPacApplication
             this.connection = connection.Substring(0, connection.LastIndexOf(';') + 1);
             conn = new SqlConnection(this.connection);
             this.table = connection.Substring(connection.LastIndexOf(';') + 1);
-            this.table = this.table.Split(' ')[0].Trim(); //TODO: parameterize this
+            this.table = this.table.Split(' ')[0].Trim();
 
         }
 
@@ -120,13 +120,13 @@ namespace MPacApplication
                 cmd = new SqlCommand("INSERT INTO " + table + " (version_major, version_minor, name, id_high, id_low, length, format) " +
                     "VALUES (@version_major, @version_minor, @name, @id_high, @id_low, @length, @format)", conn);
 
-                cmd.Parameters.AddWithValue("version_major", message.version_major);
-                cmd.Parameters.AddWithValue("version_minor", message.version_minor);
-                cmd.Parameters.AddWithValue("name", message.name);
-                cmd.Parameters.AddWithValue("id_high", message.id_high);
-                cmd.Parameters.AddWithValue("id_low", message.id_low);
-                cmd.Parameters.AddWithValue("length", message.length);
-                cmd.Parameters.AddWithValue("format", message.format);
+                cmd.Parameters.AddWithValue("version_major", message.VersionMajor);
+                cmd.Parameters.AddWithValue("version_minor", message.VersionMinor);
+                cmd.Parameters.AddWithValue("name", message.Name);
+                cmd.Parameters.AddWithValue("id_high", message.IdHigh);
+                cmd.Parameters.AddWithValue("id_low", message.IdLow);
+                cmd.Parameters.AddWithValue("length", message.Length);
+                cmd.Parameters.AddWithValue("format", message.FormatString);
 
                 flag = (cmd.ExecuteNonQuery() > 0);
 
@@ -172,7 +172,7 @@ namespace MPacApplication
 
         public bool Remove(MessageFormat m)
         {
-            return Remove(m.id);
+            return Remove(m.Id);
         }
 
         private object safeRead(SqlDataReader r, string s)

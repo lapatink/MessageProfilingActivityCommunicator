@@ -15,32 +15,32 @@ namespace MPacApplication
           private byte[] _data;
           private DateTime timestamp;
 
-          public byte version_major
+          public byte VersionMajor
           {
               get { return _version_major; }
               set { _version_major = value; }
           }
-          public byte version_minor
+          public byte VersionMinor
           {
               get { return _version_minor; }
               set { _version_minor = value; }
           }
-          public byte id_high
+          public byte IdHigh
           {
               get { return _id_high; }
               set { _id_high = value; }
           }
-          public byte id_low
+          public byte IdLow
           {
               get { return _id_low; }
               set { _id_low = value; }
           }
-          public byte length
+          public byte Length
           {
               get { return _length; }
               set { _length = value; }
           }
-          public byte[] data
+          public byte[] Data
           {
               get { return _data; }
               set { _data = value; }
@@ -53,14 +53,14 @@ namespace MPacApplication
 
           public Message(byte version_major, byte version_minor, byte id_high, byte id_low, byte[] data, DateTime timestamp)
           {
-               this.version_major = version_major;
-               this.version_minor = version_minor;
-               this.id_high = id_high;
-               this.id_low = id_low;
+               this.VersionMajor = version_major;
+               this.VersionMinor = version_minor;
+               this.IdHigh = id_high;
+               this.IdLow = id_low;
                if (data != null)
                {
-                    this.length = (byte)data.Length;
-                    this.data = data;
+                    this.Length = (byte)data.Length;
+                    this.Data = data;
                }
                this.timestamp = timestamp;
           }
@@ -72,13 +72,13 @@ namespace MPacApplication
 
           public override String ToString()
           {
-               String str = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}     ", timestamp) + "Message ID: 0x" + Format.AsHex(id_high) + Format.AsHex(id_low) + " - Length: " + length;
+               String str = String.Format("{0:MM/dd/yyyy HH:mm:ss.fff tt}     ", timestamp) + "Message ID: 0x" + Format.AsHex(IdHigh) + Format.AsHex(IdLow) + " - Length: " + Length;
 
-               if (data != null && data.Length > 0)
+               if (Data != null && Data.Length > 0)
                {
                     str += "     Data:";
 
-                    foreach (byte b in data)
+                    foreach (byte b in Data)
                     {
                          str += " " + Format.AsHex(b);
                     }

@@ -5,11 +5,9 @@
     <source>ec2-50-16-16-131.compute-1.amazonaws.com</source>
     <catalog>protocolsdb</catalog>
     <table>Messages0</table>
-    <!-- I may add multiple table support later. For now you need to specify the whole connection each time.-->
     <user>admin</user>
     <password>xjSeu3sBBUvDgyL</password>
-    <!-- I may add encryption options here at some point. Plaintext for now.-->
   </connection>
-  <admin>true</admin>
+  <admin>true</admin> <!-- set this value to false or omit it for non admin users -->
   <!--<file>c:\config.xml</file>--> <!-- you can specify multiple config files in various locations this way.-->
 </config>
