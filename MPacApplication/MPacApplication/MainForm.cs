@@ -378,25 +378,25 @@ namespace MPacApplication
           public byte GetMessageHighByte(int index, MessageType type)
           {
                if (type == MessageType.Company)
-                    return companyMessages[index].id_high;
+                    return companyMessages[index].IdHigh;
                else
-                    return localMessages[index].id_high;
+                    return localMessages[index].IdHigh;
           }
 
           public byte GetMessageLowByte(int index, MessageType type)
           {
                if (type == MessageType.Company)
-                    return companyMessages[index].id_low;
+                    return companyMessages[index].IdLow;
                else
-                    return localMessages[index].id_low;
+                    return localMessages[index].IdLow;
           }
 
           public string GetMessageName(int index, MessageType type)
           {
                if (type == MessageType.Company)
-                    return companyMessages[index].name;
+                    return companyMessages[index].Name;
                else
-                    return localMessages[index].name;
+                    return localMessages[index].Name;
           }
           public MessageFormat GetMessageFormat(int index)
           {
@@ -409,7 +409,7 @@ namespace MPacApplication
           {
                foreach (MessageFormat mf in localMessages)
                {
-                    if (mf.id_high == highByte && mf.id_low == lowByte)
+                    if (mf.IdHigh == highByte && mf.IdLow == lowByte)
                     {
                          return mf;
                     }
@@ -417,7 +417,7 @@ namespace MPacApplication
 
                foreach (MessageFormat mf in companyMessages)
                {
-                    if (mf.id_high == highByte && mf.id_low == lowByte)
+                    if (mf.IdHigh == highByte && mf.IdLow == lowByte)
                     {
                          return mf;
                     }
@@ -430,7 +430,7 @@ namespace MPacApplication
           {
                String message;
                
-               MessageFormat format = GetMessageFormat(completedMessage.id_high, completedMessage.id_low);
+               MessageFormat format = GetMessageFormat(completedMessage.IdHigh, completedMessage.IdLow);
 
                if (format == null)
                {
@@ -438,10 +438,10 @@ namespace MPacApplication
                }
                else
                {
-                    message = completedMessage.GetTimestamp() + format.name;
-                    if (completedMessage.data == null || completedMessage.data.Length == format.length)
+                    message = completedMessage.GetTimestamp() + format.Name;
+                    if (completedMessage.Data == null || completedMessage.Data.Length == format.Length)
                     {
-                         String formattedString = FormatParser.Parse(format.format, completedMessage.data); // if data length == 0, this can still return string via external program
+                         String formattedString = FormatParser.Parse(format.FormatString, completedMessage.Data); // if data length == 0, this can still return string via external program
 
                          if (formattedString != null && formattedString.Length != 0)
                          {
@@ -475,16 +475,16 @@ namespace MPacApplication
           {
                foreach (MessageFormat format in localMessages)
                {
-                    if (format.name.Equals(messageName))
+                    if (format.Name.Equals(messageName))
                     {
-                         return ((format.id_high << 8) | (format.id_low));
+                         return ((format.IdHigh << 8) | (format.IdLow));
                     }
                }
                foreach (MessageFormat format in companyMessages)
                {
-                    if (format.name.Equals(messageName))
+                    if (format.Name.Equals(messageName))
                     {
-                         return ((format.id_high << 8) | (format.id_low));
+                         return ((format.IdHigh << 8) | (format.IdLow));
                     }
                }
 
@@ -512,7 +512,7 @@ namespace MPacApplication
 
                lstMessageSummary.Items.Add(messageFormat);
                lstMessageSummary.SelectedIndex = lstMessageSummary.Items.Count-1;
-               cmbViews.Items.Add(messageFormat.name);
+               cmbViews.Items.Add(messageFormat.Name);
                //bool allSelected = cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES);
                //cmbViews.Items.Remove(ALL_MESSAGES);
                //cmbViews.Items.Insert(0,ALL_MESSAGES);
@@ -524,7 +524,7 @@ namespace MPacApplication
           {
                bool flag = false;
 
-               if (cmbViews.SelectedItem.ToString().Equals(messageFormat.name))
+               if (cmbViews.SelectedItem.ToString().Equals(messageFormat.Name))
                {
                     cmbViews.SelectedItem = ALL_MESSAGES;
                }
@@ -542,7 +542,7 @@ namespace MPacApplication
                if (flag)
                {
                     lstMessageSummary.Items.Remove(messageFormat);
-                    cmbViews.Items.Remove(messageFormat.name);
+                    cmbViews.Items.Remove(messageFormat.Name);
                }
 
 
@@ -779,14 +779,14 @@ namespace MPacApplication
 
 
                   foreach (MessageFormat m in companyMessages)
-                      companyNames.Add(m.name);
+                      companyNames.Add(m.Name);
 
                   foreach (MessageFormat m in messages)
-                      if (!companyNames.Contains(m.name) && !ids.Contains((ushort)(m.id_high << 8 | m.id_low)))
+                      if (!companyNames.Contains(m.Name) && !ids.Contains((ushort)(m.IdHigh << 8 | m.IdLow)))
                       {
                           AddMessageFormat(m, MessageType.Local);
-                          companyNames.Add(m.name); //prevent name conflicts within the file
-                          ids.Add((ushort)(m.id_high << 8 | m.id_low)); //prevent id conflicts within the file
+                          companyNames.Add(m.Name); //prevent name conflicts within the file
+                          ids.Add((ushort)(m.IdHigh << 8 | m.IdLow)); //prevent id conflicts within the file
                       }
                       else
                           errors += m.ToString() + '\n';
@@ -823,7 +823,7 @@ namespace MPacApplication
               List<string> localNames = new List<string>();
 
               foreach (MessageFormat m in localMessages)
-                  localNames.Add(m.name);
+                  localNames.Add(m.Name);
 
               messages.AddRange(companyMessages);
 
@@ -835,11 +835,11 @@ namespace MPacApplication
               foreach (string connection in connections)
                   messages.AddRange(new SqlMessageConnection(connection).GetMessageList());
               foreach (MessageFormat m in messages)
-                  if (!localNames.Contains(m.name))
+                  if (!localNames.Contains(m.Name))
                       AddMessageFormat(m, MessageType.Company);
                   else
                   {
-                      MessageFormat dupe = localMessages.Find(d => d.name == m.name);
+                      MessageFormat dupe = localMessages.Find(d => d.Name == m.Name);
                       error += dupe.ToString() + '\n';
                       RemoveMessageFormat(dupe);
                   }
@@ -867,7 +867,7 @@ namespace MPacApplication
 
               MessageFormat mf = (MessageFormat)lstMessageSummary.Items[index];
 
-              if (mf.id_high >= 0x80)
+              if (mf.IdHigh >= 0x80)
               {
                   MessageBox.Show("You cannot remove company messages.");
                   return;
