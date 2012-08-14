@@ -68,12 +68,14 @@ namespace MPacApplication
             InitializeComponent();
             parentForm = sourceForm;
             msgType = type;
+            editIndex = index;
+            
 
             if (type == MessageType.Company)
                 this.Text = "Add Company Message";
             else
                 this.Text = "Add Local Message";
-            Edit(index);
+            //Edit(index);
         }
         private void txtID_check(object sender, EventArgs e)
         {
@@ -258,6 +260,7 @@ namespace MPacApplication
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Visible = false;
+            editIndex = -1;
         }
 
         private void reset()
@@ -406,22 +409,21 @@ namespace MPacApplication
 
         private void Edit(int index)
         {
-            editIndex = index;
             MessageFormat m = null;
 
             if (index < 0)
                 return;
             m = parentForm.GetMessageFormat(index);
 
-            txtLength.Text = m.length.ToString("X");
-            txtName.Text = m.name;
-            byte[] id = { m.id_high, m.id_low };
+            txtLength.Text = m.Length.ToString("X");
+            txtName.Text = m.Name;
+            byte[] id = { m.IdHigh, m.IdLow };
             try { txtID.Text = ushort.Parse(Format.AsUnsignedDecimal(id)).ToString("X"); }
             catch { }
-            if (m.format == "%" || m.format == "")
+            if (m.FormatString == "%" || m.FormatString == "")
                 return;
             
-            string[] tokens = m.format.Split(' ');
+            string[] tokens = m.FormatString.Split(' ');
 
             if (tokens.Length < 2)
                 return;
@@ -472,6 +474,7 @@ namespace MPacApplication
                     }
                 }
             }
+            UpdateControls();
 
         }
 
@@ -688,7 +691,15 @@ namespace MPacApplication
 
         private void AddMessageForm_activated(object sender, EventArgs e)
         {
-            reset();
+            if (editIndex != -1)
+            {
+                int index = editIndex;
+                reset();
+                editIndex = index;
+                Edit(index);
+            }
+            else
+                reset();
             txtName.Focus();
         }
     }
