@@ -40,6 +40,7 @@ namespace MPacApplication
           private DataProcessor dataProcessor;
           private bool initialized;
           private bool listBoxOneSelected;
+          private bool stopReceiving;
 
           private List<String> RecordedMessages;
 
@@ -132,6 +133,7 @@ namespace MPacApplication
 
                PrintStatusMessage("Start Initialization");
                initialized = false;
+               stopReceiving = false;
                this.comPortName = "--";
                this.baudRate = DEFAULT_BAUD_RATE;
                this.parity = DEFAULT_PARITY;
@@ -456,7 +458,7 @@ namespace MPacApplication
 
                RecordedMessages.Add(message);
 
-               if (cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES) || message.Contains(GetMessageIdFromMessageName(cmbViews.SelectedItem.ToString()).ToString()))
+               if (cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES) || message.Contains(cmbViews.SelectedItem.ToString()))
                {
                     if (listBoxOneSelected)
                     {
@@ -466,29 +468,9 @@ namespace MPacApplication
                     else
                     {
                          lstDisplayWindowTwo.Items.Add(message);
-                         lstDisplayWindowTwo.SelectedIndex = lstDisplayWindowOne.Items.Count - 1;
+                         lstDisplayWindowTwo.SelectedIndex = lstDisplayWindowTwo.Items.Count - 1;
                     }
                }
-          }
-
-          private int GetMessageIdFromMessageName(String messageName)
-          {
-               foreach (MessageFormat format in localMessages)
-               {
-                    if (format.Name.Equals(messageName))
-                    {
-                         return ((format.IdHigh << 8) | (format.IdLow));
-                    }
-               }
-               foreach (MessageFormat format in companyMessages)
-               {
-                    if (format.Name.Equals(messageName))
-                    {
-                         return ((format.IdHigh << 8) | (format.IdLow));
-                    }
-               }
-
-               return -1;
           }
 
           public void PrintComPortMessage(String message)
@@ -584,7 +566,7 @@ namespace MPacApplication
           {
                try
                {
-                    if (listeningPort == null || !listeningPort.IsOpen)
+                    if (listeningPort == null || !listeningPort.IsOpen || stopReceiving)
                          return;
 
                     int numberOfBytes = listeningPort.BytesToRead;
@@ -619,12 +601,13 @@ namespace MPacApplication
                if (!initialized)
                     return;
 
-               int selectedID = GetMessageIdFromMessageName(cmbViews.SelectedItem.ToString());
+               stopReceiving = true;
+
                if (listBoxOneSelected)
                {
                     lstDisplayWindowTwo.Items.Clear();
 
-                    if (selectedID == -1)//ALL_MESSAGES was selected
+                    if (cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES))//ALL_MESSAGES was selected
                     {
                          foreach (String str in RecordedMessages)
                          {
@@ -635,7 +618,7 @@ namespace MPacApplication
                     {
                          foreach (String str in RecordedMessages)
                          {
-                              if (str.Contains(selectedID.ToString()))
+                              if (str.Contains(cmbViews.SelectedItem.ToString()))
                                    lstDisplayWindowTwo.Items.Add(str);
                          }
                     }
@@ -650,7 +633,7 @@ namespace MPacApplication
                {
                     lstDisplayWindowOne.Items.Clear();
 
-                    if (selectedID == -1)//ALL_MESSAGES was selected
+                    if (cmbViews.SelectedItem.ToString().Equals(ALL_MESSAGES))//ALL_MESSAGES was selected
                     {
                          foreach (String str in RecordedMessages)
                          {
@@ -661,7 +644,7 @@ namespace MPacApplication
                     {
                          foreach (String str in RecordedMessages)
                          {
-                              if (str.Contains(selectedID.ToString()))
+                              if (str.Contains(cmbViews.SelectedItem.ToString()))
                                    lstDisplayWindowOne.Items.Add(str);
                          }
                     }
@@ -672,6 +655,8 @@ namespace MPacApplication
                     lstDisplayWindowTwo.Visible = false;
                     listBoxOneSelected = true;
                }
+               
+               stopReceiving = false;
           }
 
           private void btnOpenAndClose_Click(object sender, EventArgs e)
