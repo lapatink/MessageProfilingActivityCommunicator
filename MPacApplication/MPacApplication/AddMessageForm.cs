@@ -578,8 +578,8 @@ namespace MPacApplication
             public FormatLine(string tokens)
             {
                 string[] token = tokens.Split(' ');
-                group = token[0];
-                count = token[1];
+                group = token[1];
+                count = token[0];
                 switch (token[2])
                 {
                     case "b":
