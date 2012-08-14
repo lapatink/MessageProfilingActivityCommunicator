@@ -8,6 +8,14 @@
     <user>admin</user>
     <password>xjSeu3sBBUvDgyL</password>
   </connection>
+  <connection>
+    <!-- a SQL connection -->
+    <source>ec2-50-16-16-131.compute-1.amazonaws.com</source>
+    <catalog>protocolsdb</catalog>
+    <table>Table5</table>
+    <user>admin</user>
+    <password>wrongpassword</password>
+  </connection>
   <admin>true</admin> <!-- set this value to false or omit it for non admin users -->
   <!--<file>c:\config.xml</file>--> <!-- you can specify multiple config files in various locations this way.-->
 </config>
