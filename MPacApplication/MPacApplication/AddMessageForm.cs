@@ -17,6 +17,7 @@ namespace MPacApplication
         private MessageType msgType;
         private bool error;
         private int editIndex = -1;
+        private int loadFile = 0;
         private ushort ID;
         private const ushort CONTROLX = 15;
         private const ushort CONTROLY = 128; 
@@ -503,6 +504,7 @@ namespace MPacApplication
 
         private void btnOpenFile_Click(object sender, EventArgs e)
         {
+            loadFile = 1;
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "All Files|*.*";
             fileDialog.InitialDirectory = "%USERPROFILE%";
@@ -698,6 +700,10 @@ namespace MPacApplication
                 editIndex = index;
                 Edit(index);
             }
+            else if (loadFile == 1)
+                {
+                    loadFile = 0;
+                }
             else
                 reset();
             txtName.Focus();
