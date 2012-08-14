@@ -222,7 +222,7 @@ namespace MPacApplication
             {
                 txtFormat.Text = "call " + txtExternalFile.Text;
             }
-            parentForm.PrintStatusMessage("Format string: " + txtFormat.Text);
+            
             MessageFormat message = new MessageFormat(
                 versionBytes[1],
                 versionBytes[0],

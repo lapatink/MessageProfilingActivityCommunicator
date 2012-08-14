@@ -81,8 +81,7 @@ namespace MPacApplication
             return 
                 "0x" + Format.AsHex(IdHigh) + Format.AsHex(IdLow) +
                 "     " + Name.ToString() + 
-                " - Length: " + Length.ToString() +
-                " - Format: " + FormatString.ToString();
+                " - Length: " + Length.ToString();
         }
 
         /// <summary>

@@ -276,9 +276,9 @@
                this.Controls.Add(this.lblComPortName);
                this.Controls.Add(this.cmbComPortName);
                this.MaximizeBox = false;
-               this.MaximumSize = new System.Drawing.Size(280, 320);
+               this.MaximumSize = new System.Drawing.Size(275, 313);
                this.MinimizeBox = false;
-               this.MinimumSize = new System.Drawing.Size(255, 292);
+               this.MinimumSize = new System.Drawing.Size(275, 313);
                this.Name = "ComPortConfigForm";
                this.Text = "ComPortConfigForm";
                this.ResumeLayout(false);

@@ -131,7 +131,6 @@ namespace MPacApplication
                cmbViews.SelectedIndex = 0;
                recordedMessages = new List<String>();
 
-               PrintStatusMessage("Start Initialization");
                initialized = false;
                stopReceiving = false;
                this.comPortName = "--";
@@ -160,28 +159,15 @@ namespace MPacApplication
 
                if(availableComPortNames.Count > 0)
                     OpenComPort(availableComPortNames.ElementAt<String>(0), DEFAULT_BAUD_RATE, DEFAULT_PARITY, DEFAULT_DATA_BITS, DEFAULT_STOP_BITS, DEFAULT_HANDSHAKE, DEFAULT_RTS, DEFAULT_DTR);
-
-               PrintStatusMessage("Remaining List");
-               foreach (String name in availableComPortNames)
-               {
-                    PrintStatusMessage(name);
-               }
                
-               PrintStatusMessage("End Initialization");
-
-               PrintStatusMessage("Start Configuration");
                Configuration config = new Configuration();
 
                string[] connections = config.Read();
-              PrintStatusMessage("Configuration read complete. Found " + connections.Length + " connection(s).");
 
               if (!config.IsAdministrator)
                   btnAddCompanyMessage.Enabled = false;
               else
                   isAdministrator = true;
-
-               PrintStatusMessage("End Configuration");
-               PrintStatusMessage("Start SQL Import");
 
                string errors = "";
                List<MessageFormat> messages = new List<MessageFormat>();
@@ -201,8 +187,6 @@ namespace MPacApplication
                foreach (MessageFormat m in messages)
                    AddMessageFormat(m, MessageType.Company);
 
-              PrintStatusMessage("End SQL Import. " + companyMessages.Count + " custom messages loaded.");
-
               initialized = true;
           }
 
@@ -214,7 +198,6 @@ namespace MPacApplication
                {
                     if (name.StartsWith("COM") && OpenComPortCheck(name))
                     {
-                         PrintStatusMessage("Add Com Port " + name);
                          availableComPorts.Add(name);
                     }
                }
@@ -242,8 +225,6 @@ namespace MPacApplication
           {
                try
                {
-                    PrintStatusMessage("Set Serial Port Config " + comPortName + " " + baudRate + " " + parity + " " + dataBits + " " + stopBits);
-
                     CloseComPort();
 
                     this.comPortName = comPortName;
@@ -257,7 +238,6 @@ namespace MPacApplication
 
                     if (listeningPort == null)
                     {
-                         PrintStatusMessage("Create new SerialPort " + this.comPortName + " " + this.baudRate + " " + this.parity + " " + this.dataBits + " " + this.stopBits);
                          listeningPort = new SerialPort(this.comPortName, this.baudRate, this.parity, this.dataBits, this.stopBits);
                          listeningPort.Handshake = this.handshake;
                          listeningPort.RtsEnable = this.rtsEnable;
@@ -320,14 +300,11 @@ namespace MPacApplication
           {
                try
                {
-                    PrintStatusMessage("Opening Serial Port " + this.comPortName);
                     tmrCheckForData.Enabled = true;
                     this.listeningPort.Open();
                }
                catch (Exception)
                {
-                    PrintStatusMessage("Unable to open serial port " + this.comPortName);
-                    PrintStatusMessage("Removing " + this.comPortName + " from available port list");
                     availableComPortNames.Remove(this.comPortName);
                     try
                     {
@@ -354,7 +331,6 @@ namespace MPacApplication
                     try
                     {
                          listeningPort.Close();
-                         PrintStatusMessage("Closed serial port");
                     }
                     catch (Exception)
                     {
@@ -473,18 +449,6 @@ namespace MPacApplication
                }
           }
 
-          public void PrintComPortMessage(String message)
-          {
-               lstComPortDisplay.Items.Add(message);
-               lstComPortDisplay.SelectedIndex = lstComPortDisplay.Items.Count-1;
-          }
-
-          public void PrintStatusMessage(String message)
-          {
-               lstStatusDisplay.Items.Add(message);
-               lstStatusDisplay.SelectedIndex = lstStatusDisplay.Items.Count-1;
-          }
-
           public void AddMessageFormat(MessageFormat messageFormat, MessageType type)
           {
                if (type == MessageType.Company)
@@ -575,18 +539,12 @@ namespace MPacApplication
                          return;
 
                     byte[] buffer = new byte[numberOfBytes];
-                    String byteString = "";
 
                     numberOfBytes = listeningPort.Read(buffer, 0, numberOfBytes);
 
                     if (numberOfBytes > 0)
                     {
-                         PrintStatusMessage("Milliseconds:" + dataProcessor.ProcessData(buffer) + "\n");
-                         foreach (byte b in buffer)
-                         {
-                              byteString += Convert.ToString(b, 16).PadLeft(2, '0').ToUpper() + " ";
-                         }
-                         PrintComPortMessage(byteString);
+                         dataProcessor.ProcessData(buffer);
                     }
                }
                catch (Exception ex)
@@ -695,21 +653,6 @@ namespace MPacApplication
                     addCompanyMessageForm = new AddMessageForm(this, MessageType.Company);
                     addCompanyMessageForm.ShowDialog();
                }
-          }
-
-          private void btnSendMessageOne_Click(object sender, EventArgs e)
-          {
-               SendMessageToParser(txtMessageOne.Text.Trim().Split(' '));
-          }
-
-          private void btnSendMessageTwo_Click(object sender, EventArgs e)
-          {
-               SendMessageToParser(txtMessageTwo.Text.Trim().Split(' '));
-          }
-
-          private void btnSendMessageThree_Click(object sender, EventArgs e)
-          {
-               SendMessageToParser(txtMessageThree.Text.Trim().Split(' '));
           }
 
           private void SendMessageToParser(String[] parts)
