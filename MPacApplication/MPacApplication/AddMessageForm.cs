@@ -193,6 +193,22 @@ namespace MPacApplication
                     error = true;
                 }
             }
+
+            MessageType other;
+            if (msgType == MessageType.Local)
+                other = MessageType.Company;
+            else
+                other = MessageType.Local;
+
+                for (int i = 0; i < parentForm.GetMessagesCount(other); i++)
+                {
+                    if (txtName.Text.Trim() == parentForm.GetMessageName(i, other))
+                    {
+                        lblNameError2.Visible = true;
+                        error = true;
+                    }
+                }
+
             if (error == true)
                 return;
 
