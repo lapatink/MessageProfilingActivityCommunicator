@@ -637,28 +637,14 @@ namespace MPacApplication
 
           private void btnAddMessage_Click(object sender, EventArgs e)
           {
-               try
-               {
-                    addLocalMessageForm.ShowDialog();
-               }
-               catch (Exception)
-               {
-                    addLocalMessageForm = new AddMessageForm(this, MessageType.Local);
-                    addLocalMessageForm.ShowDialog();
-               }
+                   addLocalMessageForm = new AddMessageForm(this, MessageType.Local, -1);
+                   addLocalMessageForm.ShowDialog();
           }
 
           private void btnAddCompanyMessage_Click(object sender, EventArgs e)
           {
-               try
-               {
+                    addCompanyMessageForm = new AddMessageForm(this, MessageType.Company, -1);
                     addCompanyMessageForm.ShowDialog();
-               }
-               catch (Exception)
-               {
-                    addCompanyMessageForm = new AddMessageForm(this, MessageType.Company);
-                    addCompanyMessageForm.ShowDialog();
-               }
           }
 
           private void SendMessageToParser(String[] parts)
@@ -762,14 +748,15 @@ namespace MPacApplication
               foreach (string connection in connections)
                   messages.AddRange(new SqlMessageConnection(connection).GetMessageList());
               foreach (MessageFormat m in messages)
-                  if (!localNames.Contains(m.Name))
-                      AddMessageFormat(m, MessageType.Company);
-                  else
+              {
+                  AddMessageFormat(m, MessageType.Company);
+                  if (localNames.Contains(m.Name))
                   {
                       MessageFormat dupe = localMessages.Find(d => d.Name == m.Name);
                       error += dupe.ToString() + '\n';
                       RemoveMessageFormat(dupe);
                   }
+              }
 
               if (error != "")
                   MessageBox.Show("The following local messages were removed because they share a name with a company message:\n\n" + error);
